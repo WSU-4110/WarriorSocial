@@ -1,3 +1,3 @@
 # Warrior Social
-A mobile application by the student organizations of Wayne State University for the students of Wayne State University looking to meet new people with similar interests.
-Because Wayne State is a commuter school, it has been hard for students to meet people outside of class and make friends with similar interests. The pandemic has made it impossible to make friends even in class. With this app students at Wayne state can follow student organizations/clubs and join forums to talk about various topics of their interest.Through this app people can easily be updated about the student organizations’ meetings, events and posts and never have to worry about missing out on information. Students can also join forums related to their topic of interest and create discussion posts. These topics may range from their majors to their interests and hobbies.
+An android application by the student organizations of Wayne State University, for the students
+of Wayne State University looking to meet new people with similar interests.
