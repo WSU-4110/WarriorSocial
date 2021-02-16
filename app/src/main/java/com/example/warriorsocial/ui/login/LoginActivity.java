@@ -23,10 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.warriorsocial.NavDrawerActivity;
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.login.LoginViewModel;
-import com.example.warriorsocial.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -146,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         button_goToNavDrawerActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this , NavDrawerActivity.class);
+                Intent intent = new Intent(LoginActivity.this , BottomActivity.class);
                 startActivity(intent);
             }
         });
