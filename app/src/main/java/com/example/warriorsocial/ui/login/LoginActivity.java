@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.login;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,6 +14,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,10 +27,16 @@ import android.widget.Toast;
 
 import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
+import com.example.warriorsocial.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    FirebaseAuth fAuth;
 
     // Opens registration page
     private Button button_register;
@@ -50,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final Button button_register = findViewById(R.id.button_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        fAuth = FirebaseAuth.getInstance();
 
         //Just for development
         final Button button_goToHome = findViewById(R.id.button_goToHome);
@@ -125,9 +134,44 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                String emailTxt = usernameEditText.getText().toString();
+                String passwordTxt = passwordEditText.getText().toString();
+
+                //Check to see if input is empty
+                if(TextUtils.isEmpty(emailTxt)){
+                    usernameEditText.setError("Email is required!");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(passwordTxt)){
+                    passwordEditText.setError("Password is required!");
+                    return;
+                }
+
+                //Check if password length has 8 or more characters
+                if(passwordTxt.length() < 5){
+                    passwordEditText.setError("Password must have 5 or more characters!");
+                    return;
+                }
+                //loadingProgressBar.setVisibility(View.VISIBLE);
+
+                //Authenticate User
+                fAuth.signInWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), HomeFragment.class));
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+                //loginViewModel.login(usernameEditText.getText().toString(),
+                        //passwordEditText.getText().toString());
             }
         });
 
