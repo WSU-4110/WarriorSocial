@@ -115,7 +115,7 @@
 
     <!-- For Development Only. Opens Home page -->
     <Button
-        android:id="@+id/button_goToNavDrawerActivity"
+        android:id="@+id/button_goToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="go to home"
