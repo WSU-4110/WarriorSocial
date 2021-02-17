@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.dashboard;
+package com.example.warriorsocial.ui.organizations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.warriorsocial.R;
 
-public class DashboardFragment extends Fragment {
+public class OrganizationsFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private OrganizationsViewModel organizationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.bioTv);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        organizationsViewModel =
+                new ViewModelProvider(this).get(OrganizationsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_organizations, container, false);
+        final TextView textView = root.findViewById(R.id.text_organizations);
+        organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

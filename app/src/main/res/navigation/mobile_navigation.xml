@@ -12,17 +12,17 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.warriorsocial.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_organizations"
+        android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
+        android:label="Organizations"
+        tools:layout="@layout/fragment_organizations" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.warriorsocial.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/activity_main" />
-<!--replaced fragment_notifications with activity_main-->
+        android:id="@+id/navigation_discover"
+        android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
+        android:label="Discover"
+        tools:layout="@layout/fragment_discover" />
+
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.example.warriorsocial.ui.settings.SettingsFragment"
