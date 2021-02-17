@@ -21,8 +21,8 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.warriorsocial.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
+        tools:layout="@layout/activity_main" />
+<!--replaced fragment_notifications with activity_main-->
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.example.warriorsocial.ui.settings.SettingsFragment"
