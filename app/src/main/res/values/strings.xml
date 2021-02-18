@@ -40,29 +40,4 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-
-    <string-array name="programming_languages">
-        <item>ACM</item>
-        <item>BIO</item>
-        <item>CHEM</item>
-        <item>CIVIL</item>
-        <item>ELECTRIC</item>
-        <item>ESD</item>
-        <item>MECHANICAL</item>
-        <item>RACING</item>
-        <item>ROBOTICS</item>
-        <item>SWE</item>
-    </string-array>
-    <string-array name="description">
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    <item>This is a random description</item>
-    </string-array>
 </resources>
