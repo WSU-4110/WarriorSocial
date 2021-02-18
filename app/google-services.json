@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "393262403976",
+    "project_id": "warrior-social",
+    "storage_bucket": "warrior-social.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393262403976:android:f0c3239ba341ec6820ea3d",
+        "android_client_info": {
+          "package_name": "com.example.warriorsocial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393262403976-2l392jiq4uqtr4i6bmfhafqn6do4ss5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCphgT2fINxE7_ejEVsG5YGiBhjP2oFkF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393262403976-2l392jiq4uqtr4i6bmfhafqn6do4ss5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
