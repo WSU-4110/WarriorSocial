@@ -1,9 +1,152 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="169dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="122dp"
+            android:layout_marginBottom="423dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="193dp"
+            android:layout_marginBottom="361dp"
+            android:text="Change Picture"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="163dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="Warrior Social"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="182dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="238dp"
+            android:layout_marginTop="256dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="301dp"
+            android:text="Change Username"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="166dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="231dp"
+            android:layout_marginBottom="246dp"
+            android:text="***********"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="181dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="238dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="242dp"
+            android:text="Change Password"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="367dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="17dp"
+            android:text="Notification Settings"
+            app:layout_constraintBottom_toTopOf="@+id/switch1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="364dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="20dp"
+            android:text="Replies to my posts"
+            app:layout_constraintBottom_toTopOf="@+id/switch2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="365dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="19dp"
+            android:text="Replies to my comments"
+            app:layout_constraintBottom_toTopOf="@+id/switch3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="364dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="46dp"
+            android:text="Turn off all notifications"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
