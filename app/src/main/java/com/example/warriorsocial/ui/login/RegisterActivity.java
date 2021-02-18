@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Check if user is already logged in
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), HomeFragment.class));
+            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
             finish();
 
         }
@@ -77,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), HomeFragment.class));
+                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                         }
                         else{
                             Toast.makeText(RegisterActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

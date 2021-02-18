@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     FirebaseAuth fAuth;
-    Button loginButton;
+    //Button loginButton;
 
     // Opens registration page
     private Button button_register;
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         //Assigning/Getting elements
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login);
+        final Button loginButton = findViewById(R.id.login);
         final Button button_register = findViewById(R.id.button_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         fAuth = FirebaseAuth.getInstance();
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), HomeFragment.class));
+                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                         }
                         else{
                             Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
