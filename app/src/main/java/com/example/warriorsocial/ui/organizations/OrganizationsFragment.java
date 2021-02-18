@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,12 +23,14 @@ public class OrganizationsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         organizationsViewModel =
                 new ViewModelProvider(this).get(OrganizationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_organizations, container, false);
-        final TextView textView = root.findViewById(R.id.text_organizations);
-        organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        View root = inflater.inflate(R.layout.my_row, container, false);
+        final TextView textView = root.findViewById(R.id.myText1);
+        final ImageView imageView = root.findViewById(R.id.myImageView);
+        organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>(){
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+               // imageView.setImageResource(t);
             }
         });
         return root;
