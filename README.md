@@ -11,4 +11,4 @@ Android app for Wayne State student organizations.
 
 **Full Stack developers** 
 1. Ze(Alex) Chen:  zalexchen
-2. Samia Chowdhury: samiacho
+2. Samia Chowdhury: samiachowdhury
