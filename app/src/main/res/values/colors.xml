@@ -7,4 +7,8 @@
     <color name="WSUGreen">#006756</color>
     <color name="WSUDrkGreen">#115e56</color>
     <color name="WSUGold">#c79316</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+
 </resources>
