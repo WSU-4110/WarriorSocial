@@ -26,13 +26,13 @@ public class OrganizationsFragment extends Fragment {
         View root = inflater.inflate(R.layout.my_row, container, false);
         final TextView textView = root.findViewById(R.id.myText1);
         final ImageView imageView = root.findViewById(R.id.myImageView);
-        organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>(){
+        /*organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>(){
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
-               // imageView.setImageResource(t);
+                //imageView.setImageResource(t);
             }
-        });
+        });*/
         return root;
     }
 }

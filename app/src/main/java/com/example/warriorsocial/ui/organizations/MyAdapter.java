@@ -38,6 +38,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         //inflate my_row xml file
         //store inflater inside view to return view
         View view = inflater.inflate(R.layout.my_row, parent, false);
+
+
+
         //Pass view to MyViewHolder class
         return new MyViewHolder(view);
 
@@ -48,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         //using holder to find myText1 to set the text dynamically
         holder.myText1.setText(data1[position]);
         holder.myText2.setText(data2[position]);
-        holder.myImage.setImageResource(images[position]);
+        //holder.myImage.setImageResource(images[position]);
     }
     //MyAdapter method
     @Override
