@@ -42,7 +42,7 @@
     <string name="title_notifications">Notifications</string>
 
     <!-- Strings related to organizations -->
-    <string-array name="programming_languages">
+    <string-array name="student_organizations">
         <item>ACM</item>
         <item>BIO</item>
         <item>CHEM</item>
