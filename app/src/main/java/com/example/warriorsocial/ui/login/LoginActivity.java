@@ -23,10 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.warriorsocial.NavDrawerActivity;
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.login.LoginViewModel;
-import com.example.warriorsocial.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button button_register;
 
     // Just for development
-    private Button button_goToNavDrawerActivity;
+    //private Button button_goToNavDrawerActivity;
 
 
     @Override
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         //Just for development
-        final Button button_goToNavDrawerActivity = findViewById(R.id.button_goToNavDrawerActivity);
+        final Button button_goToHome = findViewById(R.id.button_goToHome);
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -143,10 +141,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // For development only
         // Links button to open a new Activity (NAvDrawerActivity)
-        button_goToNavDrawerActivity.setOnClickListener(new View.OnClickListener() {
+        button_goToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this , NavDrawerActivity.class);
+                Intent intent = new Intent(LoginActivity.this , BottomActivity.class);
                 startActivity(intent);
             }
         });
