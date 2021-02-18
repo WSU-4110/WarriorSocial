@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     FirebaseAuth fAuth;
+    Button loginButton;
 
     // Opens registration page
     private Button button_register;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         //Assigning/Getting elements
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        loginButton = findViewById(R.id.login);
         final Button button_register = findViewById(R.id.button_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         fAuth = FirebaseAuth.getInstance();
