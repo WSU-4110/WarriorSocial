@@ -15,13 +15,13 @@
         android:id="@+id/navigation_organizations"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
         android:label="Organizations"
-        tools:layout="@layout/fragment_organizations" />
+        tools:layout="@layout/my_row" />
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/fragment_discover" />
+        tools:layout="@layout/act_main" />
 
     <fragment
         android:id="@+id/navigation_settings"

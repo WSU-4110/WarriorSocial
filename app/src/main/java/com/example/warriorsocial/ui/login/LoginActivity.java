@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button button_register;
 
     // Just for development
-    private Button button_goToNavDrawerActivity;
+    //private Button button_goToNavDrawerActivity;
 
 
     @Override
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         //Just for development
-        final Button button_goToNavDrawerActivity = findViewById(R.id.button_goToNavDrawerActivity);
+        final Button button_goToHome = findViewById(R.id.button_goToHome);
 
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -187,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // For development only
         // Links button to open a new Activity (NAvDrawerActivity)
-        button_goToNavDrawerActivity.setOnClickListener(new View.OnClickListener() {
+        button_goToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this , BottomActivity.class);

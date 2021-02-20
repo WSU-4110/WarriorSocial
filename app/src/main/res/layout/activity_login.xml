@@ -114,15 +114,36 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <!-- For Development Only. Opens Home page -->
+
     <Button
-        android:id="@+id/button_goToNavDrawerActivity"
+        android:id="@+id/button_goToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="221dp"
         android:text="go to home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.941" />
+
+    <Button
+        android:id="@+id/button_forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Forgot password?"
+        android:textColor="@color/WSUGold"
+        android:background="@drawable/roundedcorners"
+        android:backgroundTint="@color/WSUDrkGreen"
+        android:textSize="10sp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.708" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

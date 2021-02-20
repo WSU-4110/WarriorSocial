@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--represents each and every row inside recycler view-->
+<!--represents each and every row inside recycler view
+consists of card-view which contains one image view and one text view and a constraint layout to
+design the image views and text views more easily -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,18 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
+           <!-- <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />
-            </androidx.recyclerview.widget.RecyclerView>
-
+            </androidx.recyclerview.widget.RecyclerView>-->
             <ImageView
                 android:id="@+id/myImageView"
                 android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@drawable/ic_acm_background" />
 
             <TextView
                 android:id="@+id/myText1"
@@ -48,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="36dp"
-                android:text="Student Organization "
+                android:text="Student Organization"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/myImageView"
