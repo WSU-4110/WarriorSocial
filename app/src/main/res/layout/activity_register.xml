@@ -95,6 +95,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="@color/WSUGold"
+            android:textSize="16sp"
+            android:padding="10dp"
             android:text="Create New Account">
         </Button>
 
