@@ -1,6 +1,10 @@
 # WarriorSocial
 Android app for Wayne State student organizations.
 
+**Technical Requirements:**
+* Android Studio
+* Firebase 
+
 **Front-end developers:**
 1. Chloe Matthews: ChloeMJM
 2. Sherin Shaji: Sher1nShaj1
