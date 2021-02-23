@@ -49,16 +49,15 @@ Note: Backend implementation currently being researched. The focus for this spri
 
 Done Today:
 Assigned Stories for Assignment 3 Part 2 and 3 to each Team Member</br>
-Designations:
-* Chloe: A user wants to view events for a day (Calendar)
-* Sherin: Student Organization wants to edit their profile page
-* Samia: Change one's user settings on the app
-* Alex: Create and register an account to the app
-* Rahul: A user wants to post in a discussion topic
-* Richard: A user wants to login to the app</br>
-
-Explored Scrum Platform options: We are currently using Microsoft Teams and the Task List on Teams (Tentative)</br>
-Explored Assignment 3 Part 1: We discovered a lot of confusion, unable to conclusively do Assignment 3 Part 1 without further material knowledge. Plan is to use the lecture on Tuesday to complete this assignment.</br>
+* Designations:
+	* Chloe: A user wants to view events for a day (Calendar)
+	* Sherin: Student Organization wants to edit their profile page
+	* Samia: Change one's user settings on the app
+	* Alex: Create and register an account to the app
+	* Rahul: A user wants to post in a discussion topic
+	* Richard: A user wants to login to the app
+* Explored Scrum Platform options: We are currently using Microsoft Teams and the Task List on Teams (Tentative)</br>
+* Explored Assignment 3 Part 1: We discovered a lot of confusion, unable to conclusively do Assignment 3 Part 1 without further material knowledge. Plan is to use the lecture on Tuesday to complete this assignment.</br>
 (Email sent asking for extension)
 
 **2/15/21**
