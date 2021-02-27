@@ -42,9 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     // Opens registration page
     private Button button_register;
 
-    // Just for development
-    //private Button button_goToNavDrawerActivity;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
