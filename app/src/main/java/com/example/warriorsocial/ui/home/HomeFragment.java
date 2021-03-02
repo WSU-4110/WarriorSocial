@@ -20,24 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
 
+// Home Fragment displays the calendar and allows Students to select event lists from the dates
 public class HomeFragment extends Fragment {
 
-    //private HomeViewModel homeViewModel;
+    // RecyclerView connected to the calendar (list of events)
     private RecyclerView recyclerView;
+    // Calendar on home fragment
     private CalendarView calendarView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        // Attaches to fragment_home layout
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        // Pregenerated code below
-        //final TextView textView = root.findViewById(R.id.text_home);
-       /* homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });*/
 
         // Calendar
         calendarView = root.findViewById(R.id.home_calendar);
