@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.home;
+/*package com.example.warriorsocial.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,3 +32,4 @@ public class HomeRecyclerViewHolder extends RecyclerView.ViewHolder {
         return view;
     }
 }
+ */

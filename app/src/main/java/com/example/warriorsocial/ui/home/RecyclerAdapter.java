@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.home;
+/*package com.example.warriorsocial.ui.home;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerViewHolder
                 });
 
      */
-
+/*
         // Represents the year, month, and dayOfMonth
         private int year;
         private int month;
@@ -101,5 +101,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerViewHolder
            }
            System.out.println("Returning a 0");
            return 0;*/
+/*
         }
 }
+ */
+

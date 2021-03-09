@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
 
 
         // Make the calendar respond when date clicked
+        /*
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -72,6 +73,41 @@ public class HomeFragment extends Fragment {
                 //recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
             }
         });
+         */
+/*
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                System.out.println("Inside onSelectedDayChange");
+                // Set up FirebaseRecyclerAdapter with the Query
+                Query eventsQuery = getQuery(mDatabase);
+
+                FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
+                        .setQuery(eventsQuery, CalendarEvent.class)
+                        .build();
+
+                mAdapter = new FirebaseRecyclerAdapter<CalendarEvent, CalendarEventViewHolder>(options) {
+
+                    @Override
+                    public CalendarEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                        System.out.println("inside onCreateViewHolder");
+                        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                        return new CalendarEventViewHolder(inflater.inflate(R.layout.calendar_event, viewGroup, false));
+                    }
+
+                    @Override
+                    protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
+                        System.out.println("Inside onBindViewHolder in HomeFragment");
+                        final DatabaseReference postRef = getRef(position);
+                        viewHolder.bindToPost(model);
+                    }
+
+                };
+                System.out.println("SetRecyclerView adapter to mAdapter");
+                recyclerView.setAdapter(mAdapter);
+                }
+            });
+ */
 
 
         return root;
@@ -87,24 +123,30 @@ public class HomeFragment extends Fragment {
             mManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(mManager);
 
-            // Set up FirebaseRecyclerAdapter with the Query
-            Query eventsQuery = getQuery(mDatabase);
+
+            // Set up FirebaseRecyclerAdapter with a default Query
+            //TODO: Set initial query to current day
+            Query eventsQuery = getQuery(mDatabase, 0, 0, 0);
 
             FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
                     .setQuery(eventsQuery, CalendarEvent.class)
                     .build();
-
+            System.out.println("Setup mAdapter");
             mAdapter = new FirebaseRecyclerAdapter<CalendarEvent, CalendarEventViewHolder>(options) {
 
                 @Override
                 public CalendarEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                    System.out.println("inside onCreateViewHolder in HomeFragment");
                     LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                     return new CalendarEventViewHolder(inflater.inflate(R.layout.calendar_event, viewGroup, false));
                 }
 
                 @Override
                 protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
+                    System.out.println("inside onBindViewHolder in HomeFragment");
                     final DatabaseReference postRef = getRef(position);
+
+
 
                     /*
                     // Set click listener for the whole post view
@@ -146,10 +188,29 @@ public class HomeFragment extends Fragment {
                         }
                     });
                      */
+
                 }
             };
+            System.out.println("set recyclerView to mAdapter");
             recyclerView.setAdapter(mAdapter);
+
+
+            calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                    // Sends date info to RecyclerAdapter
+                    //recyclerView.setAdapter(adapter);
+                    //recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
+                    System.out.println("Changed Date| year: " + year + " month: " + month + " day: " + dayOfMonth);
+                    Query newQuery = getQuery(mDatabase, year, month, dayOfMonth);
+                    FirebaseRecyclerOptions newOptions = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
+                            .setQuery(newQuery, CalendarEvent.class)
+                            .build();
+                    mAdapter.updateOptions(newOptions);
+                }
+            });
         }
+
 
         @Override
         public void onStart() {
@@ -171,9 +232,9 @@ public class HomeFragment extends Fragment {
             return FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
-        public Query getQuery(DatabaseReference databaseReference) {
+        public Query getQuery(DatabaseReference databaseReference, int year, int month, int dayOfMonth) {
             // All posts
             System.out.println("getquery");
-            return databaseReference.child("CalendarEvents");
+            return databaseReference.child("CalendarEvents/" + year + "/" + month + "/" + dayOfMonth);
         }
     }
