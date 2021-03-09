@@ -27,7 +27,9 @@ public class CalendarEventViewHolder extends RecyclerView.ViewHolder {
     public void bindToPost(@NotNull CalendarEvent ce/*View.OnClickListener starClickListener*/) {
         event_organization_name.setText(ce.getOrganizationName());
         event_title.setText(ce.getEventTitle());
-        event_date.setText(ce.getEventTimestamp().toString());
+        System.out.println("Binding date to post!");
+        event_date.setText(ce.getEventTimestamp()/*.toString()*/);
+        System.out.println("Bound date to post!");
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.organizations;
+/*package com.example.warriorsocial.ui.organizations;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        System.out.println("Inside onCreate of organizations.MainActivity"); //UNUSED????????????
         setContentView(R.layout.activity_main1);
         //finding the id for the recyclerView
         recyclerView=findViewById(R.id.recyclerView);
@@ -35,3 +36,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
+ */

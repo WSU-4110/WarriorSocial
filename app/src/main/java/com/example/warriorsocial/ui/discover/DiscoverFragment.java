@@ -20,6 +20,7 @@ public class DiscoverFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("Inside DiscoverFragment onCreateView");
         discoverViewModel =
                 new ViewModelProvider(this).get(DiscoverViewModel.class);
         View root = inflater.inflate(R.layout.act_main, container, false);

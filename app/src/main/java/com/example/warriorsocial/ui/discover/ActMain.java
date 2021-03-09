@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.discover;
+/*package com.example.warriorsocial.ui.discover;
 
 import android.os.Bundle;
 
@@ -10,7 +10,10 @@ public class ActMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        System.out.println("Inside the discover.ActMain");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
     }
 }
+
+ */

@@ -22,6 +22,7 @@ public class SettingsFragment extends Fragment {
 
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
+            System.out.println("Inside onCreateView Settings");
 
             //just change the fragment_dashboard
             //with the fragment you want to inflate

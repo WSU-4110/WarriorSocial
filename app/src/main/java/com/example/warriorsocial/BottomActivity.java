@@ -19,6 +19,7 @@ public class BottomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Inside BottomActivity onCreate");
         setContentView(R.layout.activity_bottom);
         // Connect to the icons
         BottomNavigationView navView = findViewById(R.id.nav_view);

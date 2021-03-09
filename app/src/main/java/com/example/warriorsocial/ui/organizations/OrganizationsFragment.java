@@ -21,6 +21,7 @@ public class OrganizationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("Inside onCreateView for Organizations");
         organizationsViewModel =
                 new ViewModelProvider(this).get(OrganizationsViewModel.class);
         View root = inflater.inflate(R.layout.my_row, container, false);

@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-
+            System.out.println("Inside onActivityCreated");
             // Set up Layout Manager, reverse layout
             mManager = new LinearLayoutManager(getActivity());
             mManager.setReverseLayout(true);
@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment {
 
         public Query getQuery(DatabaseReference databaseReference) {
             // All posts
-            return databaseReference.child("CalendarEvents")
-                    .child(getUid());
+            System.out.println("getquery");
+            return databaseReference.child("CalendarEvents");
         }
     }
