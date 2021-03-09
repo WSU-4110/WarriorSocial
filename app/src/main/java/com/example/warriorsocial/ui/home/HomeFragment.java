@@ -15,22 +15,44 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.Calendar;
 
 // Home Fragment displays the calendar and allows Students to select event lists from the dates
 public class HomeFragment extends Fragment {
+
+    // [START define_database_reference]
+    private DatabaseReference mDatabase;
+    // [END define_database_reference]
+    private FirebaseRecyclerAdapter<CalendarEvent, CalendarEventViewHolder> mAdapter;
+    private LinearLayoutManager mManager;
 
     // RecyclerView connected to the calendar (list of events)
     private RecyclerView recyclerView;
     // Calendar on home fragment
     private CalendarView calendarView;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Attaches to fragment_home layout
+        super.onCreateView(inflater, container, savedInstanceState);
+        System.out.println("Inside onCreateView");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // [START create_database_reference]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Calendar
         calendarView = root.findViewById(R.id.home_calendar);
@@ -38,17 +60,120 @@ public class HomeFragment extends Fragment {
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+
 
         // Make the calendar respond when date clicked
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 // Sends date info to RecyclerAdapter
-                recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
+                //recyclerView.setAdapter(adapter);
+                //recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
             }
         });
-        return root;
-    }
 
+
+        return root;
+        }
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+
+            // Set up Layout Manager, reverse layout
+            mManager = new LinearLayoutManager(getActivity());
+            mManager.setReverseLayout(true);
+            mManager.setStackFromEnd(true);
+            recyclerView.setLayoutManager(mManager);
+
+            // Set up FirebaseRecyclerAdapter with the Query
+            Query eventsQuery = getQuery(mDatabase);
+
+            FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
+                    .setQuery(eventsQuery, CalendarEvent.class)
+                    .build();
+
+            mAdapter = new FirebaseRecyclerAdapter<CalendarEvent, CalendarEventViewHolder>(options) {
+
+                @Override
+                public CalendarEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+                    LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                    return new CalendarEventViewHolder(inflater.inflate(R.layout.calendar_event, viewGroup, false));
+                }
+
+                @Override
+                protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
+                    final DatabaseReference postRef = getRef(position);
+
+                    /*
+                    // Set click listener for the whole post view
+                    final String postKey = postRef.getKey();
+                    viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Launch PostDetailFragment
+                            NavController navController = Navigation.findNavController(requireActivity(),
+                                    R.id.nav_host_fragment);
+                            Bundle args = new Bundle();
+                            args.putString(PostDetailFragment.EXTRA_POST_KEY, postKey);
+                            navController.navigate(R.id.action_MainFragment_to_PostDetailFragment, args);
+                        }
+                    });
+                     */
+
+                    /*
+                    // Determine if the current user has liked this post and set UI accordingly
+                    if (model.stars.containsKey(getUid())) {
+                        viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
+                    } else {
+                        viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
+                    }
+                     */
+                    viewHolder.bindToPost(model);
+                    /*
+                    // Bind Post to ViewHolder, setting OnClickListener for the star button
+                    viewHolder.bindToPost(model, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View starView) {
+                            // Need to write to both places the post is stored
+                            DatabaseReference globalPostRef = mDatabase.child("posts").child(postRef.getKey());
+                            DatabaseReference userPostRef = mDatabase.child("user-posts").child(model.uid).child(postRef.getKey());
+
+                            // Run two transactions
+                            onStarClicked(globalPostRef);
+                            onStarClicked(userPostRef);
+                        }
+                    });
+                     */
+                }
+            };
+            recyclerView.setAdapter(mAdapter);
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            if (mAdapter != null) {
+                mAdapter.startListening();
+            }
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            if (mAdapter != null) {
+                mAdapter.stopListening();
+            }
+        }
+
+        public String getUid() {
+            return FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
+        public Query getQuery(DatabaseReference databaseReference) {
+            // All posts
+            return databaseReference.child("CalendarEvents")
+                    .child(getUid());
+        }
     }
