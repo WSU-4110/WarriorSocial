@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.login.RegisterActivity">
 
-    <!-- Create New Account line -->
+        <!-- Create New Account line -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,12 +45,12 @@
             android:gravity="start"
             android:text="Enter Email:"
             android:textColor="@color/WSUGold"
-            android:textSize="26dp"
+            android:textSize="24dp"
             android:textStyle="bold">
         </TextView>
 
         <EditText
-            android:id="@+id/et_userEmail"
+            android:id="@+id/et_studentEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -81,12 +81,12 @@
             android:gravity="start"
             android:text="Set Password:"
             android:textColor="@color/WSUGold"
-            android:textSize="26dp"
+            android:textSize="24dp"
             android:textStyle="bold">
         </TextView>
 
         <EditText
-            android:id="@+id/et_userPassword"
+            android:id="@+id/et_studentPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -101,7 +101,6 @@
             android:textStyle="bold">
         </EditText>
     </LinearLayout>
-
 
     <!-- Enter User Name Row -->
     <LinearLayout
@@ -139,11 +138,11 @@
         </EditText>
     </LinearLayout>
 
-    <!-- Account Type Radio Button Group -->
+    <!-- Radio Button Group -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -155,7 +154,7 @@
             android:padding="5dp"
             android:text="Account Type:"
             android:textColor="@color/WSUGold"
-            android:textSize="26sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -178,28 +177,26 @@
         </RadioGroup>
     </LinearLayout>
 
-
     <!-- Create New Account Line -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button_create_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@drawable/roundedcorners"
-            android:backgroundTint="@color/WSUGold"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:text="Create New Account">
-        </Button>
-
+    <Button
+        android:id="@+id/button_createStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/roundedcorners"
+        android:backgroundTint="@color/WSUGold"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:text="Create New Account">
+    </Button>
     </LinearLayout>
 </LinearLayout>
 
