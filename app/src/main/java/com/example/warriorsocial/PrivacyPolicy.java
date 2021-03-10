@@ -68,7 +68,7 @@ public class PrivacyPolicy extends AppCompatActivity {
         setContentView(R.layout.activity_privacy);
 
         // Set controls
-        tv_privacy = findViewById(R.id.tv_privacy);
+        tv_privacy = findViewById(R.id.tv_privacy2);
 
         // Set text to TextView in activity_privacy
         tv_privacy.setText(privacyPolicy);
