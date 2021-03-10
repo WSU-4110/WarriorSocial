@@ -146,23 +146,20 @@ public class HomeFragment extends Fragment {
                     System.out.println("inside onBindViewHolder in HomeFragment");
                     final DatabaseReference postRef = getRef(position);
 
-
-
-                    /*
                     // Set click listener for the whole post view
                     final String postKey = postRef.getKey();
                     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // Launch PostDetailFragment
+                            // Launch EventDetailFragment
                             NavController navController = Navigation.findNavController(requireActivity(),
                                     R.id.nav_host_fragment);
                             Bundle args = new Bundle();
-                            args.putString(PostDetailFragment.EXTRA_POST_KEY, postKey);
-                            navController.navigate(R.id.action_MainFragment_to_PostDetailFragment, args);
+                            args.putString(EventDetailFragment.EXTRA_CALENDAREVENT_KEY, postKey);
+                            navController.navigate(R.id.action_navigation_home_to_event_detail, args);
                         }
                     });
-                     */
+
 
                     /*
                     // Determine if the current user has liked this post and set UI accordingly
