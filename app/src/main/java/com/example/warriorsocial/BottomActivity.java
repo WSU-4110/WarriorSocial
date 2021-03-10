@@ -27,7 +27,7 @@ public class BottomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
 
-        logoutButton = findViewById(R.id.logoutBtn);
+        logoutButton = findViewById(R.id.button);
         //fAuth = FirebaseAuth.getInstance();
 
         // Connect to the icons
