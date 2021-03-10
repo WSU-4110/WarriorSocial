@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="6dp">
 
-    <!-- Represents the field for each Recycler View entry -->
+    <!-- Represents the field for each Recycler View entry attached to the home fragment -->
     <TextView
         android:id="@+id/recyclerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="This is some temp text" />
+        tools:text="Only visible for development" />
 
 </FrameLayout>

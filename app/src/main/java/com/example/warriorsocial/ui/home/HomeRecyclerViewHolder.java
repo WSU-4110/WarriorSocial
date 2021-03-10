@@ -22,6 +22,7 @@ public class HomeRecyclerViewHolder extends RecyclerView.ViewHolder {
     // Text box in each field of Recycler Viewer
     public HomeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
+        // recyclerText is defined in home_item_view.xml layout
         view = itemView.findViewById(R.id.recyclerText);
     }
 
