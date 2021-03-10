@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
-//this is a java class for recyclreView Adapter
+//this is a java class for recyclerView Adapter for student organizations
 //extends a class that passes one parameter that will be the inner class
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //new variables to hold values to pass inside the main activity
