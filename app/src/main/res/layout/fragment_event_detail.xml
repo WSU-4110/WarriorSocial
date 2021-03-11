@@ -1,48 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/event_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="60dp"
-        android:text="Event Title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/event_timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Event Timestamp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_organization_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/event_organization_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Organization Name"
-        app:layout_constraintStart_toStartOf="@+id/event_title"
-        app:layout_constraintTop_toBottomOf="@+id/event_title" />
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:background="@color/WSUGold"
+                android:src="@drawable/warrior_social_logo1_svg"/>
+            "
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/WSUDrkGreen"
+                android:background="@color/WSUGold"
+                android:textSize="30sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
+                android:text="Event Title" />
 
-    <TextView
-        android:id="@+id/event_description"
-        android:layout_width="367dp"
-        android:layout_height="144dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="Event Description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_timestamp" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/WSUDrkGreen"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:paddingTop="10sp"
+                android:layout_gravity="center"
+                android:textColor="@color/WSUGold"
+                android:textSize="20sp"
+                android:text="Time: " />
+            <TextView
+                android:id="@+id/event_timestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="10sp"
+                android:paddingTop="10sp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="Event Timestamp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="10sp"
+                android:paddingTop="10sp"
+                android:textColor="@color/WSUGold"
+                android:textSize="20sp"
+                android:text="Organization: " />
+            <TextView
+                android:id="@+id/event_organization_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="10sp"
+                android:paddingTop="10sp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20sp"
+                android:text="Organization Name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/event_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:paddingTop="10sp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20sp"
+                android:text="Event Description" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     //onCreate method
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orgs);//was activity_main1
         //finding the id for the recyclerView
