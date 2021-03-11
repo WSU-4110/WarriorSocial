@@ -1,4 +1,4 @@
-/*package com.example.warriorsocial.ui.discover;
+package com.example.warriorsocial.ui.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,5 +69,3 @@ public class ActMain extends AppCompatActivity {
 
     }
 }
-
- */
