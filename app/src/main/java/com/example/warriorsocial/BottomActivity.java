@@ -27,7 +27,7 @@ public class BottomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
 
-        logoutButton = findViewById(R.id.logoutBtn);
+        //logoutButton = findViewById(R.id.logoutBtn);
         //fAuth = FirebaseAuth.getInstance();
 
         // Connect to the icons
@@ -40,14 +40,14 @@ public class BottomActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+       /* logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fAuth.signOut();
                 signOutUser();
             }
 
-        });
+        });*/
 
     }
 
