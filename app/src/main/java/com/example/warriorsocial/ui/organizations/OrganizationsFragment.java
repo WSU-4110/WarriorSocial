@@ -23,9 +23,9 @@ public class OrganizationsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         organizationsViewModel =
                 new ViewModelProvider(this).get(OrganizationsViewModel.class);
-        View root = inflater.inflate(R.layout.my_row, container, false);
-        final TextView textView = root.findViewById(R.id.myText1);
-        final ImageView imageView = root.findViewById(R.id.myImageView);
+        View root = inflater.inflate(R.layout.activity_orgs, container, false);//was my_row
+        //final TextView textView = root.findViewById(R.id.myText1);
+        //final ImageView imageView = root.findViewById(R.id.myImageView);
         /*organizationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>(){
             @Override
             public void onChanged(@Nullable String s) {

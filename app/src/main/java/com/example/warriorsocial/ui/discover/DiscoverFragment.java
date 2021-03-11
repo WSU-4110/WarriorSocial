@@ -4,32 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.warriorsocial.R;
+//need to figure out how to set up actmain to connect to item_news and activity_main
+//need to set it up just like how the login page is setup
 
 public class DiscoverFragment extends Fragment {
 
     private DiscoverViewModel discoverViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         discoverViewModel =
                 new ViewModelProvider(this).get(DiscoverViewModel.class);
-        View root = inflater.inflate(R.layout.act_main, container, false);
-        final TextView textView = root.findViewById(R.id.text_discover);
-       /* discoverViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+        View root = inflater.inflate(R.layout.item_news, container, false);//changed from act_main
         return root;
+
     }
 }

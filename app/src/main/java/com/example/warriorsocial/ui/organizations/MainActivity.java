@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
 
+//student organizations
+
 public class MainActivity extends AppCompatActivity {
     //RecyclerView object
     RecyclerView recyclerView;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main1);
+        setContentView(R.layout.activity_orgs);//was activity_main1
         //finding the id for the recyclerView
         recyclerView=findViewById(R.id.recyclerView);
         //store the string array inside the string variable s1
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         //store string array for descriptions
         s2 = getResources().getStringArray(R.array.description);
         //initialize new class and create new object and pass four parameters from adapter to main activity
-        //"this" is the context which is the main activity
         MyAdapter myAdapter= new MyAdapter(this,s1, s2,images);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
