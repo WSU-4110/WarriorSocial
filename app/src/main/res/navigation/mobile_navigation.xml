@@ -19,13 +19,14 @@
         android:id="@+id/navigation_organizations"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
         android:label="Organizations"
-        tools:layout="@layout/my_row" />
+        tools:layout="@layout/activity_orgs" />
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/act_main" />
+        tools:layout="@layout/item_news" />
+    <!--changed from act_main-->
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.warriorsocial.ui.notifications.NotificationsFragment"
