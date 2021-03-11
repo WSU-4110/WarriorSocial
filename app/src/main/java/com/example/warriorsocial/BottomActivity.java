@@ -39,7 +39,7 @@ public class BottomActivity extends AppCompatActivity {
 
         logoutButton = findViewById(R.id.button);
         changePass = findViewById(R.id.button4);
-        //fAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
         user = fAuth.getCurrentUser();
 
         // Connect to the icons
@@ -52,52 +52,52 @@ public class BottomActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fAuth.signOut();
-                signOutUser();
-            }
+        if(user!=null){
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fAuth.signOut();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
 
-        });
+            });
 
-        changePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EditText resetpass = new EditText(v.getContext());
-                final AlertDialog.Builder resetPassDialog = new AlertDialog.Builder(v.getContext());
-                resetPassDialog.setTitle("Reset Password?");
-                resetPassDialog.setMessage("Enter New Password (5 or more chars)");
-                resetPassDialog.setView(resetpass);
+            changePass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final EditText resetpass = new EditText(v.getContext());
+                    final AlertDialog.Builder resetPassDialog = new AlertDialog.Builder(v.getContext());
+                    resetPassDialog.setTitle("Reset Password?");
+                    resetPassDialog.setMessage("Enter New Password (5 or more chars)");
+                    resetPassDialog.setView(resetpass);
 
-                resetPassDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newpass = resetpass.getText().toString();
-                        user.updatePassword(newpass).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(BottomActivity.this, "Password was reset!", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(BottomActivity.this, "Password was reset!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
+                    resetPassDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newpass = resetpass.getText().toString();
+                            user.updatePassword(newpass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(BottomActivity.this, "Password was reset!", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(BottomActivity.this, "Password was not reset!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
 
-            }
-        });
+                }
+            });
 
-    }
+        }else{
+            Intent intent = new Intent(BottomActivity.this, LoginActivity.class);
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
-    private void signOutUser() {
-        Intent intent = new Intent(BottomActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+
     }
 
 
