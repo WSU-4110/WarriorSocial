@@ -19,14 +19,23 @@
         android:id="@+id/navigation_organizations"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
         android:label="Organizations"
-        tools:layout="@layout/activity_orgs" />
+        tools:layout="@layout/my_row">
+        <action
+            android:id="@+id/action_navigation_home_to_org_detail"
+            app:destination="@id/org_detail" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/item_news" />
-    <!--changed from act_main-->
+        tools:layout="@layout/act_main">
+        <action
+            android:id="@+id/action_navigation_discover_to_item_detail"
+            app:destination="@id/item_detail" />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.warriorsocial.ui.notifications.NotificationsFragment"
@@ -43,4 +52,13 @@
         android:name="com.example.warriorsocial.ui.home.EventDetailFragment"
         android:label="fragment_event_detail"
         tools:layout="@layout/fragment_event_detail" />
+    <fragment
+        android:id="@+id/org_detail"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/activity_orgs" />
+    <fragment
+        android:id="@+id/item_detail"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/item_news" />
+
 </navigation>

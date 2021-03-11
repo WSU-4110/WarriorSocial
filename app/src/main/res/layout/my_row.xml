@@ -36,12 +36,12 @@ design the image views and text views more easily -->
             </androidx.recyclerview.widget.RecyclerView>-->
             <ImageView
                 android:id="@+id/myImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="116dp"
+                android:layout_height="107dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_acm_background" />
+                tools:srcCompat="@drawable/acm" />
 
             <TextView
                 android:id="@+id/myText1"
