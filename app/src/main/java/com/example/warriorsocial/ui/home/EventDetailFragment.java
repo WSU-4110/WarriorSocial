@@ -35,12 +35,13 @@ public class EventDetailFragment extends Fragment {
 
     public static final String EXTRA_CALENDAREVENT_KEY = "CalendarEvent_key";
 
-    //CalendarEvent referenc + CalendarEventlistener + CalendarEvent key
+    //CalendarEvent reference + CalendarEventListener + CalendarEvent key
     private DatabaseReference mCalendarEventReference;
     private ValueEventListener mCalendarEventListener;
     private String mCalendarEventKey;
-    // FragmentCalendarEventDetailBinding = binding to replace R for CalendarEventDetail
+    //FragmentCalendarEventDetailBinding = binding to replace R for CalendarEventDetail
     //private FragmentCalendarEventDetailBinding binding;
+
 
 
 
@@ -56,6 +57,10 @@ public class EventDetailFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         System.out.println("Inside onCreateView in EventDetailFragment");
         View root = inflater.inflate(R.layout.fragment_event_detail, container, false);
+
+        //Back button from fragment functionality
+        //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
+        setHasOptionsMenu(true);
 
         return root;
     }
@@ -73,7 +78,7 @@ public class EventDetailFragment extends Fragment {
 
         // Initialize Database
         mCalendarEventReference = FirebaseDatabase.getInstance().getReference()
-                .child("CalendarEvents").child(mCalendarEventKey);
+                .child("CalendarEvents/2021/3/9/"+mCalendarEventKey);
     }
 
     @Override
@@ -81,21 +86,26 @@ public class EventDetailFragment extends Fragment {
         super.onStart();
         System.out.println("Inside onStart in EventDetailFragment");
 
-        final TextView eventTitle = getActivity().findViewById(R.id.event_title);
-        final TextView organizationName = getActivity().findViewById(R.id.event_organization_name);
-        final TextView eventTimestamp = getActivity().findViewById(R.id.event_timestamp);
-        final TextView eventDescription = getActivity().findViewById(R.id.event_description);
-
-        // Add value event listener to the CalendarEvent
+        // Add value event listener to the CalendarEvent, defining onDataChange and onCancelled for the listener
         ValueEventListener CalendarEventListener = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get CalendarEvent object and use the values to update the UI
-                CalendarEvent CalendarEvent = dataSnapshot.getValue(CalendarEvent.class);
-                eventTitle.setText(CalendarEvent.getEventTitle());
-                organizationName.setText(CalendarEvent.getOrganizationName());
-                eventTimestamp.setText(CalendarEvent.getEventTimestamp());
-                eventDescription.setText(CalendarEvent.getEventDescription());
+                if(dataSnapshot.exists()) {
+                    TextView eventTitle = getActivity().findViewById(R.id.event_title);
+                    TextView organizationName = getActivity().findViewById(R.id.event_organization_name);
+                    TextView eventTimestamp = getActivity().findViewById(R.id.event_timestamp);
+                    TextView eventDescription = getActivity().findViewById(R.id.event_description);
+
+                    CalendarEvent calendarEvent = dataSnapshot.getValue(CalendarEvent.class);
+                    System.out.println("Organization Name: " + calendarEvent.getOrganizationName());
+                    System.out.println("Event Title: " + calendarEvent.getEventTitle());
+
+                    eventTitle.setText(calendarEvent.getEventTitle());
+                    organizationName.setText(calendarEvent.getOrganizationName());
+                    eventTimestamp.setText(calendarEvent.getEventTimestamp());
+                    eventDescription.setText(calendarEvent.getEventDescription());
+                }
             }
 
             @Override

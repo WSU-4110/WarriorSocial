@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         System.out.println("Inside onCreateView");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // [START create_database_reference]
+        // Create database reference
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Calendar
@@ -60,55 +60,6 @@ public class HomeFragment extends Fragment {
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-
-
-        // Make the calendar respond when date clicked
-        /*
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                // Sends date info to RecyclerAdapter
-                //recyclerView.setAdapter(adapter);
-                //recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
-            }
-        });
-         */
-/*
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                System.out.println("Inside onSelectedDayChange");
-                // Set up FirebaseRecyclerAdapter with the Query
-                Query eventsQuery = getQuery(mDatabase);
-
-                FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
-                        .setQuery(eventsQuery, CalendarEvent.class)
-                        .build();
-
-                mAdapter = new FirebaseRecyclerAdapter<CalendarEvent, CalendarEventViewHolder>(options) {
-
-                    @Override
-                    public CalendarEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-                        System.out.println("inside onCreateViewHolder");
-                        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                        return new CalendarEventViewHolder(inflater.inflate(R.layout.calendar_event, viewGroup, false));
-                    }
-
-                    @Override
-                    protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
-                        System.out.println("Inside onBindViewHolder in HomeFragment");
-                        final DatabaseReference postRef = getRef(position);
-                        viewHolder.bindToPost(model);
-                    }
-
-                };
-                System.out.println("SetRecyclerView adapter to mAdapter");
-                recyclerView.setAdapter(mAdapter);
-                }
-            });
- */
-
 
         return root;
         }
@@ -144,10 +95,10 @@ public class HomeFragment extends Fragment {
                 @Override
                 protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
                     System.out.println("inside onBindViewHolder in HomeFragment");
-                    final DatabaseReference postRef = getRef(position);
+                    final DatabaseReference CalendarEventRef = getRef(position);
 
-                    // Set click listener for the whole post view
-                    final String postKey = postRef.getKey();
+                    // Set click listener for the whole event view
+                    final String CalendarEventKey = CalendarEventRef.getKey();
                     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -155,37 +106,12 @@ public class HomeFragment extends Fragment {
                             NavController navController = Navigation.findNavController(requireActivity(),
                                     R.id.nav_host_fragment);
                             Bundle args = new Bundle();
-                            args.putString(EventDetailFragment.EXTRA_CALENDAREVENT_KEY, postKey);
+                            args.putString(EventDetailFragment.EXTRA_CALENDAREVENT_KEY, CalendarEventKey);
+                            System.out.println("CalendarEventKey: " + CalendarEventKey);
                             navController.navigate(R.id.action_navigation_home_to_event_detail, args);
                         }
                     });
-
-
-                    /*
-                    // Determine if the current user has liked this post and set UI accordingly
-                    if (model.stars.containsKey(getUid())) {
-                        viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
-                    } else {
-                        viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
-                    }
-                     */
                     viewHolder.bindToPost(model);
-                    /*
-                    // Bind Post to ViewHolder, setting OnClickListener for the star button
-                    viewHolder.bindToPost(model, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View starView) {
-                            // Need to write to both places the post is stored
-                            DatabaseReference globalPostRef = mDatabase.child("posts").child(postRef.getKey());
-                            DatabaseReference userPostRef = mDatabase.child("user-posts").child(model.uid).child(postRef.getKey());
-
-                            // Run two transactions
-                            onStarClicked(globalPostRef);
-                            onStarClicked(userPostRef);
-                        }
-                    });
-                     */
-
                 }
             };
             System.out.println("set recyclerView to mAdapter");
@@ -195,9 +121,7 @@ public class HomeFragment extends Fragment {
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                    // Sends date info to RecyclerAdapter
-                    //recyclerView.setAdapter(adapter);
-                    //recyclerView.setAdapter(new RecyclerAdapter(year, month, dayOfMonth));
+                    // Sends date info to RecyclerAdapter (mAdapter)
                     System.out.println("Changed Date| year: " + year + " month: " + month + " day: " + dayOfMonth);
                     Query newQuery = getQuery(mDatabase, year, month, dayOfMonth);
                     FirebaseRecyclerOptions newOptions = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
