@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.warriorsocial.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_event_detail"
+            app:destination="@id/event_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_organizations"
@@ -33,19 +37,25 @@
         android:id="@+id/navigation_settings"
         android:name="com.example.warriorsocial.ui.settings.SettingsFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/settings_activity" >
         <action
             android:id="@+id/action_navigation_settings_to_navigation_privacy"
             app:destination="@id/navigation_privacy" />
     </fragment>
+    <fragment
+        android:id="@+id/event_detail"
+        android:name="com.example.warriorsocial.ui.home.EventDetailFragment"
+        android:label="fragment_event_detail"
+        tools:layout="@layout/fragment_event_detail" />
 
     <fragment
         android:id="@+id/navigation_privacy"
-        android:name="com.example.warriorsocial.ui.settings.PrivacyFragment"
-        android:label="Settings"
-        tools:layout="@layout/fragment_privacy" >
+        android:name="com.example.warriorsocial.ui.privacy.PrivacyFragment"
+        android:label="Privacy"
+        tools:layout="@layout/activity_privacy" >
         <action
             android:id="@+id/action_navigation_privacy_to_navigation_settings"
             app:destination="@id/navigation_settings" />
     </fragment>
+
 </navigation>

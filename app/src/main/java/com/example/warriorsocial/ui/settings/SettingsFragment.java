@@ -18,60 +18,40 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.warriorsocial.R;
+import com.example.warriorsocial.ui.home.EventDetailFragment;
 import com.example.warriorsocial.ui.settings.SettingsViewModel;
 
 public class SettingsFragment extends Fragment {
 
         private SettingsViewModel settingsViewModel;
+
+        // Privacy Policy
         Button btn_privacy;
 
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
-            System.out.println("Inside onCreateView Settings");
-
-            //just change the fragment_dashboard
-            //with the fragment you want to inflate
-            //like if the class is HomeFragment it should have R.layout.home_fragment
-            //if it is DashboardFragment it should have R.layout.fragment_dashboard
-
-            //return inflater.inflate(R.layout.settings_activity, null);
-
 
             // Attach root to the layout
             View root = inflater.inflate(R.layout.settings_activity, container, false);
 
+            // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
             btn_privacy = root.findViewById(R.id.button3);
 
-            /*btn_privacy.setOnClickListener(new View.OnClickListener() {
+            // Set the onClickListener for the privacy button
+            btn_privacy.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Navigation.findNavController(view).navigate(R.id.action_navigation_settings_to_navigation_privacy);
-                }
-            });*/
+                public void onClick(View v) {
+                    // NavController for navigation between fragments
+                    NavController navController = Navigation.findNavController(requireActivity(),
+                            R.id.nav_host_fragment);
 
-            btn_privacy.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_settings_to_navigation_privacy, null));
-            
-
-            return root;
-
-
-
-          /*  settingsViewModel =
-                    new ViewModelProvider(this).get(SettingsViewModel.class);
-            View root = inflater.inflate(R.layout.fragment_settings, container, false);
-            final TextView textView = root.findViewById(R.id.text_settings);
-            settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-                @Override
-                public void onChanged(@Nullable String s) {
-                    textView.setText(s);
+                    // Bind to action to move from Settings page to Privacy Policy
+                    navController.navigate(R.id.action_navigation_settings_to_navigation_privacy);
                 }
             });
-            return root;*/
-
-
+            
+            // Return root (layout)
+            return root;
         }
-
-
-
     }
 
