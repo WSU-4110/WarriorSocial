@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/event_detail"
         android:name="com.example.warriorsocial.ui.home.EventDetailFragment"
-        android:label="fragment_event_detail"
+        android:label="Event Detail"
         tools:layout="@layout/fragment_event_detail" />
 
     <fragment
