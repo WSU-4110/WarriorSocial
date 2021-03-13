@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--represents each and every row inside recycler view
+<!--represents each and every row inside recycler view for student organizations
 consists of card-view which contains one image view and one text view and a constraint layout to
 design the image views and text views more easily -->
 

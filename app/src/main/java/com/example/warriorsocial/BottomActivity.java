@@ -25,6 +25,7 @@ public class BottomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Inside BottomActivity onCreate");
         setContentView(R.layout.activity_bottom);
 
         //logoutButton = findViewById(R.id.logoutBtn);
