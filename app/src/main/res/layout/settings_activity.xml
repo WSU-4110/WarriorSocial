@@ -89,7 +89,7 @@
             app:layout_constraintVertical_bias="0.4" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/resetPass"
             android:layout_width="181dp"
             android:layout_height="49dp"
             android:layout_marginStart="238dp"

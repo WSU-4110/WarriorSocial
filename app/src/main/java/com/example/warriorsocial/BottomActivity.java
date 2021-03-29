@@ -32,13 +32,12 @@ public class BottomActivity extends AppCompatActivity {
     Button changePass;
 
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
 
         logoutButton = findViewById(R.id.button);
-        changePass = findViewById(R.id.button4);
+        changePass = findViewById(R.id.resetPass);
         fAuth = FirebaseAuth.getInstance();
         user = fAuth.getCurrentUser();
 
@@ -61,7 +60,7 @@ public class BottomActivity extends AppCompatActivity {
                 }
 
             });
-
+        
             changePass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,13 +88,23 @@ public class BottomActivity extends AppCompatActivity {
                         }
                     });
 
+                    resetPassDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    resetPassDialog.create().show();
+
                 }
             });
 
-        }else{
+        }
+        /*else{
             Intent intent = new Intent(BottomActivity.this, LoginActivity.class);
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
+        }*/
 
 
     }
