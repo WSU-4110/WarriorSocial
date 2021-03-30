@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Privacy Policy Layout -->
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".PrivacyPolicy">
+    tools:context=".ui.settings.PrivacyFragment">
 
     <!-- Make activity scrollable -->
     <ScrollView
@@ -17,7 +12,7 @@
 
         <!-- Displays text of privacy policy -->
         <TextView
-            android:id="@+id/tv_privacy2"
+            android:id="@+id/tv_privacy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
@@ -25,4 +20,6 @@
             android:textSize="14dp">
         </TextView>
     </ScrollView>
-</LinearLayout>
+
+
+</FrameLayout>

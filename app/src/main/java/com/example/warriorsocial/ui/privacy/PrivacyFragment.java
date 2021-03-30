@@ -1,19 +1,40 @@
-package com.example.warriorsocial;
+package com.example.warriorsocial.ui.privacy;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.warriorsocial.R;
 
-// Displays the privacy policy
+public class PrivacyFragment extends Fragment {
 
-public class PrivacyPolicy extends AppCompatActivity {
-    // TextView to display string
+    // TextView that holds the text for the privacy policy
     public TextView tv_privacy;
 
-    // Text of privacy policy
+    public PrivacyFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout
+        View root = inflater.inflate(R.layout.fragment_privacy, container, false);
+        tv_privacy = root.findViewById(R.id.tv_privacy);
+
+        // Set text to TextView in activity_privacy
+        tv_privacy.setText(privacyPolicy);
+
+        return root;
+    }
+
+    // Privacy Policy
     public String privacyPolicy = "PRIVACY POLICY\n\n" +
             "Protecting your private information is our priority. This Privacy Policy applies to Warrior Social and governs information collection and usage. By using the Warrior Social Mobile Application, you consent to the information practices described in this statement.\n" +
             " \n" +
@@ -59,18 +80,5 @@ public class PrivacyPolicy extends AppCompatActivity {
             "7. CONTACT INFORMATION\n" +
             "Warrior Social welcomes your questions or comments regarding this Privacy Policy. If you believe that Warrior Social has not adhered to this Policy or if you wish to delete your account or have any other issues, please contact us at warriorsocial4110@gmail.com.\n" +
             "\n" +
-            "Effective as of Mar 03, 2021\n";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Attach to layout
-        setContentView(R.layout.activity_privacy);
-
-        // Set controls
-        tv_privacy = findViewById(R.id.tv_privacy2);
-
-        // Set text to TextView in activity_privacy
-        tv_privacy.setText(privacyPolicy);
-    }
+            "Effective as of Mar 03, 2021\n\n\n\n\n";
 }

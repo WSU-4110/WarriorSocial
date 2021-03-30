@@ -1,4 +1,4 @@
-package com.example.warriorsocial.ui.home;
+/*package com.example.warriorsocial.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,9 +24,12 @@ public class HomeRecyclerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         // recyclerText is defined in home_item_view.xml layout
         view = itemView.findViewById(R.id.recyclerText);
+        System.out.println("Inside HomeRecyclerViewHolder!");
     }
 
     public TextView getView() {
+        System.out.println("Inside getView!");
         return view;
     }
 }
+ */
