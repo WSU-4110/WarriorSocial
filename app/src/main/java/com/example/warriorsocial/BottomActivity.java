@@ -47,7 +47,6 @@ public class BottomActivity extends AppCompatActivity {
                 fAuth.signOut();
                 signOutUser();
             }
-
         });*/
 
     }

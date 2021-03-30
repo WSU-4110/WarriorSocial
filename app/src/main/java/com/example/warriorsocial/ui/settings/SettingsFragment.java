@@ -53,5 +53,5 @@ public class SettingsFragment extends Fragment {
             // Return root (layout)
             return root;
         }
-    }
+ }
 
