@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/resetPass"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="209dp"
