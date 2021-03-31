@@ -166,7 +166,7 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/logout"
                 android:layout_width="112dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="275dp"

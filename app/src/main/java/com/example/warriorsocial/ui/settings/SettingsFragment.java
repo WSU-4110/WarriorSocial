@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.EventDetailFragment;
+import com.example.warriorsocial.ui.login.LoginActivity;
 import com.example.warriorsocial.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +41,9 @@ public class SettingsFragment extends Fragment {
         //Change Password
         Button changepass;
 
+        //Logout User
+        Button logout;
+
         public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,6 +54,8 @@ public class SettingsFragment extends Fragment {
             btn_privacy = root.findViewById(R.id.btn_privacy);
 
             changepass = root.findViewById(R.id.resetPass);
+
+            logout = root.findViewById(R.id.logout);
 
             // Set the onClickListener for the privacy button
             btn_privacy.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +109,15 @@ public class SettingsFragment extends Fragment {
                     passwordResetDialog.create().show();
                 }
             });
+
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            });
+
             
             // Return root (layout)
             return root;
