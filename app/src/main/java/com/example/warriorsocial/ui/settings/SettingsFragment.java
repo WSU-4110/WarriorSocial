@@ -68,7 +68,7 @@ public class SettingsFragment extends Fragment {
                 public void onClick(View v) {
                     final EditText resetmail = new EditText(v.getContext());
                     final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-                    passwordResetDialog.setTitle("Reset Password?");
+                    passwordResetDialog.setTitle("Change Password?");
                     passwordResetDialog.setMessage("Enter your email to receive reset link.");
                     passwordResetDialog.setView(resetmail);
 
