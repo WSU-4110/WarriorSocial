@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -47,9 +47,26 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
+
+
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Handler CheckIfLoggedIn = new CheckIfLoggedIn();
+                Handler CheckIfStudentOrganization = new CheckIfStudentOrganization();
+                Handler CheckRegistrationInformationComplete = new CheckRegistrationInformationComplete();
+                Handler RegistrationHandler = new RegistrationHandler();
+
+                CheckIfLoggedIn.setNextHandler(CheckRegistrationInformationComplete);
+                CheckRegistrationInformationComplete.setNextHandler(CheckIfStudentOrganization);
+                CheckIfStudentOrganization.setNextHandler(RegistrationHandler);
+                RegistrationHandler.setNextHandler(null);
+
+                Request request = new Request(userName, userPassword, fAuth);
+
+                CheckIfLoggedIn.handle(request, getApplicationContext());
+                /*
+
                 String emailTxt = userName.getText().toString();
                 String passwordTxt = userPassword.getText().toString();
 
@@ -85,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+                 */
 
             }
         });
