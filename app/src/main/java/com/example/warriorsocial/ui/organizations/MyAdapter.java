@@ -1,5 +1,4 @@
 package com.example.warriorsocial.ui.organizations;
-
 import android.content.Context;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -7,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.warriorsocial.R;
+
 //this is a java class for recyclerView Adapter for student organizations
 //extends a class that passes one parameter that will be the inner class
+//Adapter design pattern to handle RecyclerView data.
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //new variables to hold values to pass inside the main activity
     String data1[], data2[];
