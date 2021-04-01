@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     // Opens registration page
     private Button button_register;
+    
+   fAuth = FirebaseAuth.getInstance();
 
 
     @Override
@@ -156,8 +158,21 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 //loadingProgressBar.setVisibility(View.VISIBLE);
-
                 
+                //Authenticate User
+                fAuth.signInWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
 
 
                 //loginViewModel.login(usernameEditText.getText().toString(),
