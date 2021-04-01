@@ -1,6 +1,6 @@
 package com.example.warriorsocial.ui.organizations;
+
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +12,13 @@ import com.example.warriorsocial.R;
 
 //this is a java class for recyclerView Adapter for student organizations
 //extends a class that passes one parameter that will be the inner class
-//Adapter design pattern to handle RecyclerView data.
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //new variables to hold values to pass inside the main activity
     String data1[], data2[];
     int images[];
     Context context;
 
-    //constructor with four parameters
+    //constructor
     public MyAdapter(Context ct, String s1[], String s2[], int img[]){
         //store the values from above inside the constructor
         context=ct;
@@ -27,10 +26,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         data2=s2;
         images = img;
     }
+
     //MyAdapter method
+    //connected to the MyViewHolder class down below
     @NonNull
     @Override
-    //connected to the MyViewHolder class down below
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //layout inflater object
         LayoutInflater inflater= LayoutInflater.from(context);
@@ -44,6 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyViewHolder(view);
 
     }
+
     //MyAdapter method
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -52,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.myText2.setText(data2[position]);
         //holder.myImage.setImageResource(images[position]);
     }
+
     //MyAdapter method
     @Override
     public int getItemCount() {
