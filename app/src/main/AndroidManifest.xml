@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.warriorsocial">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".orgnotifications"
+            android:label="@string/title_activity_orgnotifications"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".BottomActivity"
-            android:label="@string/title_activity_bottom"></activity>
+            android:label="@string/title_activity_bottom" />
         <activity android:name=".ui.login.RegisterActivity" />
-        <activity android:name=".PrivacyPolicy"
+        <activity
+            android:name=".PrivacyPolicy"
             android:parentActivityName=".BottomActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -23,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
