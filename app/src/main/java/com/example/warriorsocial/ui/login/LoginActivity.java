@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button button_register = findViewById(R.id.button_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-         fAuth = FirebaseAuth.getInstance();
+       
 
         //Just for development
         final Button button_goToHome = findViewById(R.id.button_goToHome);
@@ -157,19 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
-                //Authenticate User
-                fAuth.signInWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
-                        }
-                        else{
-                            Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                
 
 
                 //loginViewModel.login(usernameEditText.getText().toString(),
