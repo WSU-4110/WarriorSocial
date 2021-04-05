@@ -41,11 +41,14 @@ public class RegisterActivity extends AppCompatActivity {
         loadingProgressBar = findViewById(R.id.loading);
 
         //Check if user is already logged in
+        /*
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
             finish();
-
         }
+         */
+        RegistrationChecker registrationChecker = new RegistrationChecker();
+        registrationChecker.checkIfUserLoggedIn(fAuth, getApplicationContext());
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordTxt = userPassword.getText().toString();
 
                 //Check to see if input is empty
+                /*
                 if(TextUtils.isEmpty(emailTxt)){
                     userName.setError("Email is required!");
                     return;
@@ -69,6 +73,19 @@ public class RegisterActivity extends AppCompatActivity {
                     userPassword.setError("Password must have 5 or more characters!");
                     return;
                 }
+                */
+
+                RegistrationChecker registrationChecker = new RegistrationChecker();
+
+                if(!registrationChecker.checkEmailEmpty(userName, getApplicationContext())) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordEmpty(userPassword, getApplicationContext())) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordLength(userPassword, getApplicationContext())) {
+                    return;
+                }
 
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
@@ -76,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //System.out.println("Completed Registration!");
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), BottomActivity.class));

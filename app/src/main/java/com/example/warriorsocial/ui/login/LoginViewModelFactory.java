@@ -1,3 +1,4 @@
+
 package com.example.warriorsocial.ui.login;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.example.warriorsocial.data.LoginRepository;
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
+
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
