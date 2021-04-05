@@ -46,11 +46,14 @@ public class RegisterActivity extends AppCompatActivity {
         loadingProgressBar = findViewById(R.id.loading);
 
         //Check if user is already logged in
+        /*
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
             finish();
-
         }
+         */
+        RegistrationChecker registrationChecker = new RegistrationChecker();
+        registrationChecker.checkIfUserLoggedIn(fAuth, getApplicationContext());
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String usernameTxt = userName.getText().toString();
 
                 //Check to see if input is empty
+                /*
                 if(TextUtils.isEmpty(emailTxt)){
                     userEmail.setError("Email is required!");
                     return;
@@ -75,6 +79,19 @@ public class RegisterActivity extends AppCompatActivity {
                     userPassword.setError("Password must have 5 or more characters!");
                     return;
                 }
+                */
+
+                RegistrationChecker registrationChecker = new RegistrationChecker();
+
+                if(!registrationChecker.checkEmailEmpty(userName, getApplicationContext())) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordEmpty(userPassword, getApplicationContext())) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordLength(userPassword, getApplicationContext())) {
+                    return;
+                }
 
                 if(TextUtils.isEmpty(usernameTxt)){
                     userName.setError("Username is required!");
@@ -87,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //System.out.println("Completed Registration!");
                         if(task.isSuccessful()){
                             User user = new User(usernameTxt, emailTxt);
 
