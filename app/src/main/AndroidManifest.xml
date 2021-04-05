@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".BottomActivity"
-            android:label="@string/title_activity_bottom"></activity>
+            android:label="Warrior Social"></activity>
         <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".PrivacyPolicy"
             android:parentActivityName=".BottomActivity" />

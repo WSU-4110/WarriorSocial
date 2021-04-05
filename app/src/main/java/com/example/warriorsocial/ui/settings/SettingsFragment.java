@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment {
             View root = inflater.inflate(R.layout.settings_activity, container, false);
 
             // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
-            btn_privacy = root.findViewById(R.id.button3);
+            btn_privacy = root.findViewById(R.id.btn_privacy);
 
             // Set the onClickListener for the privacy button
             btn_privacy.setOnClickListener(new View.OnClickListener() {
@@ -53,5 +53,5 @@ public class SettingsFragment extends Fragment {
             // Return root (layout)
             return root;
         }
-    }
+ }
 
