@@ -1,22 +1,39 @@
 package com.example.warriorsocial.ui.login;
 
 import android.os.Looper;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.text.Editable;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 public class LoginActivityTest {
 
+
+    //LoginActivityTest lll = new LoginActivityTest();
+    private android.text.Editable s;
+
+
+
+
+
+    public void run() {
+        Looper.prepare();
+
+        System.out.println("bblaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+    }
+
+
+
+   /* @Rule
+    public LoginActivityTest mActivityRule =
+            new LoginActivityTest(LoginActivity.class);*/
+
     //FirebaseAuth fAuth;
-    Task<AuthResult> task = FirebaseAuth.getInstance().signInAnonymously();
+   // Task<AuthResult> task = FirebaseAuth.getInstance().signInAnonymously();
 
    /* Looper loop() {
         return null;
@@ -39,8 +56,8 @@ public class LoginActivityTest {
 
 
 
-    LoginActivity login = new LoginActivity();
-
+   // public LoginActivityTest(Class<LoginActivity> loginActivityClass) {
+    //}
 
 
     @Before
@@ -55,8 +72,23 @@ public class LoginActivityTest {
 
     @Test
     public void onCreate() {
-    //login.onCompleteT(task);
+    //log.onCompleteT(task);
 
+
+    }
+
+    @Test
+    public void checkTextChanged() {
+        LoginActivityTest lll = new LoginActivityTest();
+        //char s = 'h';
+
+        lll.run();
+        LoginCheckTextChanged log = new LoginCheckTextChanged();
+        log.checkTextChanged(s);
+
+        System.out.println("bblaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+     //   fail();
 
     }
 }

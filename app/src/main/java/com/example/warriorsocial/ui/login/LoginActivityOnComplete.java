@@ -21,13 +21,13 @@ public class LoginActivityOnComplete extends LoginActivity {
 
 public boolean checkSuccess() {
     if (task.isSuccessful()) {
-       /* Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivityOnComplete.this, "Log in successful.", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), BottomActivity.class));
-        System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE SUCCESS LINE 160~~~~~");*/
+        System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE SUCCESS LINE 160~~~~~");
         return true;
-    } else {/*
-        Toast.makeText(LoginActivity.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-        System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE NOT SUCCESSFUL LINE 160~~~~~");*/
+    } else {
+        Toast.makeText(LoginActivityOnComplete.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE NOT SUCCESSFUL LINE 160~~~~~");
         return false;
     }
 }

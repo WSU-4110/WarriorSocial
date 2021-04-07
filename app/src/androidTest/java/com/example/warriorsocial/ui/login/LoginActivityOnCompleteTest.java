@@ -6,9 +6,11 @@ import static org.junit.Assert.*;
 
 public class LoginActivityOnCompleteTest {
 
-    LoginActivity login = new LoginActivity();
+    LoginActivityOnComplete login = new LoginActivityOnComplete();
 
     @Test
     public void checkSuccess() {
+        login.checkSuccess();
+
     }
 }

@@ -34,12 +34,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Node;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     FirebaseAuth fAuth;
     // Opens registration page
     private Button button_register;
+
+    EditText usernameEditText;
+    EditText passwordEditText;
+
 
 
 
@@ -100,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -111,12 +119,18 @@ public class LoginActivity extends AppCompatActivity {
                 // ignore
             }
 
+
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                LoginCheckTextChanged l = new LoginCheckTextChanged();
+                s = usernameEditText.getText().toString();
+
+                l.checkTextChanged(s);
+               /* loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());*/
             }
         };
+
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -208,6 +222,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public void onStart(final Node node) {
+        Looper.prepare();
+    }
+
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
@@ -229,4 +247,9 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE NOT SUCCESSFUL LINE 160~~~~~");
         }
     }
+    /*public void checkTextChanged(Editable s){
+        loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                passwordEditText.getText().toString());
+    }*/
+
 }
