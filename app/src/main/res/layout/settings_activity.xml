@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-            <TextView
+            <EditText
                 android:id="@+id/textView2"
                 android:layout_width="163dp"
                 android:layout_height="48dp"
@@ -92,7 +92,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/resetPass"
                 android:layout_width="180dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="209dp"
