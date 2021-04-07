@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     // Opens registration page
     private Button button_register;
+
+
 
 
     @Override
@@ -156,13 +159,25 @@ public class LoginActivity extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+
+                        onCompleteT(task);
+                       /* LoginActivityOnComplete l = new LoginActivityOnComplete();
+                        if(l.checkSuccess()){
                             Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                         }
+                        else {
+                            Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }*/
+                       /* if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+                            System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE SUCCESS LINE 160~~~~~");
+                        }
                         else{
                             Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                            System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE NOT SUCCESSFUL LINE 160~~~~~");
+                        }*/
                     }
                 });
 
@@ -201,5 +216,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onCompleteT(Task<AuthResult> task) {
+        if(task.isSuccessful()){
+            //Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+            System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE SUCCESS LINE 160~~~~~");
+        }
+        else{
+            //Toast.makeText(LoginActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            System.out.println("~~~~~~~~~~~~~~~~ONCOMPLETE NOT SUCCESSFUL LINE 160~~~~~");
+        }
     }
 }
