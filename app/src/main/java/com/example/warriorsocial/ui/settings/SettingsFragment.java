@@ -37,7 +37,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends Fragment {
 
-    //private static final Object MODE_PRIVATE = 0;
     private SettingsViewModel settingsViewModel;
     FirebaseAuth fAuth;
 
@@ -54,7 +53,6 @@ public class SettingsFragment extends Fragment {
     EditText etUsername;
     Button btChangeUsername;
 
-
     // Shared preferences variables
     public static final String REPLIES_POST = "REPLIES_POST";
     public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
@@ -62,7 +60,7 @@ public class SettingsFragment extends Fragment {
     public static final boolean BOOL_DEFAULT = false;
     public static final String USERNAME = "USERNAME";
     public static final String STRING_VALUE_DEFAULT = "WSU User";
-    Context context;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -133,7 +131,6 @@ public class SettingsFragment extends Fragment {
 
                     }
                 });
-
                 passwordResetDialog.create().show();
             }
         });
@@ -152,7 +149,6 @@ public class SettingsFragment extends Fragment {
                         // Write values to Shared Preferences
                         writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
                                 swAllNotifications.isChecked(), etUsername.getText().toString());
-
                     }
                 });
 
@@ -196,8 +192,6 @@ public class SettingsFragment extends Fragment {
                         swAllNotifications.isChecked(), etUsername.getText().toString());
             }
         });
-
-
         // Return root (layout)
         return root;
     }
@@ -219,8 +213,7 @@ public class SettingsFragment extends Fragment {
 
         editor.commit();
     }
-
-
+    
     // readSharedPreferences reads from shared preferences
     public void readSharedPreferences() {
         // Declare variables
@@ -235,6 +228,5 @@ public class SettingsFragment extends Fragment {
         swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
         swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
     }
-
 }
 
