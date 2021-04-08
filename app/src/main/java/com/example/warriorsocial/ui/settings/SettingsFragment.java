@@ -1,5 +1,4 @@
 package com.example.warriorsocial.ui.settings;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -154,8 +153,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked());
+                writeSPPost(swPost.isChecked());
             }
         });
         // OnCheckedChanged for Replies to Comments Switch
@@ -163,8 +161,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked());
+                writeSPComment(swComment.isChecked());
             }
         });
 
@@ -173,8 +170,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked());
+                writeSPAll(swAllNotifications.isChecked());
             }
         });
         // Return root (layout)
@@ -182,7 +178,49 @@ public class SettingsFragment extends Fragment {
     }
 
     // writeToSharedPreferences writes data to the Shared Preferences
-    public void writeToSharedPreferences(boolean replies_post, boolean replies_comments,
+    public void writeSPPost(boolean replies_post) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(REPLIES_POST, replies_post);
+
+        editor.commit();
+    }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+    public void writeSPComment( boolean replies_comments) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(REPLIES_COMMENTS, replies_comments);
+
+        editor.commit();
+    }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+    public void writeSPAll(boolean all_notifications) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(ALL_NOTIFICATIONS, all_notifications);
+
+        editor.commit();
+    }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+   /* public void writeToSharedPreferences(boolean replies_post, boolean replies_comments,
                                          boolean all_notifications) {
         // Create editor object
         SharedPreferences sharedPrefWrite;
@@ -196,7 +234,7 @@ public class SettingsFragment extends Fragment {
         editor.putBoolean(ALL_NOTIFICATIONS, all_notifications);
 
         editor.commit();
-    }
+    }*/
     
     // readSharedPreferences reads from shared preferences
     public void readSharedPreferences() {
