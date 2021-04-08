@@ -12,25 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.home.EventDetailFragment;
-import com.example.warriorsocial.ui.login.LoginActivity;
-import com.example.warriorsocial.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,9 +46,6 @@ public class SettingsFragment extends Fragment {
     public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
     public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
     public static final boolean BOOL_DEFAULT = false;
-    public static final String USERNAME = "USERNAME";
-    public static final String STRING_VALUE_DEFAULT = "WSU User";
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -128,7 +113,7 @@ public class SettingsFragment extends Fragment {
                 passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                    // do nothing
                     }
                 });
                 passwordResetDialog.create().show();
@@ -146,9 +131,9 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Write values to Shared Preferences
-                        writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                                swAllNotifications.isChecked(), etUsername.getText().toString());
+
+
+
                     }
                 });
 
@@ -164,32 +149,32 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        // OnClick for Replies to Post Switch
+        // OnCheckedChange for Replies to Post Switch
         swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked(), etUsername.getText().toString());
+                        swAllNotifications.isChecked());
             }
         });
-        // OnClick for Replies to Comments Switch
+        // OnCheckedChanged for Replies to Comments Switch
         swComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked(), etUsername.getText().toString());
+                        swAllNotifications.isChecked());
             }
         });
 
-        // OnClick for All Notifications
+        // OnCheckedChange for All Notifications
         swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 writeToSharedPreferences(swPost.isChecked(), swComment.isChecked(),
-                        swAllNotifications.isChecked(), etUsername.getText().toString());
+                        swAllNotifications.isChecked());
             }
         });
         // Return root (layout)
@@ -198,7 +183,7 @@ public class SettingsFragment extends Fragment {
 
     // writeToSharedPreferences writes data to the Shared Preferences
     public void writeToSharedPreferences(boolean replies_post, boolean replies_comments,
-                                         boolean all_notifications, String username) {
+                                         boolean all_notifications) {
         // Create editor object
         SharedPreferences sharedPrefWrite;
         SharedPreferences.Editor editor;
@@ -206,7 +191,6 @@ public class SettingsFragment extends Fragment {
         editor = sharedPrefWrite.edit();
 
         // Store values as name/value pairs
-        editor.putString(USERNAME, username);
         editor.putBoolean(REPLIES_POST, replies_post);
         editor.putBoolean(REPLIES_COMMENTS, replies_comments);
         editor.putBoolean(ALL_NOTIFICATIONS, all_notifications);
@@ -223,7 +207,6 @@ public class SettingsFragment extends Fragment {
         sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // Set text fields to data from shared preferences
-        etUsername.setText(sharedPrefRead.getString(USERNAME, STRING_VALUE_DEFAULT));
         swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
         swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
         swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
