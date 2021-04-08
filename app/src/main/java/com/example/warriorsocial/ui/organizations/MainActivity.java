@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.organizations;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -10,17 +11,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
+import com.example.warriorsocial.ui.home.CalendarEvent;
+import com.example.warriorsocial.ui.home.CalendarEventViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
 
 //student organizations
 
 public class MainActivity extends AppCompatActivity {
-    //RecyclerView object
-    RecyclerView recyclerView;
+    //RecyclerView object connected to the list of SO objects
+    private RecyclerView recyclerView;
     String s1[], s2[];
     int images[]={R.drawable.acm,R.drawable.bio,R.drawable.chem,R.drawable.civil,R.drawable.elec,R.drawable.esd,R.drawable.mech,R.drawable.race,R.drawable.rob,R.drawable.swe};
     @Override
     //onCreate method
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("Inside onCreate in MainActivity in organizations!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orgs);//was activity_main1
         //finding the id for the recyclerView
