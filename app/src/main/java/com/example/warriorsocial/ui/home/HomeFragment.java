@@ -63,7 +63,6 @@ public class HomeFragment extends Fragment {
 
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
         return root;
         }
