@@ -101,7 +101,7 @@ public class SettingsFragmentTest extends SettingsFragment  {
         // sharedPrefBoolC = false
         boolean sharedPrefBoolC = sharedPreferences.getBoolean(REPLIES_COMMENTS,BOOL_DEFAULT);
 
-        // Should return success 
+        // Should return success
         assertNotEquals(sharedPrefBoolA, sharedPrefBoolC);
         // Should return success
         assertEquals(sharedPrefBoolA, sharedPrefBoolP);
