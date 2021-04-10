@@ -3,13 +3,9 @@ package com.example.warriorsocial.ui.organizations;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.home.CalendarEvent;
 
 import org.jetbrains.annotations.NotNull;
 
