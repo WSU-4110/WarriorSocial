@@ -1,14 +1,18 @@
 package com.example.warriorsocial.ui.settings;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +48,21 @@ public class SettingsFragment extends Fragment {
         //Logout User
         Button logout;
 
-        public View onCreateView(@NonNull LayoutInflater inflater,
+    // Controls for shared preferences
+    Switch swPost;
+    Switch swComment;
+    Switch swAllNotifications;
+    EditText etUsername;
+    Button btChangeUsername;
+
+    // Shared preferences variables
+    public static final String REPLIES_POST = "REPLIES_POST";
+    public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
+    public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
+    public static final boolean BOOL_DEFAULT = false;
+
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
                                  ViewGroup container, Bundle savedInstanceState) {
 
             // Attach root to the layout
@@ -56,6 +74,16 @@ public class SettingsFragment extends Fragment {
             changepass = root.findViewById(R.id.resetPass);
 
             logout = root.findViewById(R.id.logout);
+
+        //Controls for shared preferences
+        swPost = root.findViewById(R.id.switch1);
+        swComment = root.findViewById(R.id.switch2);
+        swAllNotifications = root.findViewById(R.id.switch3);
+        etUsername = root.findViewById(R.id.textView2);
+        btChangeUsername = root.findViewById(R.id.button3);
+
+        // Read Shared Preferences values
+        readSharedPreferences();
 
             // Set the onClickListener for the privacy button
             btn_privacy.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +138,8 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+
+
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,10 +148,121 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-            
-            // Return root (layout)
+        // OnClick for Change Username Button
+        btChangeUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder changeUsernameDialog = new AlertDialog.Builder(v.getContext());
+                changeUsernameDialog.setTitle("Change username to provided entry?");
+
+                changeUsernameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        // add code here to connect to firebase
+
+                    }
+                });
+
+                changeUsernameDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                });
+
+                changeUsernameDialog.create().show();
+            }
+        });
+
+        // OnCheckedChange for Replies to Post Switch
+        swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                writeSPPost(swPost.isChecked());
+            }
+        });
+        // OnCheckedChanged for Replies to Comments Switch
+        swComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                writeSPComment(swComment.isChecked());
+            }
+        });
+
+        // OnCheckedChange for All Notifications
+        swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                writeSPAll(swAllNotifications.isChecked());
+            }
+        });
+
+        // Return root (layout)
             return root;
         }
- }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+    public void writeSPPost(boolean replies_post) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(REPLIES_POST, replies_post);
+
+        editor.commit();
+    }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+    public void writeSPComment( boolean replies_comments) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(REPLIES_COMMENTS, replies_comments);
+
+        editor.commit();
+    }
+
+    // writeToSharedPreferences writes data to the Shared Preferences
+    public void writeSPAll(boolean all_notifications) {
+        // Create editor object
+        SharedPreferences sharedPrefWrite;
+        SharedPreferences.Editor editor;
+        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPrefWrite.edit();
+
+        // Store values as name/value pairs
+        editor.putBoolean(ALL_NOTIFICATIONS, all_notifications);
+
+        editor.commit();
+    }
+
+
+    // readSharedPreferences reads from shared preferences
+    public void readSharedPreferences() {
+        // Declare variables
+        SharedPreferences sharedPrefRead;
+
+        // Retrieve value from shared preferences
+        sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        // Set text fields to data from shared preferences
+        swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
+        swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
+        swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
+    }
+}
+
 
 
