@@ -2,17 +2,11 @@ package com.example.warriorsocial.ui.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-
-import com.example.warriorsocial.R;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import static org.junit.Assert.*;
 
 // This test class tests the shared preferences functionality that saves user selected settings
