@@ -3,6 +3,7 @@ package com.example.warriorsocial.ui.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.warriorsocial.R;
@@ -10,10 +11,17 @@ import com.example.warriorsocial.R;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-public class SettingsFragmentTest extends SettingsFragment  {
+// This test class tests the shared preferences functionality that saves user selected settings
+// from SettingsFragment in internal storage to be accessed again later.
+// In this case, we are only using booleans because each of these methods are linked to a switch
+// that the user either turns on or off.
+
+@RunWith(AndroidJUnit4.class)
+public class SettingsFragmentTest  {
 
     public static final String REPLIES_POST = "REPLIES_POST";
     public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
@@ -24,28 +32,14 @@ public class SettingsFragmentTest extends SettingsFragment  {
 
     @Before
     public void before() {
-        // Get context of SettingsFragment to make sure we're testing SettingsFragment not test class
+        // Get context of SettingsFragment to make sure we're testing SettingsFragment not test
+        // application context.
+        // This is necessary because we need to run an instrumented unit test for shared preferences.
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         sharedPreferences = context.getSharedPreferences(REPLIES_POST, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(REPLIES_COMMENTS, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(ALL_NOTIFICATIONS, Context.MODE_PRIVATE);
-    }
-
-   /* @Test
-    public void put_and_get_preference() throws Exception {
-        String string1 = "test";
-
-       // sharedPreferences.edit().putString(KEY_PREF, string1).apply();
-      //  String string2 = sharedPreferences.getString(KEY_PREF, "");
-
-        // Verify that the received data is correct.
-        assertEquals(string1, string2);
-    }*/
-
-    @After
-    public void after() {
-        //sharedPreferences.edit().putBoolean(REPLIES_POST, false).apply();
     }
 
     @Test
@@ -63,7 +57,7 @@ public class SettingsFragmentTest extends SettingsFragment  {
     }
 
     @Test
-    public void testwriteSPComment() {
+    public void testWriteSPComment() {
         // Variable trueBoolC is the comparison value
         boolean trueBoolC = false;
 
@@ -76,11 +70,11 @@ public class SettingsFragmentTest extends SettingsFragment  {
         assertEquals(trueBoolC, sharedPrefBoolC);
     }
 
-    @Test
-    public void testwriteSPAll() {
+   @Test
+    public void testWriteSPAll() {
         // Variable trueBoolA is the comparison value
         boolean trueBoolA = true;
-        // To check for a forced false value
+        // To check for a false value
         boolean falseBoolA = false;
 
         // Save value of trueBoolA in shared preferences
@@ -92,18 +86,19 @@ public class SettingsFragmentTest extends SettingsFragment  {
         assertEquals(trueBoolA, sharedPrefBoolA);
     }
 
+    // This method reads the values set by other other methods
     @Test
-    public void testreadSharedPreferences() {
-        // sharedPrefBoolP = true
+    public void testReadSharedPreferences() {
+        // Note: sharedPrefBoolP = true
         boolean sharedPrefBoolP = sharedPreferences.getBoolean(REPLIES_POST,BOOL_DEFAULT);
-        // sharedPrefBoolA = true
+        // Note: sharedPrefBoolA = true
         boolean sharedPrefBoolA = sharedPreferences.getBoolean(ALL_NOTIFICATIONS,BOOL_DEFAULT);
-        // sharedPrefBoolC = false
+        // Note: sharedPrefBoolC = false
         boolean sharedPrefBoolC = sharedPreferences.getBoolean(REPLIES_COMMENTS,BOOL_DEFAULT);
 
-        // Should return success
+        // Should return success (one true, one false)
         assertNotEquals(sharedPrefBoolA, sharedPrefBoolC);
-        // Should return success
+        // Should return success (both true)
         assertEquals(sharedPrefBoolA, sharedPrefBoolP);
     }
 }
