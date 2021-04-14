@@ -78,6 +78,8 @@ public class SettingsFragmentTest  {
 
         // Check to see if received data is same as provided boolean
         assertEquals(trueBoolA, sharedPrefBoolA);
+       // Check to see if received data is different than provided boolean (should return true)
+       assertNotEquals(falseBoolA, sharedPrefBoolA);
     }
 
     // This method reads the values set by other other methods
@@ -90,9 +92,9 @@ public class SettingsFragmentTest  {
         // Note: sharedPrefBoolC = false
         boolean sharedPrefBoolC = sharedPreferences.getBoolean(REPLIES_COMMENTS,BOOL_DEFAULT);
 
-        // Should return success (one true, one false)
-        assertNotEquals(sharedPrefBoolA, sharedPrefBoolC);
         // Should return success (both true)
         assertEquals(sharedPrefBoolA, sharedPrefBoolP);
+        // Should return success (one true, one false)
+        assertNotEquals(sharedPrefBoolA, sharedPrefBoolC);
     }
 }
