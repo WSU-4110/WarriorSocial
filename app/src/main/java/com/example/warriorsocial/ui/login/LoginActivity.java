@@ -69,16 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
+                LoginChecker loginChecker = new LoginChecker();
+                loginChecker.checkIfLoginFormEmpty(loginFormState);
                 loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
+                loginChecker.checkUserNameError(usernameEditText,loginFormState);
+                loginChecker.checkPasswordError(passwordEditText, loginFormState);
             }
         });
 
