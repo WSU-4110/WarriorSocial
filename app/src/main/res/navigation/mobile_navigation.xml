@@ -19,23 +19,18 @@
         android:id="@+id/navigation_organizations"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
         android:label="Organizations"
-        tools:layout="@layout/my_row">
+        tools:layout="@layout/activity_orgs" >
         <action
-            android:id="@+id/action_navigation_home_to_org_detail"
-            app:destination="@id/org_detail" />
+            android:id="@+id/action_navigation_organizations_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
     </fragment>
-
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/act_main">
-        <action
-            android:id="@+id/action_navigation_discover_to_item_detail"
-            app:destination="@id/item_detail" />
-    </fragment>
-
+        tools:layout="@layout/item_news" />
+    <!--changed from act_main-->
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.warriorsocial.ui.notifications.NotificationsFragment"
@@ -46,19 +41,29 @@
         android:id="@+id/navigation_settings"
         android:name="com.example.warriorsocial.ui.settings.SettingsFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/settings_activity" >
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_privacy"
+            app:destination="@id/navigation_privacy" />
+    </fragment>
     <fragment
         android:id="@+id/event_detail"
         android:name="com.example.warriorsocial.ui.home.EventDetailFragment"
-        android:label="fragment_event_detail"
+        android:label="Event Detail"
         tools:layout="@layout/fragment_event_detail" />
+
     <fragment
-        android:id="@+id/org_detail"
-        android:label="fragment_item_detail"
-        tools:layout="@layout/activity_orgs" />
+        android:id="@+id/navigation_privacy"
+        android:name="com.example.warriorsocial.ui.privacy.PrivacyFragment"
+        android:label="Privacy"
+        tools:layout="@layout/fragment_privacy" >
+        <action
+            android:id="@+id/action_navigation_privacy_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+    </fragment>
     <fragment
-        android:id="@+id/item_detail"
-        android:label="fragment_item_detail"
-        tools:layout="@layout/item_news" />
+        android:id="@+id/organizationProfile"
+        android:name="com.example.warriorsocial.ui.organizations.OrganizationProfile"
+        android:label="OrganizationProfile" />
 
 </navigation>

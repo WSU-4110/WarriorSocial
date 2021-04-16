@@ -78,7 +78,7 @@ public class EventDetailFragment extends Fragment {
 
         // Initialize Database
         mCalendarEventReference = FirebaseDatabase.getInstance().getReference()
-                .child("CalendarEvents/2021/3/9/"+mCalendarEventKey);
+                .child("CalendarEvents/" + mCalendarEventKey);
     }
 
     @Override

@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -29,6 +31,8 @@ import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     FirebaseAuth fAuth;
-    //Button loginButton;
-
     // Opens registration page
     private Button button_register;
 
@@ -54,9 +56,11 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button forgotPass = findViewById(R.id.button_forgotpassword);
         final Button button_register = findViewById(R.id.button_register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-        fAuth = FirebaseAuth.getInstance();
+
+         fAuth = FirebaseAuth.getInstance();
 
         //Just for development
         final Button button_goToHome = findViewById(R.id.button_goToHome);
@@ -153,7 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
-                //Authenticate User
+                
+                 //Authenticate User
                 fAuth.signInWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -166,12 +171,53 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
+                    
 
                 //loginViewModel.login(usernameEditText.getText().toString(),
                         //passwordEditText.getText().toString());
             }
         });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText resetmail = new EditText(v.getContext());
+                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle("Forgot Password?");
+                passwordResetDialog.setMessage("Enter your email to receive reset link.");
+                passwordResetDialog.setView(resetmail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String mail = resetmail.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(LoginActivity.this, "Reset link sent to your email.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, "Error! Reset link was not sent" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                passwordResetDialog.create().show();
+            }
+        });
+
 
         // Links button to open new Activity (RegistrationActivity)
         button_register.setOnClickListener(new View.OnClickListener() {

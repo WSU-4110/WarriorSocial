@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Home Fragment displays the calendar and allows Students to select event lists from the dates
 public class HomeFragment extends Fragment {
@@ -59,7 +63,6 @@ public class HomeFragment extends Fragment {
 
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
         return root;
         }
@@ -75,9 +78,20 @@ public class HomeFragment extends Fragment {
             recyclerView.setLayoutManager(mManager);
 
 
-            // Set up FirebaseRecyclerAdapter with a default Query
-            //TODO: Set initial query to current day
-            Query eventsQuery = getQuery(mDatabase, 0, 0, 0);
+            // Set up FirebaseRecyclerAdapter with a default Query ( Current Day )
+            //TODO: Set initial query to current day (Current implementation requires API 26 [our minimum is 24])
+
+            int currentYear = 0;
+            int currentMonth = 0;
+            int currentDay = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate currentDate = LocalDate.now();
+                currentYear = currentDate.getYear();
+                currentMonth = currentDate.getMonthValue();
+                currentDay = currentDate.getDayOfMonth();
+            }
+
+            Query eventsQuery = getQuery(mDatabase, currentYear, currentMonth, currentDay);
 
             FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
                     .setQuery(eventsQuery, CalendarEvent.class)
@@ -96,18 +110,39 @@ public class HomeFragment extends Fragment {
                 protected void onBindViewHolder(CalendarEventViewHolder viewHolder, int position, final CalendarEvent model) {
                     System.out.println("inside onBindViewHolder in HomeFragment");
                     final DatabaseReference CalendarEventRef = getRef(position);
+                    System.out.println("CalendarEventRef KEY: " + CalendarEventRef.getKey());
+                    System.out.println("CalendarEventRef PARENT: " + CalendarEventRef.getParent());
+                    System.out.println("CalendarEventRef REF: " + CalendarEventRef.getRef());
+                    System.out.println("CalendarEventRef ROOT: " + CalendarEventRef.getRoot());
+
 
                     // Set click listener for the whole event view
-                    final String CalendarEventKey = CalendarEventRef.getKey();
+                    //final String CalendarEventKey = CalendarEventRef.getKey();
+
+
                     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // Launch EventDetailFragment
+                            // Launch EventDetailFragment and pass a database reference key
+
                             NavController navController = Navigation.findNavController(requireActivity(),
                                     R.id.nav_host_fragment);
                             Bundle args = new Bundle();
+
+                            // Find the Event "key"/"path" in the database using a regex
+                            Pattern dateRegex = Pattern.compile("\\d{4}\\W(0?[1-9]|1[012])\\W(0?[1-9]|[12][0-9]|[3[01]]).*");
+                            Matcher dateMatcher = dateRegex.matcher(CalendarEventRef.getRef().toString());
+                            String CalendarEventKey = ""; //default key
+                            if (dateMatcher.find()) {
+                                System.out.println("Date matcher found: " + dateMatcher.group());
+                                CalendarEventKey = dateMatcher.group();
+                            }
+
+                            // Load event key
                             args.putString(EventDetailFragment.EXTRA_CALENDAREVENT_KEY, CalendarEventKey);
                             System.out.println("CalendarEventKey: " + CalendarEventKey);
+
+                            // Navigate
                             navController.navigate(R.id.action_navigation_home_to_event_detail, args);
                         }
                     });
@@ -123,7 +158,9 @@ public class HomeFragment extends Fragment {
                 public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                     // Sends date info to RecyclerAdapter (mAdapter)
                     System.out.println("Changed Date| year: " + year + " month: " + month + " day: " + dayOfMonth);
-                    Query newQuery = getQuery(mDatabase, year, month, dayOfMonth);
+                    // For an unknown reason, month is received 1 month too low. The plus 1 is to counteract this for now
+                    // TODO: Figure out reason behind the decremented month
+                    Query newQuery = getQuery(mDatabase, year, month+1, dayOfMonth);
                     FirebaseRecyclerOptions newOptions = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
                             .setQuery(newQuery, CalendarEvent.class)
                             .build();
