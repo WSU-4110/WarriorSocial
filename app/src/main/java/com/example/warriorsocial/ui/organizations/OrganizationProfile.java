@@ -34,6 +34,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -181,9 +182,12 @@ public class OrganizationProfile extends Fragment {
 
                     // Get StudentOrganization object from dataSnapshot (handled by firebase using getters and setters)
                     StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
-                    System.out.println("Organization Name: " + studentOrganization.getOrganizationName());
 
+                    System.out.println("Organization Name: " + studentOrganization.getOrganizationName());
+                    Uri testingUri = Uri.parse(studentOrganization.getOrganizationImageUrl());
+                    System.out.println("Got testingUri" + testingUri.toString());
                     organizationImage.setImageURI(Uri.parse(studentOrganization.getOrganizationImageUrl()));
+                    System.out.println("Past the setting of the ImageURI");
 
                     organizationName.setText(studentOrganization.getOrganizationName());
                     organizationEmail.setText(studentOrganization.getOrganizationEmail());
@@ -300,6 +304,7 @@ public class OrganizationProfile extends Fragment {
 
     // Open up user's image gallery for them to pick an image
     private void openFileChooser() {
+        System.out.println("Inside openFileChooser in OrganizationProfile");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -309,9 +314,15 @@ public class OrganizationProfile extends Fragment {
     // onActivityResult executes after openFileChooser finishes
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("Inside onActivityResult in OrganizationProfile");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
+            final int takeFlags = data.getFlags()
+                    & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            // Check for the freshest data.
+            getActivity().getContentResolver().takePersistableUriPermission(mImageUri, takeFlags);
             mImageView.setImageURI(mImageUri);
             uploadFile();
         }
