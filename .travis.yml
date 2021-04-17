@@ -29,6 +29,10 @@ android:
 install: skip
 
 #script: skip
+
+before_install:
+    - yes | sdkmanager "platforms;android-30"
+    - yes | sdkmanager "build-tools;30.0.3"
      
 
 
