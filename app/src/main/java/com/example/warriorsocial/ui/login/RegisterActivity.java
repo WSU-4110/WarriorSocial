@@ -83,13 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 RegistrationChecker registrationChecker = new RegistrationChecker();
 
-                if(!registrationChecker.checkEmailEmpty(userName, getApplicationContext())) {
+                if(!registrationChecker.checkEmailEmpty(userName)) {
                     return;
                 }
-                if(!registrationChecker.checkPasswordEmpty(userPassword, getApplicationContext())) {
+                if(!registrationChecker.checkPasswordEmpty(userPassword)) {
                     return;
                 }
-                if(!registrationChecker.checkPasswordLength(userPassword, getApplicationContext())) {
+                if(!registrationChecker.checkPasswordLength(userPassword)) {
                     return;
                 }
 
