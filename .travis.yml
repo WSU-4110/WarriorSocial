@@ -28,7 +28,7 @@ android:
 
 install: skip
 
-script: skip
+#script: skip
      
 
 
