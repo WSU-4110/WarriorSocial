@@ -56,7 +56,7 @@
         android:id="@+id/navigation_privacy"
         android:name="com.example.warriorsocial.ui.privacy.PrivacyFragment"
         android:label="Privacy"
-        tools:layout="@layout/activity_privacy" >
+        tools:layout="@layout/fragment_privacy" >
         <action
             android:id="@+id/action_navigation_privacy_to_navigation_settings"
             app:destination="@id/navigation_settings" />
