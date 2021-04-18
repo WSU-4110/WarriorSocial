@@ -20,7 +20,7 @@ public class RegistrationChecker {
         return true;
     }
 
-    public boolean checkEmailEmpty(EditText email, Context mContext) {
+    public boolean checkEmailEmpty(EditText email) {
         if(TextUtils.isEmpty(email.getText().toString())){
             email.setError("Email is required!");
             return false;
@@ -28,7 +28,7 @@ public class RegistrationChecker {
         return true;
     }
 
-    public boolean checkPasswordEmpty(EditText password, Context mContext) {
+    public boolean checkPasswordEmpty(EditText password) {
         if(TextUtils.isEmpty(password.getText().toString())){
             password.setError("Password is required!");
             return false;
@@ -37,7 +37,7 @@ public class RegistrationChecker {
     }
 
 
-    public boolean checkPasswordLength(EditText password, Context mContext) {
+    public boolean checkPasswordLength(EditText password) {
         //Check if password length has 5 or more characters
         if(password.getText().toString().length() < 5){
             password.setError("Password must have 5 or more characters!");
