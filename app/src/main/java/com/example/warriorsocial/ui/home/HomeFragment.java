@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +63,6 @@ public class HomeFragment extends Fragment {
 
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
         return root;
         }
@@ -77,9 +78,20 @@ public class HomeFragment extends Fragment {
             recyclerView.setLayoutManager(mManager);
 
 
-            // Set up FirebaseRecyclerAdapter with a default Query
-            //TODO: Set initial query to current day
-            Query eventsQuery = getQuery(mDatabase, 0, 0, 0);
+            // Set up FirebaseRecyclerAdapter with a default Query ( Current Day )
+            //TODO: Set initial query to current day (Current implementation requires API 26 [our minimum is 24])
+
+            int currentYear = 0;
+            int currentMonth = 0;
+            int currentDay = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate currentDate = LocalDate.now();
+                currentYear = currentDate.getYear();
+                currentMonth = currentDate.getMonthValue();
+                currentDay = currentDate.getDayOfMonth();
+            }
+
+            Query eventsQuery = getQuery(mDatabase, currentYear, currentMonth, currentDay);
 
             FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
                     .setQuery(eventsQuery, CalendarEvent.class)

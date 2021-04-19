@@ -19,7 +19,11 @@
         android:id="@+id/navigation_organizations"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationsFragment"
         android:label="Organizations"
-        tools:layout="@layout/activity_orgs" />
+        tools:layout="@layout/activity_orgs" >
+        <action
+            android:id="@+id/action_navigation_organizations_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_discover"
@@ -52,10 +56,26 @@
         android:id="@+id/navigation_privacy"
         android:name="com.example.warriorsocial.ui.privacy.PrivacyFragment"
         android:label="Privacy"
-        tools:layout="@layout/activity_privacy" >
+        tools:layout="@layout/fragment_privacy" >
         <action
             android:id="@+id/action_navigation_privacy_to_navigation_settings"
             app:destination="@id/navigation_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/organizationProfile"
+        android:name="com.example.warriorsocial.ui.organizations.OrganizationProfile"
+        android:label="OrganizationProfile" >
+        <action
+            android:id="@+id/action_organizationProfile_to_newPostFragment"
+            app:destination="@id/newPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:name="com.example.warriorsocial.ui.organizations.NewPostFragment"
+        android:label="NewPostFragment" >
+        <action
+            android:id="@+id/action_newPostFragment_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
     </fragment>
 
 </navigation>

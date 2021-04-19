@@ -19,11 +19,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText userName;
+    private EditText userEmail;
     private EditText userPassword;
+    private EditText userName;
     private Button createAccountButton;
     FirebaseAuth fAuth;
     ProgressBar loadingProgressBar;
@@ -34,28 +38,34 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userName = findViewById(R.id.et_userEmail);
+        userEmail = findViewById(R.id.et_userEmail);
         userPassword = findViewById(R.id.et_userPassword);
+        userName = findViewById(R.id.et_studentUserName);
         createAccountButton = findViewById(R.id.button_create_account);
         fAuth = FirebaseAuth.getInstance();
         loadingProgressBar = findViewById(R.id.loading);
 
         //Check if user is already logged in
+        /*
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
             finish();
-
         }
+         */
+        RegistrationChecker registrationChecker = new RegistrationChecker();
+        registrationChecker.checkIfUserLoggedIn(fAuth, getApplicationContext());
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailTxt = userName.getText().toString();
+                final String emailTxt = userEmail.getText().toString();
                 String passwordTxt = userPassword.getText().toString();
+                final String usernameTxt = userName.getText().toString();
 
                 //Check to see if input is empty
+                /*
                 if(TextUtils.isEmpty(emailTxt)){
-                    userName.setError("Email is required!");
+                    userEmail.setError("Email is required!");
                     return;
                 }
 
@@ -69,6 +79,24 @@ public class RegisterActivity extends AppCompatActivity {
                     userPassword.setError("Password must have 5 or more characters!");
                     return;
                 }
+                */
+
+                RegistrationChecker registrationChecker = new RegistrationChecker();
+
+                if(!registrationChecker.checkEmailEmpty(userName)) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordEmpty(userPassword)) {
+                    return;
+                }
+                if(!registrationChecker.checkPasswordLength(userPassword)) {
+                    return;
+                }
+
+                if(TextUtils.isEmpty(usernameTxt)){
+                    userName.setError("Username is required!");
+                    return;
+                }
 
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
@@ -76,9 +104,24 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        //System.out.println("Completed Registration!");
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+                            User user = new User(usernameTxt, emailTxt);
+
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+                                    }else{
+                                        Toast.makeText(RegisterActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
                         }
                         else{
                             Toast.makeText(RegisterActivity.this,"Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
