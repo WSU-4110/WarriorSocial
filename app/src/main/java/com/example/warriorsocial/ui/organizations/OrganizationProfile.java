@@ -7,6 +7,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,8 +38,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,11 +48,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -88,6 +83,8 @@ public class OrganizationProfile extends Fragment {
     private LinearLayoutManager mManager;
     private RecyclerView recyclerView;
 
+    private FloatingActionButton newPostFAB;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,6 +93,7 @@ public class OrganizationProfile extends Fragment {
 
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
+        newPostFAB = root.findViewById(R.id.newPostFAB);
 
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
@@ -136,6 +134,16 @@ public class OrganizationProfile extends Fragment {
         super.onStart();
 
         System.out.println("Inside onStart in OrganizationProfile");
+
+        // Connect newPostFAB functionality
+        newPostFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigation to NewPostFragment (Could pass in some args here)
+                NavController navController = NavHostFragment.findNavController(OrganizationProfile.this);
+                navController.navigate(R.id.action_organizationProfile_to_newPostFragment);
+            }
+        });
 
         // Connect pseudo-buttons functionality
         RelativeLayout postsFakeButton = getActivity().findViewById(R.id.posts_fake_button);
