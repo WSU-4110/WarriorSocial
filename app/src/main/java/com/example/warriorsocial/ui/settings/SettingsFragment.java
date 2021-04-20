@@ -24,6 +24,7 @@ import androidx.navigation.Navigation;
 import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.login.LoginActivity;
+import com.example.warriorsocial.ui.login.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +42,10 @@ public class SettingsFragment extends Fragment {
 
         //Logout User
         Button logout;
+
+        //Username
+        EditText userName;
+        EditText setUsername;
 
         // For sending notifications
         public static final String NOTIFICATION_S = "fromSettingsFragment";
@@ -75,7 +80,13 @@ public class SettingsFragment extends Fragment {
         //swComment = root.findViewById(R.id.switch2);
         swAllNotifications = root.findViewById(R.id.switch3);
         etUsername = root.findViewById(R.id.textView2);
+        userName = root.findViewById(R.id.et_studentUserName);
         btChangeUsername = root.findViewById(R.id.button3);
+        setUsername = root.findViewById(R.id.textView2);
+
+
+        //Set username in settings
+        setUsername.setText(userName.getText().toString());
 
         // Read Shared Preferences values
         readSharedPreferences();
@@ -103,14 +114,9 @@ public class SettingsFragment extends Fragment {
                     passwordResetDialog.setMessage("Enter your email to receive reset link.");
                     passwordResetDialog.setView(resetmail);
 
-                    // For sending notifications to user
-                    //createNotificationChannels();
-                    //BottomActivity.getInstance().sendNotification(v);
-
                     passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            yesPass = true;
                             String mail = resetmail.getText().toString();
                             fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -135,12 +141,6 @@ public class SettingsFragment extends Fragment {
                     });
 
                     passwordResetDialog.create().show();
-
-                    if (yesPass == true){
-                        // For sending notifications to user
-                        createNotificationChannels();
-                        BottomActivity.getInstance().sendNotification(v);
-                    }
                 }
             });
 
