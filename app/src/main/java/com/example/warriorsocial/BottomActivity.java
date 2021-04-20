@@ -18,18 +18,12 @@ import androidx.navigation.ui.NavigationUI;
 
 // This is the activity that holds the icons on the bottom of the screen
 public class BottomActivity extends AppCompatActivity {
-    FirebaseAuth fAuth;
-    private Button logoutButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("Inside BottomActivity onCreate");
         setContentView(R.layout.activity_bottom);
-
-        //logoutButton = findViewById(R.id.logoutBtn);
-        //fAuth = FirebaseAuth.getInstance();
 
         // Connect to the icons
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -41,22 +35,16 @@ public class BottomActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        /*logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fAuth.signOut();
-                signOutUser();
-            }
-        });*/
-
     }
 
-    /*private void signOutUser() {
-        Intent intent = new Intent(BottomActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }*/
-
-
+    // Navigation for back arrows on fragments
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Ensures that back arrow will navigate to parent fragment
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
