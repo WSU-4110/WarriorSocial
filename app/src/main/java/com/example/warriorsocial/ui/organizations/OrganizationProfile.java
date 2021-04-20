@@ -145,7 +145,12 @@ public class OrganizationProfile extends Fragment {
             public void onClick(View v) {
                 // Navigation to NewPostFragment (Could pass in some args here)
                 NavController navController = NavHostFragment.findNavController(OrganizationProfile.this);
-                navController.navigate(R.id.action_organizationProfile_to_newPostFragment);
+
+                // Attach the org profile information to
+                Bundle args = new Bundle();
+                args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, mOrganizationKey);
+
+                navController.navigate(R.id.action_organizationProfile_to_newPostFragment, args);
             }
         });
 
@@ -272,8 +277,9 @@ public class OrganizationProfile extends Fragment {
                             View.OnClickListener likeClickListener = new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    String postUserEmailProcessed = model.postEmail.replaceAll("\\.", "_");
                                     DatabaseReference postRef = mOrganizationPostsReference.child("StudentOrganizationPosts/"
-                                            + getUserEmailProcessed() + "/" + postKey);
+                                            + postUserEmailProcessed + "/" + postKey);
 
                                     // Update database
                                     onLikeClicked(postRef);
@@ -419,6 +425,7 @@ public class OrganizationProfile extends Fragment {
     }
 
     private void onLikeClicked(DatabaseReference postRef) {
+        System.out.println("onLikeClicked");
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -453,11 +460,5 @@ public class OrganizationProfile extends Fragment {
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
-
-    public String getUserEmailProcessed() {
-        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        userEmail = userEmail.replaceAll("\\.", "_");
-        return userEmail;
     }
 }
