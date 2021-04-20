@@ -76,8 +76,8 @@ public class SettingsFragment extends Fragment {
             logout = root.findViewById(R.id.logout);
 
         //Controls for shared preferences
-        swPost = root.findViewById(R.id.switch1);
-        swComment = root.findViewById(R.id.switch2);
+        //swPost = root.findViewById(R.id.switch1);
+        //swComment = root.findViewById(R.id.switch2);
         swAllNotifications = root.findViewById(R.id.switch3);
         etUsername = root.findViewById(R.id.textView2);
         btChangeUsername = root.findViewById(R.id.button3);
@@ -177,7 +177,7 @@ public class SettingsFragment extends Fragment {
         });
 
         // OnCheckedChange for Replies to Post Switch
-        swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -191,7 +191,7 @@ public class SettingsFragment extends Fragment {
 
                 writeSPComment(swComment.isChecked());
             }
-        });
+        });*/
 
         // OnCheckedChange for All Notifications
         swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -258,8 +258,8 @@ public class SettingsFragment extends Fragment {
         sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // Set text fields to data from shared preferences
-        swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
-        swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
+      //  swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
+       // swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
         swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
     }
 }
