@@ -8,11 +8,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,6 +42,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -249,8 +253,33 @@ public class OrganizationProfile extends Fragment {
                         @Override
                         protected void onBindViewHolder(OrganizationPostViewHolder viewHolder, int position, final StudentOrganizationPost model) {
                             System.out.println("inside onBindViewHolder in OrganizationProfile");
+                            // Get specific post's reference using position
+                            final DatabaseReference specificPostRef = getRef(position);
+                            final String postKey = specificPostRef.getKey();
+
+                            // Determine if the current user has liked this post and set UI accordingly
+                            // TODO: Get Images for Liked and not yet liked
+                            if (model.likes.containsKey(getUid())) {
+                                //Need image for IS LIKED (maybe the filled in star)
+                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                            } else {
+                                //Need image for IS NOT LIKED (maybe the star outline)
+                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                            }
+
                             //TODO: Create clickable post for comments?
-                            viewHolder.bindToPost(model);
+                            Handler h = new Handler(); // Needed to do bitmap get in a background thread
+                            View.OnClickListener likeClickListener = new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    DatabaseReference postRef = mOrganizationPostsReference.child("StudentOrganizationPosts/"
+                                            + getUserEmailProcessed() + "/" + postKey);
+
+                                    // Update database
+                                    onLikeClicked(postRef);
+                                }
+                            };
+                            viewHolder.bindToPost(model, likeClickListener, h);
                         }
                     };
                     System.out.println("set recyclerView to mAdapter");
@@ -387,5 +416,48 @@ public class OrganizationProfile extends Fragment {
             Log.e(TAG, "Error getting bitmap", e);
         }
         return bm;
+    }
+
+    private void onLikeClicked(DatabaseReference postRef) {
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                StudentOrganizationPost SOPost = mutableData.getValue(StudentOrganizationPost.class);
+                if (SOPost == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                if (SOPost.likes.containsKey(getUid())) {
+                    // Unstar the post and remove self from stars
+                    SOPost.likeCount = SOPost.likeCount - 1;
+                    SOPost.likes.remove(getUid());
+                } else {
+                    // Star the post and add self to stars
+                    SOPost.likeCount = SOPost.likeCount + 1;
+                    SOPost.likes.put(getUid(), true);
+                }
+
+                // Set value and report transaction success
+                mutableData.setValue(SOPost);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed,
+                                   DataSnapshot currentData) {
+                // Transaction completed
+                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
+            }
+        });
+    }
+
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public String getUserEmailProcessed() {
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        userEmail = userEmail.replaceAll("\\.", "_");
+        return userEmail;
     }
 }
