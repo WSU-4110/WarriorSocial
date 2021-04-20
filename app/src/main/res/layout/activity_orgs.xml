@@ -80,6 +80,13 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_baseline_settings_24" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/newPostFAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
         </RelativeLayout>
 
         <LinearLayout

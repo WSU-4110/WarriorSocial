@@ -6,6 +6,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -24,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +49,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -75,6 +83,8 @@ public class OrganizationProfile extends Fragment {
     private LinearLayoutManager mManager;
     private RecyclerView recyclerView;
 
+    private FloatingActionButton newPostFAB;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,6 +93,7 @@ public class OrganizationProfile extends Fragment {
 
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
+        newPostFAB = root.findViewById(R.id.newPostFAB);
 
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
@@ -123,6 +134,16 @@ public class OrganizationProfile extends Fragment {
         super.onStart();
 
         System.out.println("Inside onStart in OrganizationProfile");
+
+        // Connect newPostFAB functionality
+        newPostFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigation to NewPostFragment (Could pass in some args here)
+                NavController navController = NavHostFragment.findNavController(OrganizationProfile.this);
+                navController.navigate(R.id.action_organizationProfile_to_newPostFragment);
+            }
+        });
 
         // Connect pseudo-buttons functionality
         RelativeLayout postsFakeButton = getActivity().findViewById(R.id.posts_fake_button);
@@ -171,7 +192,7 @@ public class OrganizationProfile extends Fragment {
                 // Get StudentOrganization object and use the values to update the UI
                 if(dataSnapshot.exists()) {
                     // Get TextViews and ImageViews from R
-                    ImageView organizationImage = getActivity().findViewById(R.id.tv_image);
+                    final ImageView organizationImage = getActivity().findViewById(R.id.tv_image);
 
                     TextView organizationName = getActivity().findViewById(R.id.tv_name);
                     TextView organizationEmail = getActivity().findViewById(R.id.tv_email);
@@ -180,10 +201,27 @@ public class OrganizationProfile extends Fragment {
                     TextView organizationVicePresidentName = getActivity().findViewById(R.id.tv_vice_president_name);
 
                     // Get StudentOrganization object from dataSnapshot (handled by firebase using getters and setters)
-                    StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
-                    System.out.println("Organization Name: " + studentOrganization.getOrganizationName());
+                    final StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
 
-                    organizationImage.setImageURI(Uri.parse(studentOrganization.getOrganizationImageUrl()));
+                    System.out.println("Organization Name: " + studentOrganization.getOrganizationName());
+                    Uri testingUri = Uri.parse(studentOrganization.getOrganizationImageUrl());
+                    System.out.println("Got testingUri" + testingUri.toString());
+                    final Bitmap[] bm = {null};
+                    Thread thread = new Thread(new Runnable()
+                    {
+                        public void run() {
+                            bm[0] = getImageBitmap(studentOrganization.getOrganizationImageUrl());
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    organizationImage.setImageBitmap(bm[0]);
+
+                                }
+                            });
+                        }
+                    });
+                    thread.start();
+
+                    System.out.println("Past the setting of the ImageURI");
 
                     organizationName.setText(studentOrganization.getOrganizationName());
                     organizationEmail.setText(studentOrganization.getOrganizationEmail());
@@ -258,7 +296,7 @@ public class OrganizationProfile extends Fragment {
     private void uploadFile() {
         System.out.println("Inside uploadFile in OrganizationProfile");
         if (mImageUri != null) {
-            StorageReference fileReference = mOrganizationStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
+            final StorageReference fileReference = mOrganizationStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
 
             final ProgressDialog pd = new ProgressDialog(getContext());
             pd.setTitle("Uploading image...");
@@ -269,14 +307,24 @@ public class OrganizationProfile extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             pd.dismiss();
+                            StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
                             Toast.makeText(getContext(), "Upload successful!", Toast.LENGTH_SHORT);
 
-                            // Update existing imageUrl in the current profile
-                            Map<String, Object> childUpdates = new HashMap<>();
-                            String downloadedUrl = mImageUri.toString();
-                            System.out.println("URL: " + downloadedUrl);
-                            childUpdates.put("organizationImageUrl", downloadedUrl);
-                            mOrganizationReference.updateChildren(childUpdates);
+
+                            // String downloadedUrl = mImageUri.toString();
+                            Task<Uri> downloadedUrl = fileReference.getDownloadUrl();
+                            downloadedUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Update existing imageUrl in the current profile
+                                    Map<String, Object> childUpdates = new HashMap<>();
+                                    String imageReference = uri.toString();
+                                    System.out.println("Image Reference: " + imageReference);
+                                    childUpdates.put("organizationImageUrl", imageReference);
+                                    mOrganizationReference.updateChildren(childUpdates);
+                                }
+                            });
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -300,6 +348,7 @@ public class OrganizationProfile extends Fragment {
 
     // Open up user's image gallery for them to pick an image
     private void openFileChooser() {
+        System.out.println("Inside openFileChooser in OrganizationProfile");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -309,11 +358,34 @@ public class OrganizationProfile extends Fragment {
     // onActivityResult executes after openFileChooser finishes
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("Inside onActivityResult in OrganizationProfile");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mImageUri = data.getData();
+            final int takeFlags = data.getFlags()
+                    & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            // Check for the freshest data.
+            getActivity().getContentResolver().takePersistableUriPermission(mImageUri, takeFlags);
             mImageView.setImageURI(mImageUri);
             uploadFile();
         }
+    }
+
+    private Bitmap getImageBitmap(String url) {
+        Bitmap bm = null;
+        try {
+            URL aURL = new URL(url);
+            URLConnection conn = aURL.openConnection();
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error getting bitmap", e);
+        }
+        return bm;
     }
 }
