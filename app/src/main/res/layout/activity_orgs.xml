@@ -11,6 +11,25 @@
         tools:context=".ui.organizations.OrganizationProfile">
 
         <RelativeLayout
+            android:id="@+id/relativelayout_posts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linlay1"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_posts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="232dp"
@@ -61,6 +80,13 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_baseline_settings_24" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/newPostFAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -71,14 +97,15 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/posts_fake_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/followersBg"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -87,6 +114,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/posts_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -99,14 +127,15 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/info_fake_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/followingBg"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -115,6 +144,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/info_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -130,17 +160,19 @@
 
 
         <RelativeLayout
+            android:id="@+id/relativelayout_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/linlay1">
+            android:layout_below="@+id/linlay1"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
                 android:orientation="vertical">
 
                 <LinearLayout

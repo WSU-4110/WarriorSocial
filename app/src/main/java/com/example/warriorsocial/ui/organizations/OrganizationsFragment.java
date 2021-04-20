@@ -53,7 +53,6 @@ public class OrganizationsFragment extends Fragment {
         //TODO: Change recyclerView id to something more representable (calendar uses id recycler_view, too similar)
         //TODO: Refactor activity_main1 to more representable layout name
         recyclerView = root.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
 
         return root;
     }
@@ -92,10 +91,12 @@ public class OrganizationsFragment extends Fragment {
                 System.out.println("inside onBindViewHolder in OrganizationsFragment");
                 final DatabaseReference StudentOrganizationRef = getRef(position);
                 // For Testing
+                /*
                 System.out.println("StudentOrganizationRef KEY: " + StudentOrganizationRef.getKey());
                 System.out.println("StudentOrganizationRef PARENT: " + StudentOrganizationRef.getParent());
                 System.out.println("StudentOrganizationRef REF: " + StudentOrganizationRef.getRef());
                 System.out.println("StudentOrganizationRef ROOT: " + StudentOrganizationRef.getRoot());
+                */
 
                 // Set click listener for the entire card
 
@@ -113,7 +114,7 @@ public class OrganizationsFragment extends Fragment {
 
                         // Load event key into args
                         args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, StudentOrganizationKey);
-                        System.out.println("CalendarEventKey: " + StudentOrganizationKey);
+                        System.out.println("StudentOrganizationKey: " + StudentOrganizationKey);
 
                         // Navigate
                         navController.navigate(R.id.action_navigation_organizations_to_organizationProfile, args);
