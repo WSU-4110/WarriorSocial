@@ -1,10 +1,13 @@
 package com.example.warriorsocial.ui.settings;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +16,14 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.home.EventDetailFragment;
 import com.example.warriorsocial.ui.login.LoginActivity;
-import com.example.warriorsocial.ui.settings.SettingsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,16 +42,17 @@ public class SettingsFragment extends Fragment {
         //Logout User
         Button logout;
 
+        // For sending notifications
+        public static final String NOTIFICATION_S = "fromSettingsFragment";
+        private boolean yesPass = false;
+
+
     // Controls for shared preferences
-    Switch swPost;
-    Switch swComment;
     Switch swAllNotifications;
     EditText etUsername;
     Button btChangeUsername;
 
     // Shared preferences variables
-    public static final String REPLIES_POST = "REPLIES_POST";
-    public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
     public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
     public static final boolean BOOL_DEFAULT = false;
 
@@ -95,6 +90,7 @@ public class SettingsFragment extends Fragment {
 
                     // Bind to action to move from Settings page to Privacy Policy
                     navController.navigate(R.id.action_navigation_settings_to_navigation_privacy);
+
                 }
             });
 
@@ -107,10 +103,14 @@ public class SettingsFragment extends Fragment {
                     passwordResetDialog.setMessage("Enter your email to receive reset link.");
                     passwordResetDialog.setView(resetmail);
 
+                    // For sending notifications to user
+                    //createNotificationChannels();
+                    //BottomActivity.getInstance().sendNotification(v);
+
                     passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            yesPass = true;
                             String mail = resetmail.getText().toString();
                             fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -135,6 +135,12 @@ public class SettingsFragment extends Fragment {
                     });
 
                     passwordResetDialog.create().show();
+
+                    if (yesPass == true){
+                        // For sending notifications to user
+                        createNotificationChannels();
+                        BottomActivity.getInstance().sendNotification(v);
+                    }
                 }
             });
 
@@ -176,22 +182,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // OnCheckedChange for Replies to Post Switch
-       /* swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                writeSPPost(swPost.isChecked());
-            }
-        });
-        // OnCheckedChanged for Replies to Comments Switch
-        swComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                writeSPComment(swComment.isChecked());
-            }
-        });*/
 
         // OnCheckedChange for All Notifications
         swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -206,33 +196,6 @@ public class SettingsFragment extends Fragment {
             return root;
         }
 
-    // writeToSharedPreferences writes data to the Shared Preferences
-    public void writeSPPost(boolean replies_post) {
-        // Create editor object
-        SharedPreferences sharedPrefWrite;
-        SharedPreferences.Editor editor;
-        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPrefWrite.edit();
-
-        // Store values as name/value pairs
-        editor.putBoolean(REPLIES_POST, replies_post);
-
-        editor.commit();
-    }
-
-    // writeToSharedPreferences writes data to the Shared Preferences
-    public void writeSPComment( boolean replies_comments) {
-        // Create editor object
-        SharedPreferences sharedPrefWrite;
-        SharedPreferences.Editor editor;
-        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPrefWrite.edit();
-
-        // Store values as name/value pairs
-        editor.putBoolean(REPLIES_COMMENTS, replies_comments);
-
-        editor.commit();
-    }
 
     // writeToSharedPreferences writes data to the Shared Preferences
     public void writeSPAll(boolean all_notifications) {
@@ -258,10 +221,24 @@ public class SettingsFragment extends Fragment {
         sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // Set text fields to data from shared preferences
-      //  swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
-       // swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
         swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
     }
+
+    // For creating notifications
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    NOTIFICATION_S,
+                    "Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("User Notification");
+
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
 }
 
 
