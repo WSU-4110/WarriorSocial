@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_event_detail"
             app:destination="@id/event_detail" />
+        <action
+            android:id="@+id/action_navigation_home_to_newCalendarEventFragment"
+            app:destination="@id/newCalendarEventFragment" />
     </fragment>
 
     <fragment
@@ -76,6 +79,14 @@
         <action
             android:id="@+id/action_newPostFragment_to_organizationProfile"
             app:destination="@id/organizationProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/newCalendarEventFragment"
+        android:name="com.example.warriorsocial.ui.home.NewCalendarEventFragment"
+        android:label="NewCalendarEventFragment" >
+        <action
+            android:id="@+id/action_newCalendarEventFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
 </navigation>

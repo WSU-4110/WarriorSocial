@@ -1,5 +1,4 @@
 package com.example.warriorsocial.ui.organizations;
-import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
 import com.example.warriorsocial.ui.home.EventDetailFragment;
@@ -35,8 +34,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -44,7 +41,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -92,12 +88,6 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
-
-    // For sending notifications
-    public static final String NOTIFICATION_S = "fromSettingsFragment";
-    public boolean postAndUserEqual = false;
-
-    View root;
 
     @Nullable
     @Override
@@ -250,7 +240,7 @@ public class OrganizationProfile extends Fragment {
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
-                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
+                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail().toLowerCase());
                     // Setting up FirebaseRecyclerOptions be based off class:  "StudentOrganizationsPost"
                     FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<StudentOrganizationPost>()
                             .setQuery(query, StudentOrganizationPost.class)
@@ -262,7 +252,6 @@ public class OrganizationProfile extends Fragment {
                         public OrganizationPostViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                             System.out.println("inside onCreateViewHolder in OrganizationProfile");
                             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-
                             return new OrganizationPostViewHolder(inflater.inflate(R.layout.student_organization_post_card, viewGroup, false));
                         }
 
@@ -276,10 +265,8 @@ public class OrganizationProfile extends Fragment {
                             // Determine if the current user has liked this post and set UI accordingly
                             // TODO: Get Images for Liked and not yet liked
                             if (model.likes.containsKey(getUid())) {
-                                //Need image for IS LIKED (maybe the filled in star)
                                 viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_24);
                             } else {
-                                //Need image for IS NOT LIKED (maybe the star outline)
                                 viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_outline_24);
                             }
 
@@ -289,13 +276,12 @@ public class OrganizationProfile extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     String postUserEmailProcessed = model.postEmail.replaceAll("\\.", "_");
+                                    postUserEmailProcessed = postUserEmailProcessed.toLowerCase();
                                     DatabaseReference postRef = mOrganizationPostsReference.child("StudentOrganizationPosts/"
                                             + postUserEmailProcessed + "/" + postKey);
 
                                     // Update database
                                     onLikeClicked(postRef);
-
-
                                 }
                             };
                             viewHolder.bindToPost(model, likeClickListener, h);
@@ -442,7 +428,6 @@ public class OrganizationProfile extends Fragment {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-
                 StudentOrganizationPost SOPost = mutableData.getValue(StudentOrganizationPost.class);
                 if (SOPost == null) {
                     return Transaction.success(mutableData);
@@ -456,22 +441,7 @@ public class OrganizationProfile extends Fragment {
                     // Star the post and add self to stars
                     SOPost.likeCount = SOPost.likeCount + 1;
                     SOPost.likes.put(getUid(), true);
-
-                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())){
-                        postAndUserEqual = true;
-                    }
-
-                    // Makes sure that a SO user exists and that the post id is the same as the current user
-                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
-                        // For sending notifications to user
-                        // Need to figure out how to send notifications when another user likes
-                        // when does the users screen update from the database?
-                        createNotificationChannels();
-                        BottomActivity.getInstance().sendNotification(root);
-                    }
                 }
-
-
 
                 // Set value and report transaction success
                 mutableData.setValue(SOPost);
@@ -485,21 +455,6 @@ public class OrganizationProfile extends Fragment {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
             }
         });
-    }
-
-    // For creating notifications
-    private void createNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(
-                    NOTIFICATION_S,
-                    "Notification",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            notificationChannel.setDescription("User Notification");
-
-            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(notificationChannel);
-        }
     }
 
     public String getUid() {
