@@ -144,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
                 preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
                 editor = preferences.edit();
                 editor.putString("AccountType",account);
+                editor.putString("Username", usernameTxt);
                 editor.commit();
 
 

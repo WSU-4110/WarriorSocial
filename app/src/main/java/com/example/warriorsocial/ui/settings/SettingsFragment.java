@@ -114,9 +114,9 @@ public class SettingsFragment extends Fragment {
         etUsername = root.findViewById(R.id.textView2);
         userName = root.findViewById(R.id.et_studentUserName);
         btChangeUsername = root.findViewById(R.id.button3);
-        userID = fAuth.getCurrentUser().getUid();
+        //userID = fAuth.getCurrentUser().getUid();
 
-        Query reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(userID);
+        /*Query reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(userID);
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,8 +129,12 @@ public class SettingsFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
-            });
+            });*/
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("Username","");
+
+        etUsername.setText(username);
 
         // Read Shared Preferences values
         readSharedPreferences();
