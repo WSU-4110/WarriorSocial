@@ -23,7 +23,7 @@
                 android:id="@+id/homeview"
                 android:layout_width="222dp"
                 android:layout_height="303dp"
-                app:srcCompat="@drawable/Home" />
+                app:srcCompat="@drawable/homeview" />
 
             <ImageView
                 android:id="@+id/orgsview"
@@ -35,19 +35,19 @@
                 android:id="@+id/discview"
                 android:layout_width="222dp"
                 android:layout_height="303dp"
-                app:srcCompat="@drawable/Disc" />
+                app:srcCompat="@drawable/disc" />
 
             <ImageView
                 android:id="@+id/notiview"
                 android:layout_width="222dp"
                 android:layout_height="303dp"
-                app:srcCompat="@drawable/Not" />
+                app:srcCompat="@drawable/noti" />
 
             <ImageView
                 android:id="@+id/settview"
                 android:layout_width="222dp"
                 android:layout_height="303dp"
-                app:srcCompat="@drawable/Sett" />
+                app:srcCompat="@drawable/sett" />
 
         </LinearLayout>
     </ScrollView>
