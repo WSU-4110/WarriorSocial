@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.warriorsocial.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,6 +48,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     // Calendar on home fragment
     private CalendarView calendarView;
+    private FloatingActionButton eventFAB;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class HomeFragment extends Fragment {
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
 
+        // Floating Action (Post new calendar Event)
+        eventFAB = root.findViewById(R.id.eventFAB);
         return root;
         }
 
@@ -76,6 +80,18 @@ public class HomeFragment extends Fragment {
             mManager.setReverseLayout(true);
             mManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(mManager);
+
+            // Set onClick for FAB
+            eventFAB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Launch EventDetailFragment and pass a database reference key
+
+                    NavController navController = Navigation.findNavController(requireActivity(),
+                            R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_navigation_home_to_newCalendarEventFragment);
+                }
+            });
 
 
             // Set up FirebaseRecyclerAdapter with a default Query ( Current Day )
