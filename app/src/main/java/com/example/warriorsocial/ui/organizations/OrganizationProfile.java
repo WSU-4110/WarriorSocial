@@ -96,6 +96,7 @@ public class OrganizationProfile extends Fragment {
     // For sending notifications
     public static final String NOTIFICATION_S = "fromSettingsFragment";
     public boolean postAndUserEqual = false;
+
     View root;
 
     @Nullable
@@ -262,13 +263,6 @@ public class OrganizationProfile extends Fragment {
                             System.out.println("inside onCreateViewHolder in OrganizationProfile");
                             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-                            if (postAndUserEqual == true) {
-                            // For sending notifications to user
-                            // Need to figure out how to send notifications when another user likes
-                            // when does the users screen update from the database?
-                            createNotificationChannels();
-                            BottomActivity.getInstance().sendNotification(root);
-                        }
                             return new OrganizationPostViewHolder(inflater.inflate(R.layout.student_organization_post_card, viewGroup, false));
                         }
 
@@ -300,6 +294,8 @@ public class OrganizationProfile extends Fragment {
 
                                     // Update database
                                     onLikeClicked(postRef);
+
+
                                 }
                             };
                             viewHolder.bindToPost(model, likeClickListener, h);
@@ -466,13 +462,13 @@ public class OrganizationProfile extends Fragment {
                     }
 
                     // Makes sure that a SO user exists and that the post id is the same as the current user
-                    /*if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
+                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
                         // For sending notifications to user
                         // Need to figure out how to send notifications when another user likes
                         // when does the users screen update from the database?
                         createNotificationChannels();
                         BottomActivity.getInstance().sendNotification(root);
-                    }*/
+                    }
                 }
 
 
