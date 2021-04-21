@@ -33,7 +33,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -86,7 +88,7 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
-    Spinner spinner;
+
 
     @Nullable
     @Override
@@ -98,10 +100,10 @@ public class OrganizationProfile extends Fragment {
         recyclerView = root.findViewById(R.id.recycler_view_posts);
         newPostFAB = root.findViewById(R.id.newPostFAB);
 
-        spinner = root.findViewById(R.id.spinner2);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.accType, R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        String account = spinner.getSelectedItem().toString();
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
+        String account = sharedPreferences.getString("AccountType","");
+
         if(account.equals("Student")){
             newPostFAB.setVisibility(View.INVISIBLE);
         }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,9 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userPassword;
     private EditText userName;
     private Button createAccountButton;
+    Spinner spinner;
 
     FirebaseAuth fAuth;
     ProgressBar loadingProgressBar;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -47,6 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountButton = findViewById(R.id.button_create_account);
         fAuth = FirebaseAuth.getInstance();
         loadingProgressBar = findViewById(R.id.loading);
+
+        spinner = findViewById(R.id.spinner2);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accType, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         //Check if user is already logged in
         /*
@@ -131,6 +139,12 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
+                // Save values in shared preferences
+                String account = spinner.getSelectedItem().toString();
+                preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+                editor = preferences.edit();
+                editor.putString("AccountType",account);
+                editor.commit();
 
 
 
