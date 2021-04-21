@@ -1,5 +1,6 @@
 package com.example.warriorsocial.ui.settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -7,17 +8,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,11 +33,23 @@ import com.example.warriorsocial.ui.login.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class SettingsFragment extends Fragment {
 
         private SettingsViewModel settingsViewModel;
         FirebaseAuth fAuth;
+        StorageReference storageReference;
+
 
         // Privacy Policy
         Button btn_privacy;
@@ -43,9 +60,6 @@ public class SettingsFragment extends Fragment {
         //Logout User
         Button logout;
 
-        //Username
-        EditText userName;
-        EditText setUsername;
 
         // For sending notifications
         public static final String NOTIFICATION_S = "fromSettingsFragment";
@@ -55,7 +69,11 @@ public class SettingsFragment extends Fragment {
     // Controls for shared preferences
     Switch swAllNotifications;
     EditText etUsername;
+    EditText userName;
     Button btChangeUsername;
+    Button btnChangePicture;
+    String userID;
+    ImageView profileImage;
 
     // Shared preferences variables
     public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
@@ -75,6 +93,20 @@ public class SettingsFragment extends Fragment {
 
             logout = root.findViewById(R.id.logout);
 
+            fAuth = FirebaseAuth.getInstance();
+
+            profileImage = root.findViewById(R.id.imageView3);
+            btnChangePicture = root.findViewById(R.id.button2);
+            storageReference = FirebaseStorage.getInstance().getReference();
+
+            StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.get().load(uri).into(profileImage);
+                }
+            });
+
         //Controls for shared preferences
         //swPost = root.findViewById(R.id.switch1);
         //swComment = root.findViewById(R.id.switch2);
@@ -82,11 +114,26 @@ public class SettingsFragment extends Fragment {
         etUsername = root.findViewById(R.id.textView2);
         userName = root.findViewById(R.id.et_studentUserName);
         btChangeUsername = root.findViewById(R.id.button3);
-        setUsername = root.findViewById(R.id.textView2);
+        userID = fAuth.getCurrentUser().getUid();
+
+        Query reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(userID);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        etUsername.setText(snapshot.toString());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
 
         //Set username in settings
-        setUsername.setText(userName.getText().toString());
+        //etUsername.setText(userName.getText().toString());
 
         // Read Shared Preferences values
         readSharedPreferences();
@@ -166,7 +213,6 @@ public class SettingsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        // add code here to connect to firebase
 
                     }
                 });
@@ -182,6 +228,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //OnClick for Change Profile Picture
+        btnChangePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open photo gallery
+                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGallery,1000);
+            }
+        });
+
 
         // OnCheckedChange for All Notifications
         swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -194,8 +250,41 @@ public class SettingsFragment extends Fragment {
 
         // Return root (layout)
             return root;
-        }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000){
+            if(resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
+                //profileImage.setImageURI(imageUri);
+
+                uploadToFirebase(imageUri);
+
+            }
+        }
+    }
+
+    private void uploadToFirebase(Uri imageUri) {
+        final StorageReference fileReference = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+        fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profileImage);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Image Upload Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // writeToSharedPreferences writes data to the Shared Preferences
     public void writeSPAll(boolean all_notifications) {
