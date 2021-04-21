@@ -83,6 +83,7 @@ public class OrganizationsFragment extends Fragment {
             public OrganizationsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 System.out.println("inside onCreateViewHolder in HomeFragment");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                //call to layout for organization profile listing
                 return new OrganizationsViewHolder(inflater.inflate(R.layout.student_organization_card, viewGroup, false));
             }
 
