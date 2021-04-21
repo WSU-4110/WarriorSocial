@@ -1,19 +1,30 @@
 package com.example.warriorsocial.ui.organizations;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.database.Exclude;
+
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StudentOrganizationPost {
-    private String postDescription;
-    private String postEmail;
-    private String postImage;
+    public String postDescription;
+    public String postEmail;
+    public String postImage;
+    public String postTitle;
+    public String uid;
+    public int likeCount = 0;
+    public Map<String, Boolean> likes = new HashMap<>();
     //private Timestamp postTime;
 
     public StudentOrganizationPost() {}
 
-    public StudentOrganizationPost(String postDescription, String postEmail, String postImage, Timestamp postTime) {
+    public StudentOrganizationPost(String postDescription, String postEmail, String postImage, String postTitle, String uid) {
         this.postDescription = postDescription;
         this.postEmail = postEmail;
         this.postImage = postImage;
+        this.postTitle = postTitle;
+        this.uid = uid;
         //this.postTime = postTime;
     }
 
@@ -26,6 +37,8 @@ public class StudentOrganizationPost {
     public String getPostImage() {
         return postImage;
     }
+    public String getPostTitle() { return postTitle; }
+    public String getuid() { return uid; }
     /*
     public Timestamp getPostTime() {
         return getPostTime();
@@ -46,4 +59,18 @@ public class StudentOrganizationPost {
     public void setPostTime(Timestamp postTime) {
         this.postTime = postTime;
     }*/
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("postEmail", postEmail);
+        result.put("postImage", postImage);
+        result.put("postTitle", postTitle);
+        result.put("postDescription", postDescription);
+        result.put("likeCount", likeCount);
+        result.put("likes", likes);
+
+        return result;
+    }
 }
