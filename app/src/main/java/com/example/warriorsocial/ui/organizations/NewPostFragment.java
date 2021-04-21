@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.warriorsocial.R;
@@ -157,8 +158,18 @@ public class NewPostFragment extends Fragment {
                         }
 
                         setEditingEnabled(true);
-                        NavHostFragment.findNavController(NewPostFragment.this)
-                                .navigate(R.id.action_newPostFragment_to_organizationProfile);
+                        // Navigate back to the org
+                        NavController navController = NavHostFragment.findNavController(NewPostFragment.this);
+
+                        // Attach args
+                        Bundle args = new Bundle();
+                        String mOrganizationKey = requireArguments().getString(OrganizationProfile.EXTRA_ORGANIZATION_KEY);
+                        if (mOrganizationKey == null) {
+                            throw new IllegalArgumentException("Must pass EXTRA_ORGANIZATION_KEY");
+                        }
+                        args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, mOrganizationKey);
+
+                        navController.navigate(R.id.action_newPostFragment_to_organizationProfile, args);
                     }
 
                     @Override
@@ -189,7 +200,7 @@ public class NewPostFragment extends Fragment {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(key, postValues);
 
-        uploadFile();
+        uploadFile(key);
         mOrganizationReference.updateChildren(childUpdates);
     }
 
@@ -219,7 +230,7 @@ public class NewPostFragment extends Fragment {
     }
 
     // uploadFile() will create unique key for the newly uploaded file, save it to that particular organization, and upload it to FirebaseStorage
-    private void uploadFile() {
+    private void uploadFile(final String key) {
         System.out.println("Inside uploadFile in NewPostFragment");
         if (mImageUri != null) {
             final StorageReference fileReference = mOrganizationStorageReference.child(System.currentTimeMillis() + "." + getFileExtension(mImageUri));
@@ -247,7 +258,7 @@ public class NewPostFragment extends Fragment {
                                     String imageReference = uri.toString();
                                     System.out.println("Image Reference: " + imageReference);
                                     childUpdates.put("postImage", imageReference);
-                                    mOrganizationReference.updateChildren(childUpdates);
+                                    mOrganizationReference.child(key).updateChildren(childUpdates);
                                 }
                             });
 
