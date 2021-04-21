@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.warriorsocial.BottomActivity;
@@ -29,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userPassword;
     private EditText userName;
     private Button createAccountButton;
+    Button editStudentOrg;
+    Spinner spinner;
     FirebaseAuth fAuth;
     ProgressBar loadingProgressBar;
 
@@ -44,6 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountButton = findViewById(R.id.button_create_account);
         fAuth = FirebaseAuth.getInstance();
         loadingProgressBar = findViewById(R.id.loading);
+        editStudentOrg = findViewById(R.id.newPostFAB);
+        spinner = findViewById(R.id.spinner2);
+        ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accType, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         //Check if user is already logged in
         /*
@@ -61,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String emailTxt = userEmail.getText().toString();
                 String passwordTxt = userPassword.getText().toString();
                 final String usernameTxt = userName.getText().toString();
+                final String account = spinner.getSelectedItem().toString();
 
                 //Check to see if input is empty
                 /*
@@ -104,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //System.out.println("Completed Registration!");
                         if(task.isSuccessful()){
                             User user = new User(usernameTxt, emailTxt);
 
@@ -113,7 +121,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if(task.isSuccessful() && account.equals("Student")){
+                                        Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), BottomActivity.class));
+                                        editStudentOrg.setVisibility(View.INVISIBLE);
+                                    }else if(task.isSuccessful() && account.equals("Student Organization")){
                                         Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                                     }else{
@@ -128,6 +140,9 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
+
 
             }
         });

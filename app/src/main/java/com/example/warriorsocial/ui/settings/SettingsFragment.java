@@ -132,9 +132,6 @@ public class SettingsFragment extends Fragment {
             });
 
 
-        //Set username in settings
-        //etUsername.setText(userName.getText().toString());
-
         // Read Shared Preferences values
         readSharedPreferences();
 
