@@ -208,13 +208,18 @@
                 android:id="@+id/btn_usertut"
                 android:layout_width="102dp"
                 android:layout_height="44dp"
-                android:onClick="activity_user_tutorial"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="39dp"
                 android:text="Tutorial"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteX="158dp"
-                tools:layout_editor_absoluteY="530dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/logout"
+                app:layout_constraintStart_toEndOf="@+id/btn_privacy"
+                app:layout_constraintTop_toBottomOf="@+id/switch3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
