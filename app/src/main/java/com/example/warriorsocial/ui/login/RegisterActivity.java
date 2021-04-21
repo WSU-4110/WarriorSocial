@@ -31,8 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userPassword;
     private EditText userName;
     private Button createAccountButton;
-    Button editStudentOrg;
-    Spinner spinner;
+
     FirebaseAuth fAuth;
     ProgressBar loadingProgressBar;
 
@@ -48,10 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountButton = findViewById(R.id.button_create_account);
         fAuth = FirebaseAuth.getInstance();
         loadingProgressBar = findViewById(R.id.loading);
-        editStudentOrg = findViewById(R.id.newPostFAB);
-        spinner = findViewById(R.id.spinner2);
-        ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accType, R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         //Check if user is already logged in
         /*
@@ -69,7 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
                 final String emailTxt = userEmail.getText().toString();
                 String passwordTxt = userPassword.getText().toString();
                 final String usernameTxt = userName.getText().toString();
-                final String account = spinner.getSelectedItem().toString();
 
                 //Check to see if input is empty
                 /*
@@ -121,11 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful() && account.equals("Student")){
-                                        Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), BottomActivity.class));
-                                        editStudentOrg.setVisibility(View.INVISIBLE);
-                                    }else if(task.isSuccessful() && account.equals("Student Organization")){
+                                    if(task.isSuccessful()){
                                         Toast.makeText(RegisterActivity.this, "User created.", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                                     }else{

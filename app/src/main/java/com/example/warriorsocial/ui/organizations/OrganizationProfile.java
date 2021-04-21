@@ -44,8 +44,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +86,7 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
+    Spinner spinner;
 
     @Nullable
     @Override
@@ -94,6 +97,15 @@ public class OrganizationProfile extends Fragment {
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
         newPostFAB = root.findViewById(R.id.newPostFAB);
+
+        spinner = root.findViewById(R.id.spinner2);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.accType, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        String account = spinner.getSelectedItem().toString();
+        if(account.equals("Student")){
+            newPostFAB.setVisibility(View.INVISIBLE);
+        }
+
 
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
