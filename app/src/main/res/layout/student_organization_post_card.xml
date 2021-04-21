@@ -24,14 +24,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:background="@color/WSUDrkGreen"
+            android:background="@color/WSUGreen"
             android:orientation="vertical">
 
             <!-- Top Portion of card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@color/WSUGold"
+                android:background="#AAAAAA"
                 android:orientation="horizontal">
 
                 <!-- Like count, like icon, post title -->
@@ -41,25 +41,33 @@
                     android:layout_weight="2"
                     android:orientation="vertical">
 
-                    <!-- Likes -->
-                    <TextView
-                        android:id="@+id/post_num_likes"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingStart="20dp"
-                        android:text="# Likes"
-                        android:textColor="@color/WSUDrkGreen"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <!-- Likes -->
 
-                    <ImageView
-                        android:id="@+id/post_likes_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="13dp"
-                        app:srcCompat="@drawable/ic_baseline_thumb_up_outline_24" />
+                        <ImageView
+                            android:id="@+id/post_likes_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10dp"
+                            android:paddingTop="12dp"
+                            app:srcCompat="@drawable/ic_baseline_thumb_up_outline_24" />
 
+                        <TextView
+                            android:id="@+id/post_num_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="10dp"
+                            android:paddingTop="10dp"
+                            android:text="# Likes"
+                            android:textColor="@color/WSUDrkGreen"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
                     <!-- Post title -->
                     <TextView
                         android:id="@+id/post_title"
@@ -67,14 +75,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginTop="70dp"
                         android:text="Post Title"
                         android:textColor="@color/WSUDrkGreen"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
-                
+
                 <!-- Image -->
                 <ImageView
                     android:id="@+id/post_image"
