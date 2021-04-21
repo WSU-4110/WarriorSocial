@@ -240,7 +240,7 @@ public class OrganizationProfile extends Fragment {
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
-                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
+                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail().toLowerCase());
                     // Setting up FirebaseRecyclerOptions be based off class:  "StudentOrganizationsPost"
                     FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<StudentOrganizationPost>()
                             .setQuery(query, StudentOrganizationPost.class)
@@ -265,11 +265,9 @@ public class OrganizationProfile extends Fragment {
                             // Determine if the current user has liked this post and set UI accordingly
                             // TODO: Get Images for Liked and not yet liked
                             if (model.likes.containsKey(getUid())) {
-                                //Need image for IS LIKED (maybe the filled in star)
-                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                                viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_24);
                             } else {
-                                //Need image for IS NOT LIKED (maybe the star outline)
-                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                                viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_outline_24);
                             }
 
                             //TODO: Create clickable post for comments?
@@ -278,6 +276,7 @@ public class OrganizationProfile extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     String postUserEmailProcessed = model.postEmail.replaceAll("\\.", "_");
+                                    postUserEmailProcessed = postUserEmailProcessed.toLowerCase();
                                     DatabaseReference postRef = mOrganizationPostsReference.child("StudentOrganizationPosts/"
                                             + postUserEmailProcessed + "/" + postKey);
 
