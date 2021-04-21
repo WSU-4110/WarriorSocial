@@ -32,23 +32,21 @@
         <RelativeLayout
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
-            android:layout_height="232dp"
+            android:layout_height="245dp"
             android:background="@drawable/header"
             android:paddingBottom="20dp">
 
-           <RelativeLayout
+            <RelativeLayout
                 android:id="@+id/imgUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
 
                 <ImageView
                     android:id="@+id/tv_image"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_margin="9dp"
                     android:adjustViewBounds="true"
                     android:padding="3dp"
                     android:scaleType="centerInside"
@@ -66,8 +64,22 @@
                 android:fontFamily="sans-serif-light"
                 android:text="Association for Computing Machinery"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15sp"
+                android:fontFamily="sans-serif-light"
+                android:text="Description"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <ImageView
@@ -79,6 +91,13 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_baseline_settings_24" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/newPostFAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </RelativeLayout>
 
