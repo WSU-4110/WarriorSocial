@@ -26,11 +26,12 @@ Here are some resources that will be needed in order to run the app:
 
   ![Image](https://github.com/WSU-4110/WarriorSocial/blob/main/newfolder/4.png)
 
-## Importing the project in Visual Studio Code (VS Code)
+## Run the application on Android Studio
 
-- Clone the repository:https://github.com/WSU-4110/WarriorSocial.git
+- Clone the project repository:https://github.com/WSU-4110/WarriorSocial.git
   ![Image](https://github.com/WSU-4110/WarriorSocial/blob/main/newfolder/6.png)
   
 - Navigate to the toolbar and click on the green play button to run the app on the emulator
+
 - Additionally you can also download the project as a zipped folder from Github and open it using Android Studio 
 
