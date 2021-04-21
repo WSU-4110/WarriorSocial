@@ -41,10 +41,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:inputType="textMultiLine"
                 android:text="Use the Home page to find new and upcoming events"
-                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -60,10 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:inputType="textMultiLine"
                 android:text="Find new organizations to join"
-                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <ImageView
@@ -77,10 +75,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="67dp"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:inputType="textMultiLine"
                 android:text="Discover new topics and discuss ideas"
-                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <ImageView
@@ -94,10 +91,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:inputType="textMultiLine"
                 android:text="Check your notifications and view your past comments and posts"
-                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <ImageView
@@ -111,10 +107,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:inputType="textMultiLine"
                 android:text="Change your username or password and update your settings "
-                android:textAlignment="center"
                 android:textStyle="bold" />
 
         </LinearLayout>

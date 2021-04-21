@@ -42,6 +42,9 @@ public class SettingsFragment extends Fragment {
         // Privacy Policy
         Button btn_privacy;
 
+        //User Tutorial
+        Button btn_usertut;
+
         //Change Password
         Button changepass;
 
@@ -71,6 +74,8 @@ public class SettingsFragment extends Fragment {
             // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
             btn_privacy = root.findViewById(R.id.btn_privacy);
 
+            btn_usertut=root.findViewById(R.id.btn_usertut);
+
             changepass = root.findViewById(R.id.resetPass);
 
             logout = root.findViewById(R.id.logout);
@@ -95,6 +100,15 @@ public class SettingsFragment extends Fragment {
 
                     // Bind to action to move from Settings page to Privacy Policy
                     navController.navigate(R.id.action_navigation_settings_to_navigation_privacy);
+                }
+            });
+
+            btn_usertut.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_navigation_settings_to_navigation_user_tutorial);
+
                 }
             });
 
@@ -138,8 +152,6 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-
-
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +159,9 @@ public class SettingsFragment extends Fragment {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             });
+
+            //button for user tutorial
+
 
         // OnClick for Change Username Button
         btChangeUsername.setOnClickListener(new View.OnClickListener() {

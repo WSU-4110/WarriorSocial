@@ -10,7 +10,6 @@ import android.widget.Button;
 public class UserTutorial extends AppCompatActivity {
 
     private Button button;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,6 @@ public class UserTutorial extends AppCompatActivity {
 
 public void openActivity_user_tutorial()
 {
-    Intent intent = new Intent (this, openActivity_user_tutorial);
-    startActivity(intent);
+
 }
 }
