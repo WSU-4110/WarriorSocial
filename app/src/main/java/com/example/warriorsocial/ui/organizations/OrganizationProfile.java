@@ -234,9 +234,10 @@ public class OrganizationProfile extends Fragment {
 
                     organizationName.setText(studentOrganization.getOrganizationName());
                     organizationEmail.setText(studentOrganization.getOrganizationEmail());
-                    organizationPhone.setText(studentOrganization.getOrganizationDescription());
-                    organizationPresidentName.setText(studentOrganization.getOrganizationDescription());
-                    organizationVicePresidentName.setText(studentOrganization.getOrganizationEmail());
+                    organizationPhone.setText(studentOrganization.getOrganizationPhoneNumber());
+                    organizationPresidentName.setText(studentOrganization.getOrganizationPresident());
+                    organizationVicePresidentName.setText(studentOrganization.getOrganizationVicePresident());
+                    //organizationDescription.setText(studentOrganization.getOrganizationDescription());
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
