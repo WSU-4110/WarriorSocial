@@ -54,12 +54,14 @@ public class SettingsFragment extends Fragment {
         // Privacy Policy
         Button btn_privacy;
 
+        //User Tutorial
+        Button btn_usertut;
+
         //Change Password
         Button changepass;
 
         //Logout User
         Button logout;
-
 
         // For sending notifications
         public static final String NOTIFICATION_S = "fromSettingsFragment";
@@ -88,8 +90,9 @@ public class SettingsFragment extends Fragment {
             // Attach root to the layout
             View root = inflater.inflate(R.layout.settings_activity, container, false);
 
-            // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
             btn_privacy = root.findViewById(R.id.btn_privacy);
+
+            btn_usertut=root.findViewById(R.id.btn_usertut);
 
             changepass = root.findViewById(R.id.resetPass);
 
@@ -110,8 +113,7 @@ public class SettingsFragment extends Fragment {
             });
 
         //Controls for shared preferences
-        //swPost = root.findViewById(R.id.switch1);
-        //swComment = root.findViewById(R.id.switch2);
+
         swAllNotifications = root.findViewById(R.id.switch3);
         etUsername = root.findViewById(R.id.textView2);
         userName = root.findViewById(R.id.et_studentUserName);
@@ -156,6 +158,15 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+            btn_usertut.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_navigation_settings_to_usertutfrag);
+
+                }
+            });
+
             changepass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -195,8 +206,6 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-
-
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -204,6 +213,7 @@ public class SettingsFragment extends Fragment {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             });
+
 
         // OnClick for Change Username Button
         btChangeUsername.setOnClickListener(new View.OnClickListener() {
@@ -215,11 +225,13 @@ public class SettingsFragment extends Fragment {
                 changeUsernameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         preferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
                         editor = preferences.edit();
                         editor.putString("Username", newUserName.getText().toString());
                         editor.commit();
                         etUsername.setText(newUserName.getText().toString());
+
                     }
                 });
 

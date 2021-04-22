@@ -5,7 +5,9 @@ public class StudentOrganization {
     private String organizationEmail;
     private String organizationDescription;
     private String organizationImageUrl;
-
+    private String organizationPhoneNumber;
+    private String organizationPresident;
+    private String organizationVicePresident;
 
     public StudentOrganization() {}
 
@@ -14,6 +16,17 @@ public class StudentOrganization {
         this.organizationEmail = organizationEmail;
         this.organizationDescription = organizationDescription;
         this.organizationImageUrl = organizationImageUrl;
+    }
+
+    public StudentOrganization(String organizationName, String organizationEmail, String organizationDescription, String organizationImageUrl
+    , String organizationPhoneNumber, String organizationPresident, String organizationVicePresident) {
+        this.organizationName = organizationName;
+        this.organizationEmail = organizationEmail;
+        this.organizationDescription = organizationDescription;
+        this.organizationImageUrl = organizationImageUrl;
+        this.organizationPhoneNumber = organizationPhoneNumber;
+        this.organizationPresident = organizationPresident;
+        this.organizationVicePresident = organizationVicePresident;
     }
 
     public String getOrganizationDescription() {
@@ -29,6 +42,12 @@ public class StudentOrganization {
     }
 
     public String getOrganizationImageUrl() { return organizationImageUrl; }
+
+    public String getOrganizationPhoneNumber() { return organizationPhoneNumber; }
+
+    public String getOrganizationPresident() { return organizationPresident; }
+
+    public String getOrganizationVicePresident() { return organizationVicePresident; }
 
     public void setOrganizationDescription(String organizationDescription) {
         this.organizationDescription = organizationDescription;

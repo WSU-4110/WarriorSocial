@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#9F9F9F"
+            android:background="@color/colorPrimary"
             android:orientation="vertical">
 
             <Space
@@ -25,59 +25,51 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/WSUDrkGreen"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingStart="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
                     android:text="Event Title "
-                    android:textColor="@color/WSUGold"
-                    android:textSize="20sp"></TextView>
+                    android:textColor="@color/WSUGreen"
+                    android:textSize="20dp"></TextView>
 
                 <EditText
                     android:id="@+id/new_event_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Event Title"
-                    android:inputType="textPersonName"
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/white" />
+                    android:inputType="textShortMessage|text"
+                    android:layout_marginStart="16dp"
+                    android:ems="15" />
 
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
 
             <!-- Event Description -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/WSUDrkGreen"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingStart="10dp"
+                    android:gravity="bottom"
                     android:text="Event Description "
-                    android:textColor="@color/WSUGold"
-                    android:textSize="20sp"></TextView>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/WSUGreen"
+                    android:textSize="20dp"></TextView>
 
                 <EditText
                     android:id="@+id/new_event_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Event Description"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
                     android:inputType="textMultiLine"
-                    android:textColor="@color/white"
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp" />
+                    android:ems="15" />
 
             </LinearLayout>
 

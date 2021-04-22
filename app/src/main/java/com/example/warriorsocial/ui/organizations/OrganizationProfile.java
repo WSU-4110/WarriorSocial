@@ -1,4 +1,5 @@
 package com.example.warriorsocial.ui.organizations;
+
 import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
@@ -70,6 +71,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Import boolean from SettingsFragment to get user notifications selections from
+// shared preferences.
+import static com.example.warriorsocial.ui.settings.SettingsFragment.ALL_NOTIFICATIONS;
+
 public class OrganizationProfile extends Fragment {
 
     private static final String TAG = "OrganizationProfile";
@@ -97,7 +102,6 @@ public class OrganizationProfile extends Fragment {
     public static final boolean BOOLEAN_DEFAULT = false;
 
 
-
     // For sending notifications
     public static final String NOTIFICATION_S = "fromSettingsFragment";
     View root;
@@ -113,12 +117,11 @@ public class OrganizationProfile extends Fragment {
         newPostFAB = root.findViewById(R.id.newPostFAB);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
-        Boolean account = sharedPreferences.getBoolean("AccountType",false);
+        Boolean account = sharedPreferences.getBoolean("AccountType", false);
 
-        if(account){
+        if (account) {
             newPostFAB.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             newPostFAB.setVisibility(View.INVISIBLE);
         }
 
@@ -231,6 +234,7 @@ public class OrganizationProfile extends Fragment {
                     TextView organizationPhone = getActivity().findViewById(R.id.tv_phone);
                     TextView organizationPresidentName = getActivity().findViewById(R.id.tv_president_name);
                     TextView organizationVicePresidentName = getActivity().findViewById(R.id.tv_vice_president_name);
+                    TextView organizationDescription = getActivity().findViewById(R.id.tv_address);
 
                     // Get StudentOrganization object from dataSnapshot (handled by firebase using getters and setters)
                     final StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
@@ -256,9 +260,10 @@ public class OrganizationProfile extends Fragment {
 
                     organizationName.setText(studentOrganization.getOrganizationName());
                     organizationEmail.setText(studentOrganization.getOrganizationEmail());
-                    organizationPhone.setText(studentOrganization.getOrganizationDescription());
-                    organizationPresidentName.setText(studentOrganization.getOrganizationDescription());
-                    organizationVicePresidentName.setText(studentOrganization.getOrganizationEmail());
+                    organizationPhone.setText(studentOrganization.getOrganizationPhoneNumber());
+                    organizationPresidentName.setText(studentOrganization.getOrganizationPresident());
+                    organizationVicePresidentName.setText(studentOrganization.getOrganizationVicePresident());
+                    organizationDescription.setText(studentOrganization.getOrganizationDescription());
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
@@ -464,13 +469,15 @@ public class OrganizationProfile extends Fragment {
                     SOPost.likeCount = SOPost.likeCount + 1;
                     SOPost.likes.put(getUid(), true);
 
-                    // Makes sure that a SO user exists and that the post id is the same as the current user
-                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
-                        // For sending notifications to user
-                        // Need to figure out how to send notifications when another user likes
-                        // when does the users screen update from the database?
-                        createNotificationChannels();
-                        BottomActivity.getInstance().sendNotification(root);
+                    // Check if user has selected to turn off all notifications from Settings page
+                    if (readSharedPrefNotifications() == true) {
+                        // If receive notifications is set to "on"
+                        // Makes sure that a SO user exists and that the post id is the same as the current user
+                        if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
+                            // Send notification to the user
+                            createNotificationChannels();
+                            BottomActivity.getInstance().sendNotification(root);
+                        }
                     }
                 }
 
@@ -506,6 +513,20 @@ public class OrganizationProfile extends Fragment {
             NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
         }
+    }
+
+    // Reads shared preferences to find out if user has selected not to receive notifications
+    // on the settings page.
+    public boolean readSharedPrefNotifications() {
+        // Declare variables
+        SharedPreferences sharedPrefRead;
+        boolean isNotifications;
+
+        // Retrieve value from shared preferences
+        sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
+        isNotifications = sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOLEAN_DEFAULT);
+
+        return isNotifications;
     }
 
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hometext"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserTutorial">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tutorial"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/homeview"
+                android:layout_width="match_parent"
+                android:layout_height="398dp"
+                app:srcCompat="@drawable/homeview" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine2"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="Use the Home page to find new and upcoming events"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/orgsview"
+                android:layout_width="match_parent"
+                android:layout_height="434dp"
+                app:srcCompat="@drawable/orgs" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine3"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="Find new organizations to join"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/discview"
+                android:layout_width="match_parent"
+                android:layout_height="390dp"
+                app:srcCompat="@drawable/disc" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine4"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="Discover new topics and discuss ideas"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/notiview"
+                android:layout_width="match_parent"
+                android:layout_height="469dp"
+                app:srcCompat="@drawable/noti" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="Check your notifications and view your past comments and posts"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/settview"
+                android:layout_width="match_parent"
+                android:layout_height="429dp"
+                app:srcCompat="@drawable/sett" />
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:text="Change your username or password and update your settings "
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
