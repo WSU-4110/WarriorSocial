@@ -15,6 +15,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        android:hint="President"
+        android:textColor="@color/WSUGold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +28,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        android:hint="Vice President"
+        android:textColor="@color/WSUGold"
         app:layout_constraintStart_toStartOf="@+id/edit_organization_president"
         app:layout_constraintTop_toBottomOf="@+id/edit_organization_president" />
 
@@ -36,6 +40,8 @@
         android:layout_marginTop="128dp"
         android:ems="10"
         android:inputType="phone"
+        android:hint="Phone Number"
+        android:textColor="@color/WSUGold"
         app:layout_constraintStart_toStartOf="@+id/edit_organization_vp"
         app:layout_constraintTop_toBottomOf="@+id/edit_organization_president" />
 
@@ -47,6 +53,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        android:hint="Description"
+        android:textColor="@color/WSUGold"
         app:layout_constraintStart_toStartOf="@+id/edit_organization_phone"
         app:layout_constraintTop_toBottomOf="@+id/edit_organization_phone" />
 
