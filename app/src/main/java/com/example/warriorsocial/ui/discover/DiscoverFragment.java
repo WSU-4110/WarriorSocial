@@ -7,19 +7,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.warriorsocial.R;
+import com.example.warriorsocial.ui.home.CalendarEvent;
+import com.example.warriorsocial.ui.home.CalendarEventViewHolder;
+import com.example.warriorsocial.ui.home.EventDetailFragment;
 //need to figure out how to set up actmain to connect to item_news and activity_main
 //need to set it up just like how the login page is setup
 
 public class DiscoverFragment extends Fragment {
 
-    private DiscoverViewModel discoverViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        discoverViewModel =
-                new ViewModelProvider(this).get(DiscoverViewModel.class);
-        View root = inflater.inflate(R.layout.item_news, container, false);//changed from act_main
+        super.onCreateView(inflater, container, savedInstanceState);
+        View root = inflater.inflate(R.layout.act_main, container, false);
         return root;
-
     }
 }
