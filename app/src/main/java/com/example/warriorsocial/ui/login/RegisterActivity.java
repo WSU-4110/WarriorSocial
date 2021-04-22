@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             User user;
-                            if(account == "Student"){
+                            if(account.equals("Student")){
                                 user = new User(usernameTxt,emailTxt,false);
                             }
                             else {
@@ -150,7 +150,12 @@ public class RegisterActivity extends AppCompatActivity {
                 // Save values in shared preferences
                 preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
                 editor = preferences.edit();
-                editor.putString("AccountType",account);
+                if(account.equals("Student")){
+                    editor.putBoolean("AccountType", false);
+                }
+                else {
+                    editor.putBoolean("AccountType", true);
+                }
                 editor.putString("Username", usernameTxt);
                 editor.commit();
 

@@ -94,6 +94,8 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
+    public static final boolean BOOLEAN_DEFAULT = false;
+
 
 
     // For sending notifications
@@ -111,9 +113,12 @@ public class OrganizationProfile extends Fragment {
         newPostFAB = root.findViewById(R.id.newPostFAB);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
-        String account = sharedPreferences.getString("AccountType","");
+        Boolean account = sharedPreferences.getBoolean("AccountType",false);
 
-        if(account.equals("Student")){
+        if(account){
+            newPostFAB.setVisibility(View.VISIBLE);
+        }
+        else{
             newPostFAB.setVisibility(View.INVISIBLE);
         }
 
