@@ -217,6 +217,7 @@ public class OrganizationProfile extends Fragment {
                     TextView organizationPhone = getActivity().findViewById(R.id.tv_phone);
                     TextView organizationPresidentName = getActivity().findViewById(R.id.tv_president_name);
                     TextView organizationVicePresidentName = getActivity().findViewById(R.id.tv_vice_president_name);
+                    TextView organizationDescription = getActivity().findViewById(R.id.tv_address);
 
                     // Get StudentOrganization object from dataSnapshot (handled by firebase using getters and setters)
                     final StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
@@ -245,7 +246,7 @@ public class OrganizationProfile extends Fragment {
                     organizationPhone.setText(studentOrganization.getOrganizationPhoneNumber());
                     organizationPresidentName.setText(studentOrganization.getOrganizationPresident());
                     organizationVicePresidentName.setText(studentOrganization.getOrganizationVicePresident());
-                    //organizationDescription.setText(studentOrganization.getOrganizationDescription());
+                    organizationDescription.setText(studentOrganization.getOrganizationDescription());
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
