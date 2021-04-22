@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="26dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/WSUGreen"
+        android:gravity="bottom">
+    </TextView>
 
     <EditText
         android:id="@+id/discussion_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:hint="Title"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/discussion_text"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:text="Reply Description"
+        android:textSize="26dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/WSUGreen"
+        android:gravity="bottom">
+    </TextView>
+    <EditText
+        android:id="@+id/discussion_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Body"
+        android:hint="Reply Description"
         android:inputType="textMultiLine"
         app:layout_constraintStart_toStartOf="@+id/discussion_title"
         app:layout_constraintTop_toBottomOf="@+id/discussion_title" />
@@ -34,9 +57,13 @@
         android:id="@+id/discussion_post_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="216dp"
-        android:text="Button"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:backgroundTint="@color/WSUGreen"
+        android:textColor="@color/WSUGold"
+        android:background="@drawable/roundedcorners"
+        android:layout_marginTop="50dp"
+        android:text="Post reply"
         app:layout_constraintStart_toStartOf="@+id/discussion_text"
         app:layout_constraintTop_toBottomOf="@+id/discussion_text" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
