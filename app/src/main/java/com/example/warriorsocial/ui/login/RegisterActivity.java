@@ -111,12 +111,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
+                final String account = spinner.getSelectedItem().toString();
+
                 //register user
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(usernameTxt, emailTxt);
+                            User user;
+                            if(account == "Student"){
+                                user = new User(usernameTxt,emailTxt,false);
+                            }
+                            else {
+                                user = new User(usernameTxt,emailTxt,true);
+                            }
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -140,7 +148,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
 
                 // Save values in shared preferences
-                String account = spinner.getSelectedItem().toString();
                 preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
                 editor = preferences.edit();
                 editor.putString("AccountType",account);
