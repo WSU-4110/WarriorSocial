@@ -63,7 +63,6 @@ public class SettingsFragment extends Fragment {
         //Logout User
         Button logout;
 
-
         // For sending notifications
         public static final String NOTIFICATION_S = "fromSettingsFragment";
         private boolean yesPass = false;
@@ -89,7 +88,6 @@ public class SettingsFragment extends Fragment {
             // Attach root to the layout
             View root = inflater.inflate(R.layout.settings_activity, container, false);
 
-            // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
             btn_privacy = root.findViewById(R.id.btn_privacy);
 
             btn_usertut=root.findViewById(R.id.btn_usertut);
@@ -113,8 +111,7 @@ public class SettingsFragment extends Fragment {
             });
 
         //Controls for shared preferences
-        //swPost = root.findViewById(R.id.switch1);
-        //swComment = root.findViewById(R.id.switch2);
+
         swAllNotifications = root.findViewById(R.id.switch3);
         etUsername = root.findViewById(R.id.textView2);
         userName = root.findViewById(R.id.et_studentUserName);
@@ -214,8 +211,6 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-            //button for user tutorial
-
 
         // OnClick for Change Username Button
         btChangeUsername.setOnClickListener(new View.OnClickListener() {
@@ -227,8 +222,6 @@ public class SettingsFragment extends Fragment {
                 changeUsernameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
 
                     }
                 });
