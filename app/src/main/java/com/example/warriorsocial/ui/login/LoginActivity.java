@@ -183,6 +183,23 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             });
+                            DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("Users/"+fAuth.getCurrentUser().getUid()+"/username");
+                            reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String userNAME = snapshot.getValue(String.class);
+                                    // Save values in shared preferences
+                                    preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+                                    editor = preferences.edit();
+                                    editor.putString("Username",userNAME);
+                                    editor.commit();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                         } else {
