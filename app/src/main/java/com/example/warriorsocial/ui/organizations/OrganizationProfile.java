@@ -4,6 +4,7 @@ import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
 import com.example.warriorsocial.ui.home.EventDetailFragment;
+import com.example.warriorsocial.ui.login.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -120,15 +121,6 @@ public class OrganizationProfile extends Fragment {
         newPostFAB = root.findViewById(R.id.newPostFAB);
         editButtonImageView = root.findViewById(R.id.edit_organization_profile_button);
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
-        Boolean account = sharedPreferences.getBoolean("AccountType", false);
-
-        if (account) {
-            newPostFAB.setVisibility(View.VISIBLE);
-        } else {
-            newPostFAB.setVisibility(View.INVISIBLE);
-        }
-
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
         setHasOptionsMenu(true);
@@ -161,6 +153,37 @@ public class OrganizationProfile extends Fragment {
         mOrganizationPostsReference = FirebaseDatabase.getInstance().getReference();
         // Initialize Storage
         mOrganizationStorageReference = FirebaseStorage.getInstance().getReference("StudentOrganizationPosts");
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        Boolean account = sharedPreferences.getBoolean("AccountType", false);
+
+        if (account) {
+            // Check if account IS THE PROFILE's ACCOUNT
+            mOrganizationReference.child("organizationEmail").addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                String email = dataSnapshot.getValue(String.class);
+                                if (email.replaceAll("_",".").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                                    newPostFAB.setVisibility(View.VISIBLE);
+                                    editButtonImageView.setVisibility(View.VISIBLE);
+                                } else {
+                                    newPostFAB.setVisibility(View.INVISIBLE);
+                                    editButtonImageView.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        }
+                    });
+        } else {
+            newPostFAB.setVisibility(View.INVISIBLE);
+            editButtonImageView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
