@@ -114,6 +114,7 @@ public class SettingsFragment extends Fragment {
         etUsername = root.findViewById(R.id.textView2);
         userName = root.findViewById(R.id.et_studentUserName);
         btChangeUsername = root.findViewById(R.id.button3);
+        final EditText newUserName = root.findViewById(R.id.textView2);
         //userID = fAuth.getCurrentUser().getUid();
 
         /*Query reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(userID);
@@ -212,8 +213,7 @@ public class SettingsFragment extends Fragment {
                 changeUsernameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
+                        etUsername.setText(newUserName.getText().toString());
 
                     }
                 });
