@@ -39,7 +39,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -92,6 +94,8 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
+    public static final boolean BOOLEAN_DEFAULT = false;
+
 
 
     // For sending notifications
@@ -107,6 +111,16 @@ public class OrganizationProfile extends Fragment {
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
         newPostFAB = root.findViewById(R.id.newPostFAB);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        Boolean account = sharedPreferences.getBoolean("AccountType",false);
+
+        if(account){
+            newPostFAB.setVisibility(View.VISIBLE);
+        }
+        else{
+            newPostFAB.setVisibility(View.INVISIBLE);
+        }
 
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
