@@ -2,6 +2,7 @@ package com.example.warriorsocial.ui.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.warriorsocial.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     // Calendar on home fragment
     private CalendarView calendarView;
+    private FloatingActionButton eventFAB;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +65,9 @@ public class HomeFragment extends Fragment {
 
         // Recycler Viewer
         recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
+        // Floating Action (Post new calendar Event)
+        eventFAB = root.findViewById(R.id.eventFAB);
         return root;
         }
 
@@ -76,10 +81,33 @@ public class HomeFragment extends Fragment {
             mManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(mManager);
 
+            // Set onClick for FAB
+            eventFAB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Launch EventDetailFragment and pass a database reference key
 
-            // Set up FirebaseRecyclerAdapter with a default Query
-            //TODO: Set initial query to current day
-            Query eventsQuery = getQuery(mDatabase, 0, 0, 0);
+                    NavController navController = Navigation.findNavController(requireActivity(),
+                            R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_navigation_home_to_newCalendarEventFragment);
+                }
+            });
+
+
+            // Set up FirebaseRecyclerAdapter with a default Query ( Current Day )
+            //TODO: Set initial query to current day (Current implementation requires API 26 [our minimum is 24])
+
+            int currentYear = 0;
+            int currentMonth = 0;
+            int currentDay = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate currentDate = LocalDate.now();
+                currentYear = currentDate.getYear();
+                currentMonth = currentDate.getMonthValue();
+                currentDay = currentDate.getDayOfMonth();
+            }
+
+            Query eventsQuery = getQuery(mDatabase, currentYear, currentMonth, currentDay);
 
             FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<CalendarEvent>()
                     .setQuery(eventsQuery, CalendarEvent.class)
