@@ -162,7 +162,6 @@
                 android:layout_height="44dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="519dp"
-                android:layout_marginEnd="259dp"
                 android:layout_marginBottom="36dp"
                 android:onClick="fragment_privacy"
                 android:text="Privacy Policy"
@@ -171,10 +170,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.555"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.785" />
+                app:layout_constraintVertical_bias="0.023" />
 
             <Button
                 android:id="@+id/btn_usertut"
@@ -190,8 +189,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/logout"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/btn_privacy"
-                app:layout_constraintTop_toBottomOf="@+id/switch3" />
+                app:layout_constraintTop_toBottomOf="@+id/switch3"
+                app:layout_constraintVertical_bias="0.116" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
