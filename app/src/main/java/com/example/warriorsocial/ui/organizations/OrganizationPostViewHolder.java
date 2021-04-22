@@ -41,7 +41,7 @@ public class OrganizationPostViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToPost(@NotNull final StudentOrganizationPost ce, View.OnClickListener likeClickListener, final Handler h) {
-        //post_time.setText(ce.getPostTime().toString());
+        post_title.setText(ce.getPostTitle());
         post_description.setText(ce.getPostDescription());
         post_num_likes.setText(String.valueOf(ce.likeCount));
 
