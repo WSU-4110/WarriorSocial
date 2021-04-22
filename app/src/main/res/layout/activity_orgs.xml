@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@color/followersBg"
+                        android:background="@color/WSUDrkGreen"
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@color/followingBg"
+                        android:background="@color/WSUGold"
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
@@ -211,7 +211,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Email"
-                                android:textColor="@color/headings"
+                                android:textColor="@color/WSUGold"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -241,7 +241,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Phone"
-                                android:textColor="@color/headings"
+                                android:textColor="@color/WSUGold"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -271,7 +271,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="President"
-                                android:textColor="@color/headings"
+                                android:textColor="@color/WSUGold"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -301,7 +301,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Vice President"
-                                android:textColor="@color/headings"
+                                android:textColor="@color/WSUGold"
                                 android:textSize="13sp" />
 
                             <TextView
