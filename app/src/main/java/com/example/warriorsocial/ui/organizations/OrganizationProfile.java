@@ -1,4 +1,5 @@
 package com.example.warriorsocial.ui.organizations;
+
 import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
@@ -70,6 +71,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Import boolean from SettingsFragment to get user notifications selections from
+// shared preferences.
+import static com.example.warriorsocial.ui.settings.SettingsFragment.ALL_NOTIFICATIONS;
+
 public class OrganizationProfile extends Fragment {
 
     private static final String TAG = "OrganizationProfile";
@@ -100,7 +105,6 @@ public class OrganizationProfile extends Fragment {
     public static final boolean BOOLEAN_DEFAULT = false;
 
 
-
     // For sending notifications
     public static final String NOTIFICATION_S = "fromSettingsFragment";
     View root;
@@ -117,12 +121,11 @@ public class OrganizationProfile extends Fragment {
         editButtonImageView = root.findViewById(R.id.edit_organization_profile_button);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
-        Boolean account = sharedPreferences.getBoolean("AccountType",false);
+        Boolean account = sharedPreferences.getBoolean("AccountType", false);
 
-        if(account){
+        if (account) {
             newPostFAB.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             newPostFAB.setVisibility(View.INVISIBLE);
         }
 
@@ -485,13 +488,15 @@ public class OrganizationProfile extends Fragment {
                     SOPost.likeCount = SOPost.likeCount + 1;
                     SOPost.likes.put(getUid(), true);
 
-                    // Makes sure that a SO user exists and that the post id is the same as the current user
-                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
-                        // For sending notifications to user
-                        // Need to figure out how to send notifications when another user likes
-                        // when does the users screen update from the database?
-                        createNotificationChannels();
-                        BottomActivity.getInstance().sendNotification(root);
+                    // Check if user has selected to turn off all notifications from Settings page
+                    if (readSharedPrefNotifications() == true) {
+                        // If receive notifications is set to "on"
+                        // Makes sure that a SO user exists and that the post id is the same as the current user
+                        if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
+                            // Send notification to the user
+                            createNotificationChannels();
+                            BottomActivity.getInstance().sendNotification(root);
+                        }
                     }
                 }
 
@@ -527,6 +532,20 @@ public class OrganizationProfile extends Fragment {
             NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
         }
+    }
+
+    // Reads shared preferences to find out if user has selected not to receive notifications
+    // on the settings page.
+    public boolean readSharedPrefNotifications() {
+        // Declare variables
+        SharedPreferences sharedPrefRead;
+        boolean isNotifications;
+
+        // Retrieve value from shared preferences
+        sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
+        isNotifications = sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOLEAN_DEFAULT);
+
+        return isNotifications;
     }
 
 }
