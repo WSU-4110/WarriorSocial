@@ -74,6 +74,8 @@ public class SettingsFragment extends Fragment {
     Button btnChangePicture;
     String userID;
     ImageView profileImage;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     // Shared preferences variables
     public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
@@ -213,8 +215,11 @@ public class SettingsFragment extends Fragment {
                 changeUsernameDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        preferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
+                        editor = preferences.edit();
+                        editor.putString("Username", newUserName.getText().toString());
+                        editor.commit();
                         etUsername.setText(newUserName.getText().toString());
-
                     }
                 });
 
