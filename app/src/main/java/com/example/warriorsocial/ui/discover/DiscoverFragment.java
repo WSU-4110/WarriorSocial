@@ -46,7 +46,7 @@ public class DiscoverFragment extends Fragment {
         //Recycler Viewer from id
         //TODO: Change recyclerView id to something more representable (calendar uses id recycler_view, too similar)
 
-        //TODO: The layout is supposed to be square, yadayada, whatever. UI people can do that lol. We're going pure functionality first.
+        //layout is just square atm
         recyclerView = root.findViewById(R.id.recyclerView);
 
         return root;
@@ -95,8 +95,8 @@ public class DiscoverFragment extends Fragment {
                                 R.id.nav_host_fragment);
                         Bundle args = new Bundle();
 
-                        // Key = Organization Name (in this case)
                         String DiscussionCategoryKey = DiscussionCategoryRef.getKey();
+                        System.out.println("DiscussionCategoryKey: " + DiscussionCategoryKey);
 
                         // Load event key into args
                         args.putString("category", DiscussionCategoryKey);

@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_navigation_discussion_to_threads"
             app:destination="@id/navigation_thread" />
+        <action
+            android:id="@+id/action_navigation_discussion_to_newDiscussionPostFragment"
+            app:destination="@id/newDiscussionPostFragment" />
     </fragment>
 
     <fragment
@@ -107,6 +110,14 @@
         <action
             android:id="@+id/action_newCalendarEventFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/newDiscussionPostFragment"
+        android:name="com.example.warriorsocial.ui.discover.NewDiscussionPostFragment"
+        android:label="NewDiscussionPostFragment" >
+        <action
+            android:id="@+id/action_newDiscussionPostFragment_to_navigation_discussion2"
+            app:destination="@id/navigation_discussion" />
     </fragment>
 
 </navigation>

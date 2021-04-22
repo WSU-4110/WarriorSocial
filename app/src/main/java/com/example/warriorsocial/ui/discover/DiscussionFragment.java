@@ -32,6 +32,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,14 +67,16 @@ public class DiscussionFragment extends Fragment {
     private FirebaseRecyclerAdapter<DiscussionPost, DiscussionPostViewHolder> mAdapter;
     private LinearLayoutManager mManager;
     private RecyclerView recyclerView;
+    private FloatingActionButton discussionFAB;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.activity_main1, container, false);
+        View root = inflater.inflate(R.layout.fragment_discussion, container, false);
 
-        recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView = root.findViewById(R.id.discussion_recycler_view);
+        discussionFAB = root.findViewById(R.id.discussionFAB);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Back button from fragment functionality
@@ -88,14 +91,26 @@ public class DiscussionFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         System.out.println("Inside onActivityCreated in OrganizationsFragment");
 
+        // Connect FAB functionality
+        discussionFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),
+                        R.id.nav_host_fragment);
+
+                Bundle args = new Bundle();
+                args.putString("category", mCategoryKey);
+
+                navController.navigate(R.id.action_navigation_discussion_to_newDiscussionPostFragment, args);
+            }
+        });
+
         // Setup Layout Manager
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mManager);
 
-        // Set up FirebaseRecyclerAdapter with a default Query ( Current Day )
-        // INITIAL QUERY IS SET TO ALL!
         System.out.println(mCategoryKey);
         Query eventsQuery = mDatabase.child("DiscussionPosts").orderByChild("categoryName").equalTo(mCategoryKey);
 
@@ -106,14 +121,12 @@ public class DiscussionFragment extends Fragment {
 
             @Override
             public DiscussionPostViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-                System.out.println("inside onCreateViewHolder in HomeFragment");
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
                 return new DiscussionPostViewHolder(inflater.inflate(R.layout.discussion_posts, viewGroup, false));
             }
 
             @Override
             protected void onBindViewHolder(DiscussionPostViewHolder viewHolder, int position, final DiscussionPost model) {
-                System.out.println("inside onBindViewHolder in OrganizationsFragment");
                 final DatabaseReference DiscussionPostRef = getRef(position);
 
                 // Set click listener for the entire card
@@ -156,7 +169,7 @@ public class DiscussionFragment extends Fragment {
         mManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mManager);
 
-        // Get StudentOrganization key from arguments
+        // Get Category key from arguments
         mCategoryKey = requireArguments().getString("category");
         if (mCategoryKey == null) {
             throw new IllegalArgumentException("Must pass Category Key");

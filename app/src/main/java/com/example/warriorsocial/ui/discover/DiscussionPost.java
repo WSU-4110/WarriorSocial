@@ -1,5 +1,10 @@
 package com.example.warriorsocial.ui.discover;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class DiscussionPost {
     private String categoryName;
     private String postText;
@@ -44,5 +49,15 @@ public class DiscussionPost {
 
     public void setPosterId(String posterId) {
         this.posterId = posterId;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("categoryName", categoryName);
+        result.put("postText", postText);
+        result.put("postTitle", postTitle);
+        result.put("posterId", posterId);
+        return result;
     }
 }
