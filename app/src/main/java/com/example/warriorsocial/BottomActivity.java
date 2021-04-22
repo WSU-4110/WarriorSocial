@@ -64,7 +64,7 @@ public class BottomActivity extends AppCompatActivity {
         Notification notification = new NotificationCompat.Builder(BottomActivity.this, NOTIFICATION_S)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("Greetings from Warrior Social")
-                .setContentText("Check your email to change your password.")
+                .setContentText("Someone liked your post!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
