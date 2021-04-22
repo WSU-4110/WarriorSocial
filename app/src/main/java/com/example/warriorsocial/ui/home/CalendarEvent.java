@@ -2,10 +2,6 @@ package com.example.warriorsocial.ui.home;
 
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CalendarEvent {
     private String organizationName;
@@ -38,15 +34,4 @@ public class CalendarEvent {
     public void setEventDescription(String eventDescription) { this.eventDescription = eventDescription; }
     //public void setEventTimestamp(Timestamp eventTimestamp) { this.eventTimestamp = eventTimestamp; }
     public void setEventTimestamp(String eventTimestamp) {this.eventTimestamp = eventTimestamp;}
-
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("organizationName", organizationName);
-        result.put("eventTitle", eventTitle);
-        result.put("eventId", eventId);
-        result.put("eventDescription", eventDescription);
-        result.put("eventTimestamp", eventTimestamp);
-        return result;
-    }
 }
