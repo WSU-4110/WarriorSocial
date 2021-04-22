@@ -165,7 +165,7 @@ public class OrganizationProfile extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 String email = dataSnapshot.getValue(String.class);
-                                if (email.replaceAll("_",".").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                                if (email.replaceAll("_",".").toLowerCase().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase())) {
                                     newPostFAB.setVisibility(View.VISIBLE);
                                     editButtonImageView.setVisibility(View.VISIBLE);
                                 } else {
