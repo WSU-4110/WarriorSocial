@@ -1,5 +1,4 @@
 # WarriorSocial
-Android app for Wayne State student organizations.
 
 **Technical Requirements:**
 * Android Studio

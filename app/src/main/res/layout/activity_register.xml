@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- Layout associated with the register new user screen -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,20 +12,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="262dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:gravity="center"
             android:text="Create New Account"
             android:textColor="@color/WSUGold"
-            android:textSize="34dp"
+            android:textSize="38dp"
             android:textStyle="bold"></TextView>
     </LinearLayout>
 
@@ -43,11 +43,17 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:gravity="start"
-            android:text="Enter Email:"
+            android:text="Enter Email"
             android:textColor="@color/WSUGold"
             android:textSize="26dp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_userEmail"
@@ -61,15 +67,14 @@
             android:padding="5dp"
             android:textColor="@color/WSUGold"
             android:textSize="20sp"
-            android:textStyle="bold">
-        </EditText>
+            android:textStyle="bold"></EditText>
     </LinearLayout>
 
     <!-- Set Password Line -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -79,11 +84,17 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:gravity="start"
-            android:text="Set Password:"
+            android:text="Set Password"
             android:textColor="@color/WSUGold"
             android:textSize="26dp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_userPassword"
@@ -98,8 +109,7 @@
             android:padding="5dp"
             android:textColor="@color/WSUGold"
             android:textSize="20sp"
-            android:textStyle="bold">
-        </EditText>
+            android:textStyle="bold"></EditText>
     </LinearLayout>
 
 
@@ -107,7 +117,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -117,11 +127,17 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:gravity="start"
-            android:text="Set User Name:"
+            android:text="Set User Name"
             android:textColor="@color/WSUGold"
             android:textSize="24dp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_studentUserName"
@@ -135,15 +151,14 @@
             android:padding="5dp"
             android:textColor="@color/WSUGold"
             android:textSize="20sp"
-            android:textStyle="bold">
-        </EditText>
+            android:textStyle="bold"></EditText>
     </LinearLayout>
 
-    <!-- Account Type Radio Button Group -->
+    <!-- Select account type spinner -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -152,30 +167,20 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:gravity="start"
-            android:padding="5dp"
             android:text="Account Type:"
             android:textColor="@color/WSUGold"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <RadioGroup
-            android:id="@+id/rb_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/rb_student"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Student" />
-
-            <RadioButton
-                android:id="@+id/rb_so"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Student Organization" />
-
-        </RadioGroup>
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@color/WSUDrkGreen"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
     </LinearLayout>
 
 
@@ -183,7 +188,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -192,13 +197,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:background="@drawable/roundedcorners"
             android:backgroundTint="@color/WSUGold"
-            android:textSize="16sp"
+            android:gravity="center"
             android:padding="10dp"
-            android:text="Create New Account">
-        </Button>
+            android:text="Create New Account"
+            android:textSize="16sp"></Button>
 
     </LinearLayout>
 </LinearLayout>

@@ -111,10 +111,8 @@ public class OrganizationsFragment extends Fragment {
 
                         // Key = Organization Name (in this case)
                         String StudentOrganizationKey = StudentOrganizationRef.getKey();
-
                         // Load event key into args
                         args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, StudentOrganizationKey);
-                        System.out.println("StudentOrganizationKey: " + StudentOrganizationKey);
 
                         // Navigate
                         navController.navigate(R.id.action_navigation_organizations_to_organizationProfile, args);

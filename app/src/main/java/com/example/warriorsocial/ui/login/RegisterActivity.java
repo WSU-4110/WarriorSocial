@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.warriorsocial.BottomActivity;
@@ -29,8 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userPassword;
     private EditText userName;
     private Button createAccountButton;
+    Spinner spinner;
+
     FirebaseAuth fAuth;
     ProgressBar loadingProgressBar;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -44,6 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountButton = findViewById(R.id.button_create_account);
         fAuth = FirebaseAuth.getInstance();
         loadingProgressBar = findViewById(R.id.loading);
+
+        spinner = findViewById(R.id.spinner2);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accType, R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         //Check if user is already logged in
         /*
@@ -100,13 +111,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
+                final String account = spinner.getSelectedItem().toString();
+
                 //register user
                 fAuth.createUserWithEmailAndPassword(emailTxt,passwordTxt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //System.out.println("Completed Registration!");
                         if(task.isSuccessful()){
-                            User user = new User(usernameTxt, emailTxt);
+                            User user;
+                            if(account.equals("Student")){
+                                user = new User(usernameTxt,emailTxt,false);
+                            }
+                            else {
+                                user = new User(usernameTxt,emailTxt,true);
+                            }
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -128,6 +146,19 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                // Save values in shared preferences
+                preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+                editor = preferences.edit();
+                if(account.equals("Student")){
+                    editor.putBoolean("AccountType", false);
+                }
+                else {
+                    editor.putBoolean("AccountType", true);
+                }
+                editor.putString("Username", usernameTxt);
+                editor.commit();
+
 
             }
         });

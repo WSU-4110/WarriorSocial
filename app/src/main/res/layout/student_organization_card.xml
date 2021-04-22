@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- This is for displaying student organizations -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:orientation="vertical">
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -52,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textSize="16sp"
-                android:textColor="@color/WSUGold"
+                android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/student_organization_name"
                 app:layout_constraintTop_toBottomOf="@+id/student_organization_name"
                 tools:layout_editor_absoluteX="144dp"
@@ -60,4 +63,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

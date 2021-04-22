@@ -1,26 +1,28 @@
 package com.example.warriorsocial;
 
-import android.content.Intent;
+import android.app.Notification;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import com.example.warriorsocial.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+// For access to NOTIFICATION_S in SettingsFragment
+import static com.example.warriorsocial.ui.settings.SettingsFragment.NOTIFICATION_S;
+
+
 // This is the activity that holds the icons on the bottom of the screen
 public class BottomActivity extends AppCompatActivity {
-    FirebaseAuth fAuth;
-    private Button logoutButton;
 
+    // For sending notifications
+    private NotificationManagerCompat notificationManager;
+    private static BottomActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,8 @@ public class BottomActivity extends AppCompatActivity {
         System.out.println("Inside BottomActivity onCreate");
         setContentView(R.layout.activity_bottom);
 
-        //logoutButton = findViewById(R.id.logoutBtn);
-        //fAuth = FirebaseAuth.getInstance();
+        // For sending notifications
+        notificationManager = NotificationManagerCompat.from(this);
 
         // Connect to the icons
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -41,22 +43,36 @@ public class BottomActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        /*logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fAuth.signOut();
-                signOutUser();
-            }
-        });*/
+        // Set instance to this for notifications
+        instance = this;
 
     }
 
-    /*private void signOutUser() {
-        Intent intent = new Intent(BottomActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }*/
+    // Navigation for back arrows on fragments
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Ensures that back arrow will navigate to parent fragment
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    // To send notifications
+    public void sendNotification(View v) {
+        Notification notification = new NotificationCompat.Builder(BottomActivity.this, NOTIFICATION_S)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("Greetings from Warrior Social")
+                .setContentText("Someone liked your post!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        notificationManager.notify(1, notification);
+    }
 
+    // For sending notifications to SettingsFragment
+    public static BottomActivity getInstance() {
+        return instance;
+    }
 }

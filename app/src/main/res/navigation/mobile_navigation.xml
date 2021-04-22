@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_event_detail"
             app:destination="@id/event_detail" />
+        <action
+            android:id="@+id/action_navigation_home_to_newCalendarEventFragment"
+            app:destination="@id/newCalendarEventFragment" />
     </fragment>
 
     <fragment
@@ -29,7 +32,30 @@
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/item_news" />
+        tools:layout="@layout/activity_main1" >
+        <action
+            android:id="@+id/action_navigation_discover_to_discussion"
+            app:destination="@id/navigation_discussion" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_discussion"
+        android:name="com.example.warriorsocial.ui.discover.DiscussionFragment"
+        android:label="Discussion"
+        android:layout="@layout/discussion_posts">
+        <action
+            android:id="@+id/action_navigation_discussion_to_threads"
+            app:destination="@id/navigation_thread" />
+        <action
+            android:id="@+id/action_navigation_discussion_to_newDiscussionPostFragment"
+            app:destination="@id/newDiscussionPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_thread"
+        android:name="com.example.warriorsocial.ui.discover.ThreadFragment"
+        android:label="Discussion"
+        android:layout="@layout/discussion_thread"/>
     <!--changed from act_main-->
     <fragment
         android:id="@+id/navigation_notifications"
@@ -45,6 +71,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_privacy"
             app:destination="@id/navigation_privacy" />
+        <action
+            android:id="@+id/action_navigation_settings_to_usertutfrag"
+            app:destination="@id/usertutfrag" />
     </fragment>
     <fragment
         android:id="@+id/event_detail"
@@ -64,6 +93,54 @@
     <fragment
         android:id="@+id/organizationProfile"
         android:name="com.example.warriorsocial.ui.organizations.OrganizationProfile"
-        android:label="OrganizationProfile" />
+        android:label="OrganizationProfile" >
+        <action
+            android:id="@+id/action_organizationProfile_to_newPostFragment"
+            app:destination="@id/newPostFragment" />
+        <action
+            android:id="@+id/action_organizationProfile_to_editOrganizationProfile"
+            app:destination="@id/editOrganizationProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPostFragment"
+        android:label="Upload New Organization Post"
+        android:name="com.example.warriorsocial.ui.organizations.NewPostFragment">
+        <action
+            android:id="@+id/action_newPostFragment_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/usertutfrag"
+        android:name="com.example.warriorsocial.usertutfrag"
+        android:label="App Tutorial"
+        tools:layout="@layout/fragment_usertutfrag" >
+        <action
+            android:id="@+id/action_usertutfrag_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/newCalendarEventFragment"
+        android:name="com.example.warriorsocial.ui.home.NewCalendarEventFragment"
+        android:label="NewCalendarEventFragment" >
+        <action
+            android:id="@+id/action_newCalendarEventFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/newDiscussionPostFragment"
+        android:name="com.example.warriorsocial.ui.discover.NewDiscussionPostFragment"
+        android:label="NewDiscussionPostFragment" >
+        <action
+            android:id="@+id/action_newDiscussionPostFragment_to_navigation_discussion2"
+            app:destination="@id/navigation_discussion" />
+    </fragment>
+    <fragment
+        android:id="@+id/editOrganizationProfile"
+        android:name="com.example.warriorsocial.ui.organizations.EditOrganizationProfile"
+        android:label="EditOrganizationProfile" >
+        <action
+            android:id="@+id/action_editOrganizationProfile_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
+    </fragment>
 
 </navigation>

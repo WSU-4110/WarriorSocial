@@ -13,7 +13,9 @@ public class RegistrationChecker {
 
     public boolean checkIfUserLoggedIn(FirebaseAuth fAuth, Context mContext) {
         if(fAuth.getCurrentUser() != null){
-            mContext.startActivity(new Intent(mContext, BottomActivity.class));
+            Intent intent = new Intent(mContext, BottomActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
             //finish();
             return false;
         }

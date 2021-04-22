@@ -1,46 +1,61 @@
 package com.example.warriorsocial.ui.settings;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
-import com.example.warriorsocial.ui.home.EventDetailFragment;
 import com.example.warriorsocial.ui.login.LoginActivity;
-import com.example.warriorsocial.ui.settings.SettingsViewModel;
+import com.example.warriorsocial.ui.login.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class SettingsFragment extends Fragment {
 
         private SettingsViewModel settingsViewModel;
         FirebaseAuth fAuth;
+        StorageReference storageReference;
+
 
         // Privacy Policy
         Button btn_privacy;
+
+        //User Tutorial
+        Button btn_usertut;
 
         //Change Password
         Button changepass;
@@ -48,16 +63,23 @@ public class SettingsFragment extends Fragment {
         //Logout User
         Button logout;
 
+        // For sending notifications
+        public static final String NOTIFICATION_S = "fromSettingsFragment";
+        private boolean yesPass = false;
+
+
     // Controls for shared preferences
-    Switch swPost;
-    Switch swComment;
     Switch swAllNotifications;
     EditText etUsername;
+    EditText userName;
     Button btChangeUsername;
+    Button btnChangePicture;
+    String userID;
+    ImageView profileImage;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     // Shared preferences variables
-    public static final String REPLIES_POST = "REPLIES_POST";
-    public static final String REPLIES_COMMENTS = "REPLIES_COMMENTS";
     public static final String ALL_NOTIFICATIONS = "ALL_NOTIFICATIONS";
     public static final boolean BOOL_DEFAULT = false;
 
@@ -68,19 +90,56 @@ public class SettingsFragment extends Fragment {
             // Attach root to the layout
             View root = inflater.inflate(R.layout.settings_activity, container, false);
 
-            // CHANGE THIS TO MATCH PRIVACY BUTTON WHEN ADDED
             btn_privacy = root.findViewById(R.id.btn_privacy);
+
+            btn_usertut=root.findViewById(R.id.btn_usertut);
 
             changepass = root.findViewById(R.id.resetPass);
 
             logout = root.findViewById(R.id.logout);
 
+            fAuth = FirebaseAuth.getInstance();
+
+            profileImage = root.findViewById(R.id.imageView3);
+            btnChangePicture = root.findViewById(R.id.button2);
+            storageReference = FirebaseStorage.getInstance().getReference();
+
+            StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.get().load(uri).into(profileImage);
+                }
+            });
+
         //Controls for shared preferences
-        swPost = root.findViewById(R.id.switch1);
-        swComment = root.findViewById(R.id.switch2);
+
         swAllNotifications = root.findViewById(R.id.switch3);
         etUsername = root.findViewById(R.id.textView2);
+        userName = root.findViewById(R.id.et_studentUserName);
         btChangeUsername = root.findViewById(R.id.button3);
+        final EditText newUserName = root.findViewById(R.id.textView2);
+        //userID = fAuth.getCurrentUser().getUid();
+
+        /*Query reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(userID);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        etUsername.setText(snapshot.toString());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });*/
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("Username","");
+
+        etUsername.setText(username);
 
         // Read Shared Preferences values
         readSharedPreferences();
@@ -95,6 +154,16 @@ public class SettingsFragment extends Fragment {
 
                     // Bind to action to move from Settings page to Privacy Policy
                     navController.navigate(R.id.action_navigation_settings_to_navigation_privacy);
+
+                }
+            });
+
+            btn_usertut.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_navigation_settings_to_usertutfrag);
+
                 }
             });
 
@@ -110,7 +179,6 @@ public class SettingsFragment extends Fragment {
                     passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             String mail = resetmail.getText().toString();
                             fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -138,8 +206,6 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-
-
             logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +213,7 @@ public class SettingsFragment extends Fragment {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             });
+
 
         // OnClick for Change Username Button
         btChangeUsername.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +226,11 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-
-                        // add code here to connect to firebase
+                        preferences = getContext().getSharedPreferences("SharedPref",Context.MODE_PRIVATE);
+                        editor = preferences.edit();
+                        editor.putString("Username", newUserName.getText().toString());
+                        editor.commit();
+                        etUsername.setText(newUserName.getText().toString());
 
                     }
                 });
@@ -176,22 +246,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // OnCheckedChange for Replies to Post Switch
-        swPost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //OnClick for Change Profile Picture
+        btnChangePicture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                writeSPPost(swPost.isChecked());
+            public void onClick(View v) {
+                //open photo gallery
+                Intent openGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGallery,1000);
             }
         });
-        // OnCheckedChanged for Replies to Comments Switch
-        swComment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                writeSPComment(swComment.isChecked());
-            }
-        });
 
         // OnCheckedChange for All Notifications
         swAllNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -204,34 +268,40 @@ public class SettingsFragment extends Fragment {
 
         // Return root (layout)
             return root;
-        }
-
-    // writeToSharedPreferences writes data to the Shared Preferences
-    public void writeSPPost(boolean replies_post) {
-        // Create editor object
-        SharedPreferences sharedPrefWrite;
-        SharedPreferences.Editor editor;
-        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPrefWrite.edit();
-
-        // Store values as name/value pairs
-        editor.putBoolean(REPLIES_POST, replies_post);
-
-        editor.commit();
     }
 
-    // writeToSharedPreferences writes data to the Shared Preferences
-    public void writeSPComment( boolean replies_comments) {
-        // Create editor object
-        SharedPreferences sharedPrefWrite;
-        SharedPreferences.Editor editor;
-        sharedPrefWrite = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPrefWrite.edit();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000){
+            if(resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
+                //profileImage.setImageURI(imageUri);
 
-        // Store values as name/value pairs
-        editor.putBoolean(REPLIES_COMMENTS, replies_comments);
+                uploadToFirebase(imageUri);
 
-        editor.commit();
+            }
+        }
+    }
+
+    private void uploadToFirebase(Uri imageUri) {
+        final StorageReference fileReference = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+        fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(profileImage);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Image Upload Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // writeToSharedPreferences writes data to the Shared Preferences
@@ -258,10 +328,24 @@ public class SettingsFragment extends Fragment {
         sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // Set text fields to data from shared preferences
-        swPost.setChecked(sharedPrefRead.getBoolean(REPLIES_POST, BOOL_DEFAULT));
-        swComment.setChecked(sharedPrefRead.getBoolean(REPLIES_COMMENTS, BOOL_DEFAULT));
         swAllNotifications.setChecked(sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOL_DEFAULT));
     }
+
+    // For creating notifications
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    NOTIFICATION_S,
+                    "Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("User Notification");
+
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
 }
 
 
