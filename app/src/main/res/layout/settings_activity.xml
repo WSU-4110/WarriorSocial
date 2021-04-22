@@ -85,8 +85,8 @@
                 android:layout_marginEnd="229dp"
                 android:layout_marginBottom="303dp"
                 android:text="***********"
-                android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,8 +140,8 @@
 
             <Button
                 android:id="@+id/logout"
-                android:layout_width="112dp"
-                android:layout_height="55dp"
+                android:layout_width="115dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="275dp"
                 android:layout_marginTop="522dp"
                 android:layout_marginEnd="24dp"
@@ -151,26 +151,48 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.727" />
 
             <Button
                 android:id="@+id/btn_privacy"
-                android:layout_width="136dp"
-                android:layout_height="58dp"
+                android:layout_width="118dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="519dp"
-                android:layout_marginEnd="259dp"
-                android:layout_marginBottom="160dp"
-                android:text="Privacy Policy"
+                android:layout_marginBottom="36dp"
                 android:onClick="fragment_privacy"
+                android:text="Privacy Policy"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.023" />
+
+            <Button
+                android:id="@+id/btn_usertut"
+                android:layout_width="102dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="39dp"
+                android:text="Tutorial"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/logout"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/btn_privacy"
+                app:layout_constraintTop_toBottomOf="@+id/switch3"
+                app:layout_constraintVertical_bias="0.116" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

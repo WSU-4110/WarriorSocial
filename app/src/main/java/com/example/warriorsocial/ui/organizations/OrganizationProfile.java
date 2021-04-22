@@ -1,4 +1,6 @@
 package com.example.warriorsocial.ui.organizations;
+
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
 import com.example.warriorsocial.ui.home.EventDetailFragment;
@@ -34,13 +36,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -64,6 +71,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Import boolean from SettingsFragment to get user notifications selections from
+// shared preferences.
+import static com.example.warriorsocial.ui.settings.SettingsFragment.ALL_NOTIFICATIONS;
+
 public class OrganizationProfile extends Fragment {
 
     private static final String TAG = "OrganizationProfile";
@@ -79,6 +90,9 @@ public class OrganizationProfile extends Fragment {
     private ValueEventListener mOrganizationListener;
     private String mOrganizationKey;
 
+    // Edit Button
+    private ImageView editButtonImageView;
+
     private Uri mImageUri;
 
     private ImageView mImageView;
@@ -88,16 +102,32 @@ public class OrganizationProfile extends Fragment {
     private RecyclerView recyclerView;
 
     private FloatingActionButton newPostFAB;
+    public static final boolean BOOLEAN_DEFAULT = false;
+
+
+    // For sending notifications
+    public static final String NOTIFICATION_S = "fromSettingsFragment";
+    View root;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.activity_orgs, container, false);
+        root = inflater.inflate(R.layout.activity_orgs, container, false);
 
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
         newPostFAB = root.findViewById(R.id.newPostFAB);
+        editButtonImageView = root.findViewById(R.id.edit_organization_profile_button);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        Boolean account = sharedPreferences.getBoolean("AccountType", false);
+
+        if (account) {
+            newPostFAB.setVisibility(View.VISIBLE);
+        } else {
+            newPostFAB.setVisibility(View.INVISIBLE);
+        }
 
         //Back button from fragment functionality
         //https://stackoverflow.com/questions/40395067/android-back-button-not-working-in-fragment/52331709
@@ -138,6 +168,21 @@ public class OrganizationProfile extends Fragment {
         super.onStart();
 
         System.out.println("Inside onStart in OrganizationProfile");
+
+        // Connect editOrg functionality
+        editButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigation to NewPostFragment (Could pass in some args here)
+                NavController navController = NavHostFragment.findNavController(OrganizationProfile.this);
+
+                // Attach the org profile information to
+                Bundle args = new Bundle();
+                args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, mOrganizationKey);
+
+                navController.navigate(R.id.action_organizationProfile_to_editOrganizationProfile, args);
+            }
+        });
 
         // Connect newPostFAB functionality
         newPostFAB.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +244,7 @@ public class OrganizationProfile extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get StudentOrganization object and use the values to update the UI
-                if(dataSnapshot.exists()) {
+                if (dataSnapshot.exists()) {
                     // Get TextViews and ImageViews from R
                     final ImageView organizationImage = getActivity().findViewById(R.id.tv_image);
 
@@ -208,6 +253,7 @@ public class OrganizationProfile extends Fragment {
                     TextView organizationPhone = getActivity().findViewById(R.id.tv_phone);
                     TextView organizationPresidentName = getActivity().findViewById(R.id.tv_president_name);
                     TextView organizationVicePresidentName = getActivity().findViewById(R.id.tv_vice_president_name);
+                    TextView organizationDescription = getActivity().findViewById(R.id.tv_address);
 
                     // Get StudentOrganization object from dataSnapshot (handled by firebase using getters and setters)
                     final StudentOrganization studentOrganization = dataSnapshot.getValue(StudentOrganization.class);
@@ -216,8 +262,7 @@ public class OrganizationProfile extends Fragment {
                     Uri testingUri = Uri.parse(studentOrganization.getOrganizationImageUrl());
                     System.out.println("Got testingUri" + testingUri.toString());
                     final Bitmap[] bm = {null};
-                    Thread thread = new Thread(new Runnable()
-                    {
+                    Thread thread = new Thread(new Runnable() {
                         public void run() {
                             bm[0] = getImageBitmap(studentOrganization.getOrganizationImageUrl());
                             getActivity().runOnUiThread(new Runnable() {
@@ -234,13 +279,14 @@ public class OrganizationProfile extends Fragment {
 
                     organizationName.setText(studentOrganization.getOrganizationName());
                     organizationEmail.setText(studentOrganization.getOrganizationEmail());
-                    organizationPhone.setText(studentOrganization.getOrganizationDescription());
-                    organizationPresidentName.setText(studentOrganization.getOrganizationDescription());
-                    organizationVicePresidentName.setText(studentOrganization.getOrganizationEmail());
+                    organizationPhone.setText(studentOrganization.getOrganizationPhoneNumber());
+                    organizationPresidentName.setText(studentOrganization.getOrganizationPresident());
+                    organizationVicePresidentName.setText(studentOrganization.getOrganizationVicePresident());
+                    organizationDescription.setText(studentOrganization.getOrganizationDescription());
 
                     // Set the recyclerView according to that particular SO's posts
                     System.out.println("Database reference: " + "StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
-                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail());
+                    Query query = mOrganizationPostsReference.child("StudentOrganizationPosts/" + studentOrganization.getOrganizationEmail().toLowerCase());
                     // Setting up FirebaseRecyclerOptions be based off class:  "StudentOrganizationsPost"
                     FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<StudentOrganizationPost>()
                             .setQuery(query, StudentOrganizationPost.class)
@@ -265,11 +311,9 @@ public class OrganizationProfile extends Fragment {
                             // Determine if the current user has liked this post and set UI accordingly
                             // TODO: Get Images for Liked and not yet liked
                             if (model.likes.containsKey(getUid())) {
-                                //Need image for IS LIKED (maybe the filled in star)
-                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                                viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_24);
                             } else {
-                                //Need image for IS NOT LIKED (maybe the star outline)
-                                //viewHolder.post_likes_image.setImageResource(R.drawable.);
+                                viewHolder.post_likes_image.setImageResource(R.drawable.ic_baseline_thumb_up_outline_24);
                             }
 
                             //TODO: Create clickable post for comments?
@@ -278,6 +322,7 @@ public class OrganizationProfile extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     String postUserEmailProcessed = model.postEmail.replaceAll("\\.", "_");
+                                    postUserEmailProcessed = postUserEmailProcessed.toLowerCase();
                                     DatabaseReference postRef = mOrganizationPostsReference.child("StudentOrganizationPosts/"
                                             + postUserEmailProcessed + "/" + postKey);
 
@@ -373,7 +418,7 @@ public class OrganizationProfile extends Fragment {
                         @Override
                         public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                             double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            pd.setMessage("Percentage: " + (int)progressPercent + "%");
+                            pd.setMessage("Percentage: " + (int) progressPercent + "%");
                         }
                     });
         } else {
@@ -442,6 +487,17 @@ public class OrganizationProfile extends Fragment {
                     // Star the post and add self to stars
                     SOPost.likeCount = SOPost.likeCount + 1;
                     SOPost.likes.put(getUid(), true);
+
+                    // Check if user has selected to turn off all notifications from Settings page
+                    if (readSharedPrefNotifications() == true) {
+                        // If receive notifications is set to "on"
+                        // Makes sure that a SO user exists and that the post id is the same as the current user
+                        if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
+                            // Send notification to the user
+                            createNotificationChannels();
+                            BottomActivity.getInstance().sendNotification(root);
+                        }
+                    }
                 }
 
                 // Set value and report transaction success
@@ -461,4 +517,35 @@ public class OrganizationProfile extends Fragment {
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+
+    // For creating notifications
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    NOTIFICATION_S,
+                    "Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("User Notification");
+
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    // Reads shared preferences to find out if user has selected not to receive notifications
+    // on the settings page.
+    public boolean readSharedPrefNotifications() {
+        // Declare variables
+        SharedPreferences sharedPrefRead;
+        boolean isNotifications;
+
+        // Retrieve value from shared preferences
+        sharedPrefRead = getActivity().getPreferences(Context.MODE_PRIVATE);
+        isNotifications = sharedPrefRead.getBoolean(ALL_NOTIFICATIONS, BOOLEAN_DEFAULT);
+
+        return isNotifications;
+    }
+
 }

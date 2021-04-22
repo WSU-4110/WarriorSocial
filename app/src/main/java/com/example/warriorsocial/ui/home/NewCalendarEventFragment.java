@@ -73,11 +73,10 @@ public class NewCalendarEventFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_new_post, container, false);
+        View root = inflater.inflate(R.layout.fragment_new_calendar_event, container, false);
 
         eventTitleEditText = root.findViewById(R.id.new_event_title);
         eventDescriptionEditText = root.findViewById(R.id.new_event_description);
-        addEventButton = root.findViewById(R.id.add_event_button);
         eventDatePicker = root.findViewById(R.id.date_picker);
         eventTimePicker = root.findViewById(R.id.time_picker);
 
@@ -88,7 +87,7 @@ public class NewCalendarEventFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        addEventButton = getActivity().findViewById(R.id.add_event_button);
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +123,7 @@ public class NewCalendarEventFragment extends Fragment {
 
         final Map<String, Integer> dateMap = new HashMap<>();
         int eventYear = eventDatePicker.getYear();
-        int eventMonth = eventDatePicker.getMonth();
+        int eventMonth = eventDatePicker.getMonth() + 1; // Month is by default off by 1
         int eventDay = eventDatePicker.getDayOfMonth();
         int eventHour = eventTimePicker.getHour();
         int eventMinutes = eventTimePicker.getMinute();
@@ -165,7 +164,7 @@ public class NewCalendarEventFragment extends Fragment {
 
                         setEditingEnabled(true);
                         NavHostFragment.findNavController(NewCalendarEventFragment.this)
-                                .navigate(R.id.action_newPostFragment_to_organizationProfile);
+                                .navigate(R.id.action_newCalendarEventFragment_to_navigation_home);
                     }
 
                     @Override
@@ -186,23 +185,41 @@ public class NewCalendarEventFragment extends Fragment {
         }
     }
 
-    private void writeNewPost(String description, String postEmail, String title, String userId, Map<String, Integer> dateMap) {
+    private void writeNewPost(final String description, String postEmail, final String title, String userId, final Map<String, Integer> dateMap) {
         // Create new event at /year/month/day/
-        String key = mCalendarEventsReference.child("/" + dateMap.get("year") +
+        final String key = mCalendarEventsReference.child("/" + dateMap.get("year") +
                 "/" + dateMap.get("month") +
                 "/" + dateMap.get("day")).push().getKey();
-        String organizationName = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String eventTimestamp = dateMap.get("hours") + ":" + dateMap.get("minutes");
-        CalendarEvent newEvent = new CalendarEvent(organizationName, title, 0, description, eventTimestamp);
-        Map<String, Object> postValues = newEvent.toMap();
+        System.out.println("Writing with key: " + key);
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put(key, postValues);
 
-        mCalendarEventsReference.child("/" + dateMap.get("year") +
-                "/" + dateMap.get("month") +
-                "/" + dateMap.get("day") +
-                "/" + key).updateChildren(childUpdates);
+
+        DatabaseReference username = mDatabase.child("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/username" );
+        username.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String eventTimestamp = dateMap.get("hour") + ":" + dateMap.get("minute");
+                System.out.println("eventTimestamp: " + eventTimestamp);
+                String currentUserName = dataSnapshot.getValue(String.class);
+                System.out.println("CurrentUserName: " + currentUserName);
+                CalendarEvent newEvent = new CalendarEvent(currentUserName, title, 0, description, eventTimestamp);
+                Map<String, Object> postValues = newEvent.toMap();
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put(key, postValues);
+
+                mCalendarEventsReference.child("/" + dateMap.get("year") +
+                        "/" + dateMap.get("month") +
+                        "/" + dateMap.get("day")).updateChildren(childUpdates);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 }
 

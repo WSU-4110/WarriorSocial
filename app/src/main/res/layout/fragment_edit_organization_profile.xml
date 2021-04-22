@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edit_organization_president"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_organization_vp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="@+id/edit_organization_president"
+        app:layout_constraintTop_toBottomOf="@+id/edit_organization_president" />
+
+    <EditText
+        android:id="@+id/edit_organization_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:ems="10"
+        android:inputType="phone"
+        app:layout_constraintStart_toStartOf="@+id/edit_organization_vp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_organization_president" />
+
+    <EditText
+        android:id="@+id/edit_organization_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="@+id/edit_organization_phone"
+        app:layout_constraintTop_toBottomOf="@+id/edit_organization_phone" />
+
+    <Button
+        android:id="@+id/edit_organization_button"
+        android:layout_width="110dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="72dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="@+id/edit_organization_description"
+        app:layout_constraintTop_toBottomOf="@+id/edit_organization_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

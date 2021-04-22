@@ -2,8 +2,6 @@ package com.example.warriorsocial.ui.organizations;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
@@ -27,7 +24,7 @@ import java.net.URLConnection;
 public class OrganizationPostViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "OrganizationPostViewHolder";
 
-    public TextView post_time;
+    public TextView post_title;
     public TextView post_description;
     public ImageView post_image;
     public ImageView post_likes_image;
@@ -36,7 +33,7 @@ public class OrganizationPostViewHolder extends RecyclerView.ViewHolder {
     public OrganizationPostViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        post_time = itemView.findViewById(R.id.post_time);
+        post_title = itemView.findViewById(R.id.post_title);
         post_description = itemView.findViewById(R.id.post_description);
         post_image = itemView.findViewById(R.id.post_image);
         post_likes_image = itemView.findViewById(R.id.post_likes_image);
@@ -44,7 +41,7 @@ public class OrganizationPostViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToPost(@NotNull final StudentOrganizationPost ce, View.OnClickListener likeClickListener, final Handler h) {
-        //post_time.setText(ce.getPostTime().toString());
+        post_title.setText(ce.getPostTitle());
         post_description.setText(ce.getPostDescription());
         post_num_likes.setText(String.valueOf(ce.likeCount));
 
