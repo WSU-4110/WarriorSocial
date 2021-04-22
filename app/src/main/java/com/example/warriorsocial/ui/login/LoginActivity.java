@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                                     // Save values in shared preferences
                                     preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
                                     editor = preferences.edit();
-                                    editor.putString("AccountType",userNAME);
+                                    editor.putString("Username",userNAME);
                                     editor.commit();
                                 }
 
