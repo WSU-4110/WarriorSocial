@@ -32,7 +32,27 @@
         android:id="@+id/navigation_discover"
         android:name="com.example.warriorsocial.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/item_news" />
+        tools:layout="@layout/activity_main1" >
+        <action
+            android:id="@+id/action_navigation_discover_to_discussion"
+            app:destination="@id/navigation_discussion" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_discussion"
+        android:name="com.example.warriorsocial.ui.discover.DiscussionFragment"
+        android:label="Discussion"
+        android:layout="@layout/discussion_posts">
+        <action
+            android:id="@+id/action_navigation_discussion_to_threads"
+            app:destination="@id/navigation_thread" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_thread"
+        android:name="com.example.warriorsocial.ui.discover.ThreadFragment"
+        android:label="Discussion"
+        android:layout="@layout/discussion_thread"/>
     <!--changed from act_main-->
     <fragment
         android:id="@+id/navigation_notifications"
