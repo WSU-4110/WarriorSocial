@@ -85,6 +85,9 @@ public class OrganizationProfile extends Fragment {
     private ValueEventListener mOrganizationListener;
     private String mOrganizationKey;
 
+    // Edit Button
+    private ImageView editButtonImageView;
+
     private Uri mImageUri;
 
     private ImageView mImageView;
@@ -111,6 +114,7 @@ public class OrganizationProfile extends Fragment {
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
         newPostFAB = root.findViewById(R.id.newPostFAB);
+        editButtonImageView = root.findViewById(R.id.edit_organization_profile_button);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
         Boolean account = sharedPreferences.getBoolean("AccountType",false);
@@ -161,6 +165,21 @@ public class OrganizationProfile extends Fragment {
         super.onStart();
 
         System.out.println("Inside onStart in OrganizationProfile");
+
+        // Connect editOrg functionality
+        editButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigation to NewPostFragment (Could pass in some args here)
+                NavController navController = NavHostFragment.findNavController(OrganizationProfile.this);
+
+                // Attach the org profile information to
+                Bundle args = new Bundle();
+                args.putString(OrganizationProfile.EXTRA_ORGANIZATION_KEY, mOrganizationKey);
+
+                navController.navigate(R.id.action_organizationProfile_to_editOrganizationProfile, args);
+            }
+        });
 
         // Connect newPostFAB functionality
         newPostFAB.setOnClickListener(new View.OnClickListener() {

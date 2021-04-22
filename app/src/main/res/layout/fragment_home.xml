@@ -54,6 +54,13 @@
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:src="@android:drawable/ic_input_add" />
+
+            <Button
+                android:id="@+id/init_db_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
         </LinearLayout>
     </LinearLayout>
 
