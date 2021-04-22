@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.warriorsocial.R;
+import com.example.warriorsocial.ui.organizations.StudentOrganization;
+import com.example.warriorsocial.ui.organizations.StudentOrganizationPost;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,8 +33,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,6 +89,48 @@ public class HomeFragment extends Fragment {
             mManager.setReverseLayout(true);
             mManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(mManager);
+
+            // InitDb
+            Button initDb = getActivity().findViewById(R.id.init_db_button);
+            initDb.setVisibility(View.GONE);
+            initDb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("reading file");
+                    BufferedReader reader;
+                    try {
+                        reader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open(
+                                "orginfo.txt")));
+                        int count = 0;
+                        String line = reader.readLine();
+                        while (count < 10) {
+                            if (line != null) {
+                                System.out.println(line);
+                                String name = line.substring(2);
+                                line = reader.readLine();
+                                String email = line.substring(2);
+                                email = email.replaceAll("\\.", "_");
+                                line = reader.readLine();
+                                String description;
+                                if (line.length() > 2 && line.length() <= 27) {
+                                    description = line.substring(2);
+                                } else if (line.length() > 27){
+                                    description = line.substring(2,27);
+                                } else {
+                                    description = "";
+                                }
+                                line = reader.readLine();
+                                StudentOrganization newOrg = new StudentOrganization(name, email, description, "", "", "", "");
+                                writeNewOrg(newOrg);
+                            }
+                            count++;
+                        }
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             // Set onClick for FAB
             eventFAB.setOnClickListener(new View.OnClickListener() {
@@ -210,5 +261,17 @@ public class HomeFragment extends Fragment {
             // All posts
             System.out.println("getquery");
             return databaseReference.child("CalendarEvents/" + year + "/" + month + "/" + dayOfMonth);
+        }
+
+        public void writeNewOrg(StudentOrganization newOrg) {
+            // Create new post at /user-posts/$userid/$postid and at
+            // /posts/$postid simultaneously
+            String key = mDatabase.child("StudentOrganizations").push().getKey();
+            Map<String, Object> postValues = newOrg.toMap();
+
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put(key, postValues);
+
+            mDatabase.child("StudentOrganizations").updateChildren(childUpdates);
         }
     }

@@ -1,5 +1,10 @@
 package com.example.warriorsocial.ui.organizations;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class StudentOrganization {
     private String organizationName;
     private String organizationEmail;
@@ -63,5 +68,19 @@ public class StudentOrganization {
 
     public void setOrganizationImageUrl(String organizationImageUrl) {
         this.organizationImageUrl = organizationImageUrl;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("organizationName", organizationName);
+        result.put("organizationEmail", organizationEmail);
+        result.put("organizationDescription", organizationDescription);
+        result.put("organizationImageUrl", organizationImageUrl);
+        result.put("organizationPhoneNumber", organizationPhoneNumber);
+        result.put("organizationPresident", organizationPresident);
+        result.put("organizationVicePresident", organizationVicePresident);
+
+        return result;
     }
 }

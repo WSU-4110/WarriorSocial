@@ -93,6 +93,7 @@
 
 
                     <ImageView
+                        android:id="@+id/edit_organization_profile_button"
                         android:layout_width="59dp"
                         android:layout_height="58dp"
                         android:layout_alignParentRight="true"

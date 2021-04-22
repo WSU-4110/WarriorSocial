@@ -97,6 +97,9 @@
         <action
             android:id="@+id/action_organizationProfile_to_newPostFragment"
             app:destination="@id/newPostFragment" />
+        <action
+            android:id="@+id/action_organizationProfile_to_editOrganizationProfile"
+            app:destination="@id/editOrganizationProfile" />
     </fragment>
     <fragment
         android:id="@+id/newPostFragment"
@@ -130,6 +133,14 @@
         <action
             android:id="@+id/action_newDiscussionPostFragment_to_navigation_discussion2"
             app:destination="@id/navigation_discussion" />
+    </fragment>
+    <fragment
+        android:id="@+id/editOrganizationProfile"
+        android:name="com.example.warriorsocial.ui.organizations.EditOrganizationProfile"
+        android:label="EditOrganizationProfile" >
+        <action
+            android:id="@+id/action_editOrganizationProfile_to_organizationProfile"
+            app:destination="@id/organizationProfile" />
     </fragment>
 
 </navigation>
