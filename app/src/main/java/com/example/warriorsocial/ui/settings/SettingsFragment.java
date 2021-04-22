@@ -107,7 +107,7 @@ public class SettingsFragment extends Fragment {
                 @Override
                 public void onClick(View v){
                     NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.action_navigation_settings_to_navigation_user_tutorial);
+                    navController.navigate(R.id.action_navigation_settings_to_usertutfrag);
 
                 }
             });

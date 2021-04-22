@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_privacy"
             app:destination="@id/navigation_privacy" />
+        <action
+            android:id="@+id/action_navigation_settings_to_usertutfrag"
+            app:destination="@id/usertutfrag" />
     </fragment>
     <fragment
         android:id="@+id/event_detail"
@@ -76,6 +79,15 @@
         <action
             android:id="@+id/action_newPostFragment_to_organizationProfile"
             app:destination="@id/organizationProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/usertutfrag"
+        android:name="com.example.warriorsocial.usertutfrag"
+        android:label="fragment_usertutfrag"
+        tools:layout="@layout/fragment_usertutfrag" >
+        <action
+            android:id="@+id/action_usertutfrag_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
     </fragment>
 
 </navigation>
