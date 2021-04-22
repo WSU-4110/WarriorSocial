@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:background="@color/WSUGreen"
+            android:background="@color/WSUDrkGreen"
             android:gravity="right"
             android:orientation="horizontal"
             android:padding="5dp"
@@ -42,7 +42,7 @@
                 android:paddingEnd="30dp"
                 android:src="@android:drawable/ic_input_add"
                 android:text="ADD NEW CALENDAR EVENT"
-                android:textColor="@color/WSUGold"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -71,6 +71,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
+                android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout_editor_absoluteX="-52dp"
