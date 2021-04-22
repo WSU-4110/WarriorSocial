@@ -158,6 +158,13 @@
             android:textSize="26sp"
             android:textStyle="bold" />
 
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!--
         <RadioGroup
             android:id="@+id/rb_group"
             android:layout_width="match_parent"
@@ -176,6 +183,7 @@
                 android:text="Student Organization" />
 
         </RadioGroup>
+        !-->
     </LinearLayout>
 
 

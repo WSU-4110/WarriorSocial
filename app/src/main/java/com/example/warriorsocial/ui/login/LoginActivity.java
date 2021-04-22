@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     // Opens registration page
     private Button button_register;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
 
 
     @Override
@@ -163,6 +172,24 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users/"+fAuth.getCurrentUser().getUid()+"/isSo");
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    boolean isStudentOrg = snapshot.getValue(Boolean.class);
+                                    // Save values in shared preferences
+                                    preferences = getSharedPreferences("SharedPref",MODE_PRIVATE);
+                                    editor = preferences.edit();
+                                    editor.putBoolean("AccountType",isStudentOrg);
+                                    editor.commit();
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             Toast.makeText(LoginActivity.this, "Log in successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), BottomActivity.class));
                         }
