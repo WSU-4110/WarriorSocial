@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C1C0C0"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
@@ -12,54 +13,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <!--<TextView
-            android:id="@+id/text_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
-
         <!-- Calendar on Home Screen -->
-
         <CalendarView
             android:id="@+id/home_calendar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></CalendarView>
+            android:layout_height="310dp"></CalendarView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/eventFAB"
-            android:layout_width="wrap_content"
+        <!-- Add calendar event bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@android:drawable/ic_input_add" />
+            android:layout_gravity="right"
+            android:background="@color/WSUGreen"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:text="ADD NEW CALENDAR EVENT">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/WSUGreen"
+                android:clickable="true"
+                android:paddingEnd="30dp"
+                android:src="@android:drawable/ic_input_add"
+                android:text="ADD NEW CALENDAR EVENT"
+                android:textColor="@color/WSUGold"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/eventFAB"
+                gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:src="@android:drawable/ic_input_add" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Holds Recycler View -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <!-- Recycler View -->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="-52dp"
-            tools:layout_editor_absoluteY="16dp" >
+            android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <!-- Recycler View -->
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="-52dp"
+                tools:layout_editor_absoluteY="16dp"></androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"></TextView>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

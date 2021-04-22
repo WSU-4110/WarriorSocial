@@ -1,4 +1,5 @@
 package com.example.warriorsocial.ui.organizations;
+import com.example.warriorsocial.BottomActivity;
 import com.example.warriorsocial.R;
 import com.example.warriorsocial.ui.home.CalendarEvent;
 import com.example.warriorsocial.ui.home.EventDetailFragment;
@@ -34,6 +35,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -41,6 +44,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -89,11 +93,16 @@ public class OrganizationProfile extends Fragment {
 
     private FloatingActionButton newPostFAB;
 
+
+    // For sending notifications
+    public static final String NOTIFICATION_S = "fromSettingsFragment";
+    View root;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.activity_orgs, container, false);
+        root = inflater.inflate(R.layout.activity_orgs, container, false);
 
         mImageView = root.findViewById(R.id.tv_image);
         recyclerView = root.findViewById(R.id.recycler_view_posts);
@@ -199,7 +208,7 @@ public class OrganizationProfile extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Get StudentOrganization object and use the values to update the UI
-                if(dataSnapshot.exists()) {
+                if (dataSnapshot.exists()) {
                     // Get TextViews and ImageViews from R
                     final ImageView organizationImage = getActivity().findViewById(R.id.tv_image);
 
@@ -216,8 +225,7 @@ public class OrganizationProfile extends Fragment {
                     Uri testingUri = Uri.parse(studentOrganization.getOrganizationImageUrl());
                     System.out.println("Got testingUri" + testingUri.toString());
                     final Bitmap[] bm = {null};
-                    Thread thread = new Thread(new Runnable()
-                    {
+                    Thread thread = new Thread(new Runnable() {
                         public void run() {
                             bm[0] = getImageBitmap(studentOrganization.getOrganizationImageUrl());
                             getActivity().runOnUiThread(new Runnable() {
@@ -373,7 +381,7 @@ public class OrganizationProfile extends Fragment {
                         @Override
                         public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                             double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            pd.setMessage("Percentage: " + (int)progressPercent + "%");
+                            pd.setMessage("Percentage: " + (int) progressPercent + "%");
                         }
                     });
         } else {
@@ -442,6 +450,15 @@ public class OrganizationProfile extends Fragment {
                     // Star the post and add self to stars
                     SOPost.likeCount = SOPost.likeCount + 1;
                     SOPost.likes.put(getUid(), true);
+
+                    // Makes sure that a SO user exists and that the post id is the same as the current user
+                    if ((SOPost.uid != null) && SOPost.uid.equals(getUid())) {
+                        // For sending notifications to user
+                        // Need to figure out how to send notifications when another user likes
+                        // when does the users screen update from the database?
+                        createNotificationChannels();
+                        BottomActivity.getInstance().sendNotification(root);
+                    }
                 }
 
                 // Set value and report transaction success
@@ -461,4 +478,21 @@ public class OrganizationProfile extends Fragment {
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+
+    // For creating notifications
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    NOTIFICATION_S,
+                    "Notification",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationChannel.setDescription("User Notification");
+
+            NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
 }
