@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#c79316</color>
 
     <color name="WSUGreen">#006756</color>
     <color name="WSUDrkGreen">#115e56</color>
