@@ -6,7 +6,7 @@
 
 - Install using the unzipped WarriorSocial.apk (You may need to enable unknown apk installation in your System Settings)
 
-## IF YOU WANT TO EMULATE AND TEST THE APPLICATION:
+## If you want to emulate and test the application
 
 Here are some resources that will be needed in order to run the app:
 
