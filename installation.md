@@ -37,6 +37,7 @@ Here are some resources that will be needed in order to run the app:
 ## Run the application on Android Studio
 
 - Clone the [project repository](https://github.com/WSU-4110/WarriorSocial.git)
+
   ![Image](https://github.com/WSU-4110/WarriorSocial/blob/main/newfolder/6.png)
   
 - Navigate to the toolbar and click on the green play button to run the app on the emulator
