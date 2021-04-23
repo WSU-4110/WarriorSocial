@@ -1,6 +1,6 @@
 ## Installation
 
-- Download the WarriorSocial.zip file from https://waynestateprod-my.sharepoint.com/:u:/g/personal/gw8607_wayne_edu/EVOepNl3jh9PkPeWjA-GEYIBgIbyrZ6nZEE8x7YWlopUYw?e=xO5vSH
+- Download the [WarriorSocial.zip file](https://waynestateprod-my.sharepoint.com/:u:/g/personal/gw8607_wayne_edu/EVOepNl3jh9PkPeWjA-GEYIBgIbyrZ6nZEE8x7YWlopUYw?e=xO5vSH)
 
 - Using Files app (made by Google), navigate to the file downloaded and unzip
 
