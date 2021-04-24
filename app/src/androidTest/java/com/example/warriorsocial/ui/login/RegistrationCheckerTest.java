@@ -60,18 +60,20 @@ public class RegistrationCheckerTest {
         //testUser = new User("something", testEmail.getText().toString());
 
         // Initialize Firebase Auth (Simulate a login)
+        /*
         fAuth = FirebaseAuth.getInstance();
 
         fAuth.signInWithEmailAndPassword(testEmail.getText().toString(), testPassword.getText().toString());
+         */
     }
-
+/*
     @Test
     public void checkIfUserLoggedIn() {
         // Should return a success (sample user was logged into the system with fAuth)
         // fAuth should log that action and remember the user that was logged in, given the context
         assertFalse(registrationChecker.checkIfUserLoggedIn(fAuth, context));
     }
-
+*/
     @Test
     public void checkEmailEmpty() {
         // Should return a success (testEmail text was initialized)
