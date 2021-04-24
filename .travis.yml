@@ -33,4 +33,4 @@ before_install:
     - yes | sdkmanager "build-tools;30.0.3"
     
 script:
-
+    - gradle build connectedCheck
