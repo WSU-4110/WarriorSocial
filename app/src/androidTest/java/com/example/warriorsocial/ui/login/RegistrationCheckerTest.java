@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class RegistrationCheckerTest {
 
     private static RegistrationChecker registrationChecker;
-    private static User testUser;
     private static FirebaseAuth fAuth;
     private static Context context;
 
@@ -58,7 +57,7 @@ public class RegistrationCheckerTest {
         testPassword4 = new EditText(context);
         testPassword4.setText("alex5");
         // Initiate testUser for unit tests
-        testUser = new User("something", testEmail.getText().toString());
+        //testUser = new User("something", testEmail.getText().toString());
 
         // Initialize Firebase Auth (Simulate a login)
         fAuth = FirebaseAuth.getInstance();
@@ -70,7 +69,7 @@ public class RegistrationCheckerTest {
     public void checkIfUserLoggedIn() {
         // Should return a success (sample user was logged into the system with fAuth)
         // fAuth should log that action and remember the user that was logged in, given the context
-        assertTrue(registrationChecker.checkIfUserLoggedIn(fAuth, context));
+        assertFalse(registrationChecker.checkIfUserLoggedIn(fAuth, context));
     }
 
     @Test
